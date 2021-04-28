@@ -30,6 +30,8 @@ namespace OurCarZ.Model
         [Column("CarID")]
         public int? CarId { get; set; }
         public double? Rating { get; set; }
+        public string? Password { get; set; }
+        public string? Email { get; set; }
 
         [ForeignKey(nameof(CarId))]
         [InverseProperty("Users")]
