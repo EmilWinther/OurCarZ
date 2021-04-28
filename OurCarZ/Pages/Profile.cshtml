@@ -1,0 +1,22 @@
+﻿@page
+@model ProfileModel
+@{
+    ViewData["Title"] = "Profile Page for User";
+}
+
+@if (Model.currentUser != null) 
+{
+    <h2>User found: </h2>
+    <p>Full Name: @Model.currentUser.FirstName @Model.currentUser.LastName</p>
+    <p>Phonenumber: @Model.currentUser.PhoneNumber</p>
+    <p>Rating: @Model.currentUser.Rating</p>
+}
+else
+{
+    <p>You can't be found!</p>
+}
+
+@if (Model.currentUser != null)
+{
+<a class="button" asp-area="" asp-page="/EditProfile" asp-route-id="@Model.currentUser.UserId">Edit</a>
+}

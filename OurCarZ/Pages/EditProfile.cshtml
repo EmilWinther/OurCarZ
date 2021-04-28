@@ -1,0 +1,24 @@
+﻿@page
+@model OurCarZ.Pages.EditProfileModel
+@{
+    ViewData["Title"] = "Edit Profile Page for User";
+}
+
+@if (Model.currentUser != null)
+{
+    <h2>User found: </h2>
+    <p>Full Name: @Model.currentUser.FirstName @Model.currentUser.LastName</p>
+    <p>Phonenumber: @Model.currentUser.PhoneNumber</p>
+    <p>Rating: @Model.currentUser.Rating</p>
+    <form method="post">
+        <label for="firstname">First name:</label>
+        <input type="text" id="@Model.currentUser.FirstName" name="firstname"><br><br>
+        <label for="lastname">Last name:</label>
+        <input type="text" id="@Model.currentUser.LastName" name="lastname"><br><br>
+        <input type="submit" value="Submit">
+    </form>
+}
+else
+{
+    <p>You can't be found!</p>
+}
