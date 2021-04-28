@@ -1,7 +1,6 @@
 ﻿@page
-@model IndexModel
+@model OurCarZ.Pages.RouteModel
 @{
-    ViewData["Title"] = "Home page";
 }
 
 <div class="text-center">
@@ -43,8 +42,8 @@
             directionsManager = new Microsoft.Maps.Directions.DirectionsManager(map);
 
             //Create waypoints to route between.
-            directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: 'Ahornlunden 5, DK' }));    
-            directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: 'Maglegårdsvej 2, Roskilde, DK' }));
+            directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: '@Model.StartPoint' }));
+            directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: '@Model.FinishPoint' }));
 
             //Set the request options that avoid highways and uses kilometers.
             directionsManager.setRequestOptions({
