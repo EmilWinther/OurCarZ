@@ -13,7 +13,11 @@ namespace OurCarZ.Pages
     {
         private readonly ILogger<EditProfileModel> _logger;
         public EmilDbContext DB = new EmilDbContext();
-        [BindProperty(SupportsGet = true)]
+        [BindProperty]
+        public string FirstName { get; set; }
+        [BindProperty]
+        public string LastName { get; set; }
+        [BindProperty]
         public User currentUser { get; set; }
 
         public EditProfileModel(ILogger<EditProfileModel> logger, EmilDbContext db)
@@ -21,16 +25,35 @@ namespace OurCarZ.Pages
             _logger = logger;
             DB = db;
         }
-
         public void OnGet(int id)
         {
             currentUser = DB.Users.Find(id);
         }
         public IActionResult OnPost()
         {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+            //No persistence between OnGet and OnPost, load the currentUser to update:
+            currentUser = DB.Users.Find(currentUser.UserId);
+
+            //Change the desired values, we grab from the page:
+            if (FirstName != null)
+            {
+                currentUser.FirstName = FirstName;
+            }
+            if (LastName != null)
+            {
+                currentUser.LastName = LastName;
+            }
+            
+            //Update the user. Finds the user based on the primary key (UserId). If a new primary key is somehow inserted, it makes a new user instead.
             DB.Users.Update(currentUser);
             DB.SaveChanges();
-            return RedirectToPage("/Profile?id=" + currentUser.UserId);
+
+            //Go to profile for the specified user.
+            return RedirectToPage("/Profile", new { id = currentUser.UserId});
         }
     }
 }

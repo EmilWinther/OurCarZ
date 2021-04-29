@@ -6,15 +6,18 @@
 
 @if (Model.currentUser != null)
 {
-    <h2>User found: </h2>
+    <h2>Current User Details: </h2>
     <p>Full Name: @Model.currentUser.FirstName @Model.currentUser.LastName</p>
     <p>Phonenumber: @Model.currentUser.PhoneNumber</p>
     <p>Rating: @Model.currentUser.Rating</p>
     <form method="post">
+        <h2>Change the users details: </h2>
         <label for="firstname">First name:</label>
-        <input type="text" id="@Model.currentUser.FirstName" name="firstname"><br><br>
+        <input type="text" id="@Model.FirstName" name="firstname"><br><br>
         <label for="lastname">Last name:</label>
-        <input type="text" id="@Model.currentUser.LastName" name="lastname"><br><br>
+        <input type="text" id="@Model.LastName" name="lastname"><br><br>
+        <!-- Hidden input field is used, for storing the UserId needed to find the user, since there is no persistence between OnGet() and OnPost() -->
+        <input hidden="hidden" asp-for="@Model.currentUser.UserId"/>
         <input type="submit" value="Submit">
     </form>
 }
