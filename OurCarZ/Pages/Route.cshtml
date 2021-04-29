@@ -4,12 +4,15 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <div id="myMap" style="        position: center;
+
+    <h1 id="demo" class="display-4"></h1>
+    <div id="myMap" style="
+        position: center;
         margin: auto;
         width: calc(100% - 360px);
         height: 900px;
-        float: left;"></div>
+        float: left;">
+    </div>
     <div id='directionsItinerary' style="height: 900px; width: 360px; overflow-y: scroll; overflow-x: hidden;"></div>
 </div>
 
@@ -41,9 +44,11 @@
             //Create an instance of the directions manager.
             directionsManager = new Microsoft.Maps.Directions.DirectionsManager(map);
 
+
+
             //Create waypoints to route between.
-            directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: '@Model.StartPoint' }));
-            directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: '@Model.FinishPoint' }));
+            directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: '@*@Html.Raw(Model.StartPoint)*@ Roskilde, Dk' }));
+            directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: '@*@Html.Raw(Model.FinishPoint)*@ København, Dk' }));
 
             //Set the request options that avoid highways and uses kilometers.
             directionsManager.setRequestOptions({
@@ -68,4 +73,3 @@
     }
 </script>
 <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap' async defer></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBQytJv5CcBRdVd7O5IJMJb0i-3HLJLbM4&callback=myMap"></script>
