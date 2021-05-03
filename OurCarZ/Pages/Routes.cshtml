@@ -23,7 +23,7 @@
             {
                 <div class="card mb-3" style="height: 20rem">
                     <div class="card-header p-2">
-                        <h5 class="card-title"><small class="text-muted">(@route.RouteId) </small>@route.StartPoint til @route.FinishPoint</h5>
+                        <h5 class="card-title">@route.StartPoint til @route.FinishPoint</h5>
                     </div>
                     <div class="card-body">
                         <p class="card-text">Kører:</p>
@@ -31,7 +31,7 @@
                         <p class="card-text">Antal Pladser:</p>
                     </div>
                     <div class="card-footer">
-                        <a class="btn" type="button" asp-page="Route" asp-route-id="@route.RouteId"><i class="fas fa-map-marked-alt"></i></a>
+                        <a class="btn" type="button" asp-page="Route" asp-route-id="@route.RouteId"><i class="fas fa-map-marked-alt" title="View Route"></i></a>
                     </div>
                 </div>
             }
