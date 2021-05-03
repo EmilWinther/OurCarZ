@@ -30,16 +30,6 @@ namespace OurCarZ.Model
         public string LastName { get; set; }
         [Column("CarID")]
         public int? CarId { get; set; }
-        [Column("RatingID")]
-        public int? RatingId { get; set; }
-        [StringLength(50)]
-        public string Password { get; set; }
-        [StringLength(50)]
-        public string Email { get; set; }
-        [StringLength(50)]
-        public string ConfirmPassword { get; set; }
-        [StringLength(5), MinLength(0), MaxLength(5)]
-        public double? Rating { get; set; }
         [StringLength(28), MinLength(8, ErrorMessage ="Your password is too short"), MaxLength(28, ErrorMessage ="Your password is too long"), RegularExpression(@"(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{8,28})$",
          ErrorMessage = "Password must contain one uppercase, one lowercase, one number, and be atleast 8 characters long"), Required]
         public string? Password { get; set; }
@@ -51,7 +41,6 @@ namespace OurCarZ.Model
         [ForeignKey(nameof(CarId))]
         [InverseProperty("Users")]
         public virtual Car Car { get; set; }
-        [ForeignKey(nameof(RatingId))]
         [InverseProperty(nameof(RatingDb.Users))]
         public virtual RatingDb Rating { get; set; }
         [InverseProperty(nameof(RatingDb.User))]

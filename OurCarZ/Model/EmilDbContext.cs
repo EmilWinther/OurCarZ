@@ -92,7 +92,6 @@ namespace OurCarZ.Model
 
                 entity.Property(e => e.PhoneNumber).IsUnicode(false);
 
-                entity.Property(e => e.RatingId).HasDefaultValueSql("((0))");
 
                 entity.HasOne(d => d.Car)
                     .WithMany(p => p.Users)
@@ -101,7 +100,6 @@ namespace OurCarZ.Model
 
                 entity.HasOne(d => d.Rating)
                     .WithMany(p => p.Users)
-                    .HasForeignKey(d => d.RatingId)
                     .HasConstraintName("FK_User_ToRating");
             });
 
