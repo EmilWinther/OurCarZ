@@ -20,6 +20,7 @@ namespace OurCarZ.Model
 
         public virtual DbSet<Car> Cars { get; set; }
         public virtual DbSet<Institution> Institutions { get; set; }
+        public virtual DbSet<RatingDb> RatingDbs { get; set; }
         public virtual DbSet<Route> Routes { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserRoute> UserRoutes { get; set; }
@@ -53,6 +54,18 @@ namespace OurCarZ.Model
                 entity.Property(e => e.Zipcode).IsUnicode(false);
             });
 
+            modelBuilder.Entity<RatingDb>(entity =>
+            {
+                entity.HasKey(e => e.RatingId)
+                    .HasName("PK__Rating__75E334FE1AEE2D1C");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.RatingDbs)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_RatingDB_ToUser");
+            });
+
             modelBuilder.Entity<Route>(entity =>
             {
                 entity.Property(e => e.FinishPoint).IsUnicode(false);
@@ -67,16 +80,29 @@ namespace OurCarZ.Model
 
             modelBuilder.Entity<User>(entity =>
             {
+                entity.Property(e => e.ConfirmPassword).IsUnicode(false);
+
+                entity.Property(e => e.Email).IsUnicode(false);
+
                 entity.Property(e => e.FirstName).IsUnicode(false);
 
                 entity.Property(e => e.LastName).IsUnicode(false);
 
+                entity.Property(e => e.Password).IsUnicode(false);
+
                 entity.Property(e => e.PhoneNumber).IsUnicode(false);
+
+                entity.Property(e => e.RatingId).HasDefaultValueSql("((0))");
 
                 entity.HasOne(d => d.Car)
                     .WithMany(p => p.Users)
                     .HasForeignKey(d => d.CarId)
                     .HasConstraintName("FK_User_ToCar");
+
+                entity.HasOne(d => d.Rating)
+                    .WithMany(p => p.Users)
+                    .HasForeignKey(d => d.RatingId)
+                    .HasConstraintName("FK_User_ToRating");
             });
 
             modelBuilder.Entity<UserRoute>(entity =>
