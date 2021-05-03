@@ -9,7 +9,6 @@
     <h2>User found: </h2>
     <p>Full Name: @Model.currentUser.FirstName @Model.currentUser.LastName</p>
     <p>Phonenumber: @Model.currentUser.PhoneNumber</p>
-    <p>Rating: @Model.currentUser.Rating</p>
     <br>
     <a class="button" asp-area="" asp-page="/EditProfile" asp-route-id="@Model.currentUser.UserId">Edit User</a>
 }
