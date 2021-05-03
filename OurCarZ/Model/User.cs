@@ -36,7 +36,7 @@ namespace OurCarZ.Model
         public string? Password { get; set; }
         [StringLength(28),MinLength(8, ErrorMessage ="Your password is too short"), MaxLength(28, ErrorMessage ="Your password is too long"), Required, Compare(nameof(Password), ErrorMessage ="The passwords does not match")]
         public string? ConfirmPassword { get; set; }
-        [MinLength(6), MaxLength(30), Required, RegularExpression(@"^[a-zA-Z0-9_.+-]+@[a-zA-z0-9-]+\.[a-zA-Z0-9-.]+$", ErrorMessage ="Invalid email format")]
+        [MinLength(6), MaxLength(30), Required, RegularExpression(@"^[a-zA-Z0-9_.+-]+@(edu.easj.dk)+$", ErrorMessage ="Invalid email format, use school mails")]
         public string? Email { get; set; }
 
         [ForeignKey(nameof(CarId))]
