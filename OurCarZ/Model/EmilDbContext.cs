@@ -67,9 +67,15 @@ namespace OurCarZ.Model
 
             modelBuilder.Entity<User>(entity =>
             {
+                entity.Property(e => e.ConfirmPassword).IsUnicode(false);
+
+                entity.Property(e => e.Email).IsUnicode(false);
+
                 entity.Property(e => e.FirstName).IsUnicode(false);
 
                 entity.Property(e => e.LastName).IsUnicode(false);
+
+                entity.Property(e => e.Password).IsUnicode(false);
 
                 entity.Property(e => e.PhoneNumber).IsUnicode(false);
 
