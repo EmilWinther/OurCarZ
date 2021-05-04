@@ -8,13 +8,21 @@
 {
     <h2>Current User Details: </h2>
     <p>Full Name: @Model.currentUser.FirstName @Model.currentUser.LastName</p>
+    <p>Email: @Model.currentUser.Email</p>
     <p>Phone Number: @Model.currentUser.PhoneNumber</p>
+    <p>License Plate: @Model.currentUser.LicensePlate</p>
     <form method="post">
         <h2>Change the users details: </h2>
         <label for="firstname">First name:</label>
         <input type="text" id="@Model.FirstName" name="firstname"><br><br>
         <label for="lastname">Last name:</label>
         <input type="text" id="@Model.LastName" name="lastname"><br><br>
+        <label for="email">Email:</label>
+        <input type="text" id="@Model.Email" name="email"><br><br>
+        <label for="phonenumber">Phone Number:</label>
+        <input type="text" id="@Model.PhoneNumber" name="phonenumber"><br><br>
+        <label for="licenseplate">License Plate:</label>
+        <input type="text" id="@Model.LicensePlate" name="licenseplate"><br><br>
 
         <!-- Hidden input field is used, for storing the UserId needed to find the user, since there is no persistence between OnGet() and OnPost() -->
         <input hidden="hidden" asp-for="@Model.currentUser.UserId" />
@@ -25,7 +33,8 @@ else
 {
     <p>You can't be found!</p>
 }
-
+<br>
+<br>
 
 @if (Model.currentUser != null)
 {

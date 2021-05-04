@@ -26,6 +26,12 @@ namespace OurCarZ.Pages
         public User currentUser { get; set; }
         [BindProperty]
         public string OldPassword { get; set; }
+        [BindProperty]
+        public string PhoneNumber { get; set; }
+        [BindProperty]
+        public string Email { get; set; }
+        [BindProperty]
+        public string LicensePlate { get; set; }
 
         public EditProfileModel(ILogger<EditProfileModel> logger, EmilDbContext db)
         {
@@ -38,7 +44,7 @@ namespace OurCarZ.Pages
         }
         public IActionResult OnPost()
         {
-            if (!ModelState.IsValid)
+           if (!ModelState.IsValid)
             {
                 return Page();
             }
@@ -49,11 +55,7 @@ namespace OurCarZ.Pages
             if (OldPassword == currentUser.Password && Password == ConfirmPassword)
             {
                 currentUser.Password = Password;
-            } else if (Password != ConfirmPassword)
-            { MessageBox.Show("Hello, world."); }
-            
-
-
+            }
             if (FirstName != null)
             {
                 currentUser.FirstName = FirstName;
@@ -62,7 +64,19 @@ namespace OurCarZ.Pages
             {
                 currentUser.LastName = LastName;
             }
-            
+            if (PhoneNumber != null)
+            {
+                currentUser.PhoneNumber = PhoneNumber;
+            }
+            if (Email != null)
+            {
+                currentUser.Email = Email;
+            }
+            if (LicensePlate != null)
+            {
+                currentUser.LicensePlate = LicensePlate;
+            }
+
 
             //Update the user. Finds the user based on the primary key (UserId). If a new primary key is somehow inserted, it makes a new user instead.
             DB.Users.Update(currentUser);

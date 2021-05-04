@@ -81,7 +81,7 @@ namespace OurCarZ.Model
 
                 entity.HasOne(d => d.Car)
                     .WithMany(p => p.Users)
-                    .HasForeignKey(d => d.CarId)
+                    .HasForeignKey(d => d.LicensePlate)
                     .HasConstraintName("FK_User_ToCar");
             });
 
