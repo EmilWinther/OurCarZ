@@ -8,15 +8,40 @@
 {
     <h2>Current User Details: </h2>
     <p>Full Name: @Model.currentUser.FirstName @Model.currentUser.LastName</p>
-    <p>Phonenumber: @Model.currentUser.PhoneNumber</p>
+    <p>Phone Number: @Model.currentUser.PhoneNumber</p>
     <form method="post">
         <h2>Change the users details: </h2>
         <label for="firstname">First name:</label>
         <input type="text" id="@Model.FirstName" name="firstname"><br><br>
         <label for="lastname">Last name:</label>
         <input type="text" id="@Model.LastName" name="lastname"><br><br>
+
         <!-- Hidden input field is used, for storing the UserId needed to find the user, since there is no persistence between OnGet() and OnPost() -->
-        <input hidden="hidden" asp-for="@Model.currentUser.UserId"/>
+        <input hidden="hidden" asp-for="@Model.currentUser.UserId" />
+        <input type="submit" value="Submit">
+    </form>
+}
+else
+{
+    <p>You can't be found!</p>
+}
+
+
+@if (Model.currentUser != null)
+{
+    <h2>Change Password: </h2>
+    <p>Password: @Model.currentUser.Password</p>
+    <form method="post">
+        <label for="oldpassword">Old Password:</label>
+        <input type="text" id="@Model.OldPassword" name="oldpassword"><br><br>
+
+        <label for="password">New Password:</label>
+        <input type="text" id="@Model.Password" name="password"><br><br>
+
+        <label for="confirmpassword">Confirm Password:</label>
+        <input type="text" id="@Model.ConfirmPassword" name="confirmpassword"><br><br>
+        <!-- Hidden input field is used, for storing the UserId needed to find the user, since there is no persistence between OnGet() and OnPost() -->
+        <input hidden="hidden" asp-for="@Model.currentUser.UserId" />
         <input type="submit" value="Submit">
     </form>
 }
