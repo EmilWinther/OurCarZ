@@ -1,0 +1,23 @@
+﻿@page
+@model YourProfileModel
+@{
+    ViewData["Title"] = "Profile Page for the Found User";
+}
+
+@if (Model.FoundUser != null)
+{
+    <h2>found User: </h2>
+    <p>Full Name: @Model.FoundUser.FirstName @Model.FoundUser.LastName</p>
+    <p>Email: @Model.FoundUser.Email</p>
+    <p>Phone Number: @Model.FoundUser.PhoneNumber</p>
+    <p>License Plate: @Model.FoundUser.LicensePlate</p>
+    <br>
+    <a class="button" asp-area="" asp-page="/" asp-route-id="@Model.FoundUser.UserId">Send messages</a>
+
+    <a class="button" asp-area="" asp-page="/Index" asp-route-id="">Sign Out</a>
+}
+else
+{
+    <p>You can't be found!</p>
+}
+<a class="button" asp-area="" asp-page="/Profile" asp-route-id="7">My Profile</a>

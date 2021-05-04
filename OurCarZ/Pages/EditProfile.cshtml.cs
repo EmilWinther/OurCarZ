@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using OurCarZ.Model;
 
+
 namespace OurCarZ.Pages
 {
     public class EditProfileModel : PageModel
@@ -18,7 +19,19 @@ namespace OurCarZ.Pages
         [BindProperty]
         public string LastName { get; set; }
         [BindProperty]
+        public string Password { get; set; }
+        [BindProperty]
+        public string ConfirmPassword { get; set; }
+        [BindProperty]
         public User currentUser { get; set; }
+        [BindProperty]
+        public string OldPassword { get; set; }
+        [BindProperty]
+        public string PhoneNumber { get; set; }
+        [BindProperty]
+        public string Email { get; set; }
+        [BindProperty]
+        public string LicensePlate { get; set; }
 
         public EditProfileModel(ILogger<EditProfileModel> logger, EmilDbContext db)
         {
@@ -31,7 +44,7 @@ namespace OurCarZ.Pages
         }
         public IActionResult OnPost()
         {
-            if (!ModelState.IsValid)
+           if (!ModelState.IsValid)
             {
                 return Page();
             }
@@ -39,6 +52,10 @@ namespace OurCarZ.Pages
             currentUser = DB.Users.Find(currentUser.UserId);
 
             //Change the desired values, we grab from the page:
+            if (OldPassword == currentUser.Password && Password == ConfirmPassword)
+            {
+                currentUser.Password = Password;
+            }
             if (FirstName != null)
             {
                 currentUser.FirstName = FirstName;
@@ -47,7 +64,20 @@ namespace OurCarZ.Pages
             {
                 currentUser.LastName = LastName;
             }
-            
+            if (PhoneNumber != null)
+            {
+                currentUser.PhoneNumber = PhoneNumber;
+            }
+            if (Email != null)
+            {
+                currentUser.Email = Email;
+            }
+            if (LicensePlate != null)
+            {
+                currentUser.LicensePlate = LicensePlate;
+            }
+
+
             //Update the user. Finds the user based on the primary key (UserId). If a new primary key is somehow inserted, it makes a new user instead.
             DB.Users.Update(currentUser);
             DB.SaveChanges();
