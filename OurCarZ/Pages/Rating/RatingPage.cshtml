@@ -1,0 +1,17 @@
+﻿@page
+@model OurCarZ.Pages.Rating.RatingPageModel
+@{
+}
+
+<h2>This is a page for rating.</h2>
+<p>For whom do you want to rate?</p>
+<form method="post">
+    <h2>Change the users details: </h2>
+    <label for="usertoberated">Who's getting rated?</label>
+    <input type="text" id="@Model.UserToBeRated" name="usertoberated"><br><br>
+    <label for="Rating">What's the rating?</label>
+    <input type="text" id="@Model.Rating" name="Rating"><br><br>
+    <label for="userrating">Which user is rating?</label>
+    <input type="text" id="@Model.UserRating" name="userrating"><br><br>
+    <input type="submit" value="Submit">
+</form>

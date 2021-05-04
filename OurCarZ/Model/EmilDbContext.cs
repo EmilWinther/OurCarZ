@@ -20,6 +20,7 @@ namespace OurCarZ.Model
 
         public virtual DbSet<Car> Cars { get; set; }
         public virtual DbSet<Institution> Institutions { get; set; }
+        public virtual DbSet<RatingDatabase> RatingDatabases { get; set; }
         public virtual DbSet<Route> Routes { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserRoute> UserRoutes { get; set; }
@@ -29,7 +30,7 @@ namespace OurCarZ.Model
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=emilzealanddb.database.windows.net;Initial Catalog=emil-db;User ID=emiladmin;Password=Sql12345");
+                optionsBuilder.UseSqlServer("Data Source=emilzealanddb.database.windows.net;Initial Catalog=emil-db;Persist Security Info=True;User ID=emiladmin;Password=Sql12345");
             }
         }
 
@@ -51,6 +52,21 @@ namespace OurCarZ.Model
                 entity.Property(e => e.Address).IsUnicode(false);
 
                 entity.Property(e => e.Zipcode).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<RatingDatabase>(entity =>
+            {
+                entity.HasOne(d => d.UserRated)
+                    .WithMany()
+                    .HasForeignKey(d => d.UserRatedId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__RatingDat__UserR__1332DBDC");
+
+                entity.HasOne(d => d.UserRating)
+                    .WithMany()
+                    .HasForeignKey(d => d.UserRatingId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__RatingDat__UserR__14270015");
             });
 
             modelBuilder.Entity<Route>(entity =>
@@ -93,6 +109,11 @@ namespace OurCarZ.Model
                     .HasForeignKey(d => d.UserId)
                     .HasConstraintName("FK_UserRoute_ToUser");
             });
+
+            //Trick the DBContext into thinking the RatingDatabase Tables "UserRatedID" and "UserRatingID" is a composite primary key,
+            //even though it's a composite Foreign Key. Context doesn't have functionality for tables with no primary key, surprisingly.
+
+            modelBuilder.Entity<RatingDatabase>().HasKey(x => new { x.UserRatedId, x.UserRatingId });
 
             OnModelCreatingPartial(modelBuilder);
         }
