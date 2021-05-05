@@ -42,6 +42,8 @@ namespace OurCarZ.Services
             user.LastName = updatedUser.LastName;
             user.PhoneNumber = updatedUser.PhoneNumber;
             edb.SaveChanges();
+            user.Email = updatedUser.Email;
+            user.Password = updatedUser.Password;
         }
     }
 }
