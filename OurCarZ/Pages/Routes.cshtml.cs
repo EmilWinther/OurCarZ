@@ -35,7 +35,7 @@ namespace OurCarZ.Pages
 
         public void OnPost()
         {
-            if (Request.Form["ZipCodeSearch"].Count > 0) { ZipCode = Request.Form["ZipCodeSearch"]; }
+            ZipCode = Request.Form["ZipCodeSearch"];
             if (Request.Form["dateOfRoute"].Count > 0) { date = Convert.ToDateTime(Request.Form["dateOfRoute"]); }
             if (!string.IsNullOrEmpty(ZipCode))
             {
@@ -45,7 +45,7 @@ namespace OurCarZ.Pages
                 {
                     UsedRoutes.Add(item);
                 }
-            }
+            } else { UsedRoutes = routes; }
 
             
         }
