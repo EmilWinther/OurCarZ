@@ -20,6 +20,7 @@ namespace OurCarZ.Model
 
         public virtual DbSet<Car> Cars { get; set; }
         public virtual DbSet<Institution> Institutions { get; set; }
+        public virtual DbSet<RatingDatabase> RatingDatabases { get; set; }
         public virtual DbSet<Route> Routes { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserRoute> UserRoutes { get; set; }
@@ -39,6 +40,11 @@ namespace OurCarZ.Model
 
             modelBuilder.Entity<Car>(entity =>
             {
+                entity.HasKey(e => e.LicensePlate)
+                    .HasName("PK__tmp_ms_x__026BC15DF578E93D");
+
+                entity.Property(e => e.LicensePlate).IsUnicode(false);
+
                 entity.Property(e => e.Model).IsUnicode(false);
 
                 entity.Property(e => e.Seats).IsUnicode(false);
@@ -51,6 +57,19 @@ namespace OurCarZ.Model
                 entity.Property(e => e.Address).IsUnicode(false);
 
                 entity.Property(e => e.Zipcode).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<RatingDatabase>(entity =>
+            {
+                entity.HasOne(d => d.UserRated)
+                    .WithMany()
+                    .HasForeignKey(d => d.UserRatedId)
+                    .HasConstraintName("FK__RatingDat__UserR__2A164134");
+
+                entity.HasOne(d => d.UserRating)
+                    .WithMany()
+                    .HasForeignKey(d => d.UserRatingId)
+                    .HasConstraintName("FK__RatingDat__UserR__2B0A656D");
             });
 
             modelBuilder.Entity<Route>(entity =>
@@ -75,11 +94,13 @@ namespace OurCarZ.Model
 
                 entity.Property(e => e.LastName).IsUnicode(false);
 
+                entity.Property(e => e.LicensePlate).IsUnicode(false);
+
                 entity.Property(e => e.Password).IsUnicode(false);
 
                 entity.Property(e => e.PhoneNumber).IsUnicode(false);
 
-                entity.HasOne(d => d.Car)
+                entity.HasOne(d => d.LicensePlateNavigation)
                     .WithMany(p => p.Users)
                     .HasForeignKey(d => d.LicensePlate)
                     .HasConstraintName("FK_User_ToCar");
