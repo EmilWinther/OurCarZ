@@ -18,6 +18,7 @@ namespace OurCarZ.Model
         {
         }
 
+        public virtual DbSet<Address> Addresses { get; set; }
         public virtual DbSet<Car> Cars { get; set; }
         public virtual DbSet<Institution> Institutions { get; set; }
         public virtual DbSet<RatingDatabase> RatingDatabases { get; set; }
@@ -30,13 +31,20 @@ namespace OurCarZ.Model
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=emilzealanddb.database.windows.net;Initial Catalog=emil-db;User ID=emiladmin;Password=Sql12345");
+                optionsBuilder.UseSqlServer("Data Source=emilzealanddb.database.windows.net;Initial Catalog=emil-db;User ID=emiladmin;Password=Sql12345;Connect Timeout=30;Encrypt=True");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
+
+            modelBuilder.Entity<Address>(entity =>
+            {
+                entity.Property(e => e.Country).IsUnicode(false);
+
+                entity.Property(e => e.RoadName).IsUnicode(false);
+            });
 
             modelBuilder.Entity<Car>(entity =>
             {
@@ -74,9 +82,19 @@ namespace OurCarZ.Model
 
             modelBuilder.Entity<Route>(entity =>
             {
-                entity.Property(e => e.FinishPoint).IsUnicode(false);
+                entity.Property(e => e.StartTime).HasDefaultValueSql("(getdate())");
 
-                entity.Property(e => e.StartPoint).IsUnicode(false);
+                entity.HasOne(d => d.FinishPointNavigation)
+                    .WithMany(p => p.RouteFinishPointNavigations)
+                    .HasForeignKey(d => d.FinishPoint)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Route_ToAdress2");
+
+                entity.HasOne(d => d.StartPointNavigation)
+                    .WithMany(p => p.RouteStartPointNavigations)
+                    .HasForeignKey(d => d.StartPoint)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Route_ToAdress1");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Routes)

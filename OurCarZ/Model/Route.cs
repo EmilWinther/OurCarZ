@@ -27,11 +27,21 @@ namespace OurCarZ.Model
         [Key]
         [Column("RouteID")]
         public int RouteId { get; set; }
+        public int StartPoint { get; set; }
+        public int FinishPoint { get; set; }
+        [Column(TypeName = "date")]
+        public DateTime StartTime { get; set; }
         public string StartPoint { get; set; }
         public string FinishPoint { get; set; }
         [Column("UserID")]
         public int? UserId { get; set; }
 
+        [ForeignKey(nameof(FinishPoint))]
+        [InverseProperty(nameof(Address.RouteFinishPointNavigations))]
+        public virtual Address FinishPointNavigation { get; set; }
+        [ForeignKey(nameof(StartPoint))]
+        [InverseProperty(nameof(Address.RouteStartPointNavigations))]
+        public virtual Address StartPointNavigation { get; set; }
         [ForeignKey(nameof(UserId))]
         [InverseProperty("Routes")]
         public virtual User User { get; set; }
