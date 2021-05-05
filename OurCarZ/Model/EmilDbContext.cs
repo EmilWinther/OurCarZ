@@ -18,6 +18,7 @@ namespace OurCarZ.Model
         {
         }
 
+        public virtual DbSet<Address> Addresses { get; set; }
         public virtual DbSet<Car> Cars { get; set; }
         public virtual DbSet<Institution> Institutions { get; set; }
         public virtual DbSet<Route> Routes { get; set; }
@@ -29,7 +30,7 @@ namespace OurCarZ.Model
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=emilzealanddb.database.windows.net;Initial Catalog=emil-db;User ID=emiladmin;Password=Sql12345");
+                optionsBuilder.UseSqlServer("Data Source=emilzealanddb.database.windows.net;Initial Catalog=emil-db;User ID=emiladmin;Password=Sql12345;Connect Timeout=30;Encrypt=True");
             }
         }
 
@@ -37,8 +38,20 @@ namespace OurCarZ.Model
         {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
 
+            modelBuilder.Entity<Address>(entity =>
+            {
+                entity.Property(e => e.Country).IsUnicode(false);
+
+                entity.Property(e => e.RoadName).IsUnicode(false);
+            });
+
             modelBuilder.Entity<Car>(entity =>
             {
+                entity.HasKey(e => e.LicensePlate)
+                    .HasName("PK__tmp_ms_x__026BC15DF578E93D");
+
+                entity.Property(e => e.LicensePlate).IsUnicode(false);
+
                 entity.Property(e => e.Model).IsUnicode(false);
 
                 entity.Property(e => e.Seats).IsUnicode(false);
@@ -55,9 +68,19 @@ namespace OurCarZ.Model
 
             modelBuilder.Entity<Route>(entity =>
             {
-                entity.Property(e => e.FinishPoint).IsUnicode(false);
+                entity.Property(e => e.StartTime).HasDefaultValueSql("(getdate())");
 
-                entity.Property(e => e.StartPoint).IsUnicode(false);
+                entity.HasOne(d => d.FinishPointNavigation)
+                    .WithMany(p => p.RouteFinishPointNavigations)
+                    .HasForeignKey(d => d.FinishPoint)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Route_ToAdress2");
+
+                entity.HasOne(d => d.StartPointNavigation)
+                    .WithMany(p => p.RouteStartPointNavigations)
+                    .HasForeignKey(d => d.StartPoint)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Route_ToAdress1");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Routes)
@@ -67,15 +90,23 @@ namespace OurCarZ.Model
 
             modelBuilder.Entity<User>(entity =>
             {
+                entity.Property(e => e.ConfirmPassword).IsUnicode(false);
+
+                entity.Property(e => e.Email).IsUnicode(false);
+
                 entity.Property(e => e.FirstName).IsUnicode(false);
 
                 entity.Property(e => e.LastName).IsUnicode(false);
 
+                entity.Property(e => e.LicensePlate).IsUnicode(false);
+
+                entity.Property(e => e.Password).IsUnicode(false);
+
                 entity.Property(e => e.PhoneNumber).IsUnicode(false);
 
-                entity.HasOne(d => d.Car)
+                entity.HasOne(d => d.LicensePlateNavigation)
                     .WithMany(p => p.Users)
-                    .HasForeignKey(d => d.CarId)
+                    .HasForeignKey(d => d.LicensePlate)
                     .HasConstraintName("FK_User_ToCar");
             });
 
