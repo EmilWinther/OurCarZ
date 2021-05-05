@@ -1,0 +1,75 @@
+﻿@page
+@model OurCarZ.Pages.RouteModel
+@{
+}
+
+<div class="text-center">
+
+    <h1 id="demo" class="display-4"></h1>
+    <div id="myMap" style="
+        position: center;
+        margin: auto;
+        width: calc(100% - 360px);
+        height: 900px;
+        float: left;">
+    </div>
+    <div id='directionsItinerary' style="height: 900px; width: 360px; overflow-y: scroll; overflow-x: hidden;"></div>
+</div>
+
+<script type='text/javascript'>
+    var map, directionsManager;
+
+    //var MapStyle = {
+    //    "elements": {
+    //        "water": { "fillColor": "Darkblue" },
+    //        "area": { "fillColor": "#115166" },
+    //        "majorRoad": {
+    //            "strokeColor": "#157399",
+    //            "fillColor": "#000000"
+    //        },
+    //        "mapElement": { "fillColor": "#115166" }
+    //    },
+    //    "version": "1.0",
+    //    "settings": { "landColor": "#0B334D"}
+    //};
+
+    function GetMap() {
+        map = new Microsoft.Maps.Map('#myMap', {
+            credentials: 'AlLVvMQ7ncFUH_ZyTOTAmH0sSZvoejNtcn9OmuOtPXjsvfiRkwCDM0GFX2wNU0R0',
+            /*customMapStyle: MapStyle*/
+        });
+
+        //Load the directions module.
+        Microsoft.Maps.loadModule('Microsoft.Maps.Directions', function () {
+            //Create an instance of the directions manager.
+            directionsManager = new Microsoft.Maps.Directions.DirectionsManager(map);
+
+
+
+            //Create waypoints to route between.
+            directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: '@*@Html.Raw(Model.StartPoint)*@ Roskilde, Dk' }));
+            directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: '@*@Html.Raw(Model.FinishPoint)*@ København, Dk' }));
+
+            //Set the request options that avoid highways and uses kilometers.
+            directionsManager.setRequestOptions({
+                distanceUnit: Microsoft.Maps.Directions.DistanceUnit.km,
+                routeAvoidance: [Microsoft.Maps.Directions.RouteAvoidance.avoidLimitedAccessHighway]
+            });
+
+            //Make the route line thick and green. Replace the title of waypoints with an empty string to hide the default text that appears.
+            directionsManager.setRenderOptions({
+                drivingPolylineOptions: {
+                    strokeColor: 'Red',
+                    strokeThickness: 4
+                },
+                waypointPushpinOptions: {
+                    title: ''
+                }
+            });
+            directionsManager.setRenderOptions({ itineraryContainer: '#directionsItinerary' });
+            //Calculate directions.
+            directionsManager.calculateDirections();
+        });
+    }
+</script>
+<script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap' async defer></script>
