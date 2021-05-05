@@ -18,14 +18,17 @@ namespace OurCarZ.Model
         }
 
         [Key]
-        [Column("CarID")]
-        public int CarId { get; set; }
+        [Column("LicensePlate")]
+        [StringLength(7)]
+        public string LicensePlate { get; set; }
         [StringLength(50)]
         public string Model { get; set; }
         [StringLength(50)]
         public string Year { get; set; }
         [StringLength(50)]
         public string Seats { get; set; }
+        
+        
 
         [InverseProperty(nameof(User.Car))]
         public virtual ICollection<User> Users { get; set; }

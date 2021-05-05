@@ -21,25 +21,22 @@ namespace OurCarZ.Model
         [Key]
         [Column("UserID")]
         public int UserId { get; set; }
-        [StringLength(8), MinLength(8, ErrorMessage = "Your phonenumber should be 8 digits"), MaxLength(8, ErrorMessage ="Your phonenumber should be 8 digits"), Required(ErrorMessage ="Your phonenumber is required"), Phone]
+        [StringLength(50)]
         public string PhoneNumber { get; set; }
-        [StringLength(50), Required(ErrorMessage ="First name is required")]
+        [StringLength(50)]
         public string FirstName { get; set; }
-        [StringLength(50), Required(ErrorMessage ="Last name is required")]
+        [StringLength(50)]
         public string LastName { get; set; }
-        [Column("CarID")]
-        public int? CarId { get; set; }
-        [StringLength(5), MinLength(0), MaxLength(5)]
-        public double? Rating { get; set; }
-        [StringLength(28), MinLength(8, ErrorMessage ="Your password is too short"), MaxLength(28, ErrorMessage ="Your password is too long"), RegularExpression(@"(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{8,28})$",
-         ErrorMessage = "Password must contain one uppercase, one lowercase, one number, and be atleast 8 characters long"), Required]
-        public string? Password { get; set; }
-        [StringLength(28),MinLength(8, ErrorMessage ="Your password is too short"), MaxLength(28, ErrorMessage ="Your password is too long"), Required, Compare(nameof(Password), ErrorMessage ="The passwords does not match")]
-        public string? ConfirmPassword { get; set; }
-        [MinLength(6), MaxLength(30), Required, RegularExpression(@"^[a-zA-Z0-9_.+-]+@[a-zA-z0-9-]+\.[a-zA-Z0-9-.]+$", ErrorMessage ="Invalid email format")]
-        public string? Email { get; set; }
+        [Column("LicensePlate")]
+        public String? LicensePlate { get; set; }
+        [StringLength(50)]
+        public string Password { get; set; }
+        [StringLength(50)]
+        public string Email { get; set; }
+        [StringLength(50)]
+        public string ConfirmPassword { get; set; }
 
-        [ForeignKey(nameof(CarId))]
+        [ForeignKey(nameof(LicensePlate))]
         [InverseProperty("Users")]
         public virtual Car Car { get; set; }
         [InverseProperty(nameof(Route.User))]

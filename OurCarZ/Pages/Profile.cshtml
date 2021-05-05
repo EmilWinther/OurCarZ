@@ -1,0 +1,29 @@
+﻿@page
+@model ProfileModel
+@{
+    ViewData["Title"] = "Profile Page for User";
+}
+
+@if (Model.currentUser != null)
+{
+    <h2>User found: </h2>
+    <p>Full Name: @Model.currentUser.FirstName @Model.currentUser.LastName</p>
+    <p>Email: @Model.currentUser.Email</p>
+    <p>Phone Number: @Model.currentUser.PhoneNumber</p>
+    <p>License Plate: @Model.currentUser.LicensePlate</p>
+    <br>
+    <a class="button" asp-area="" asp-page="/EditProfile" asp-route-id="@Model.currentUser.UserId">Edit User</a><br>
+    <a class="button" asp-area="" asp-page="/" asp-route-id="@Model.currentUser.UserId">Delete Profile</a><br>
+    <a class="button" asp-area="" asp-page="/Index" asp-route-id="@Model.currentUser.UserId">Sign Out</a><br>
+    <a class="button" asp-area="" asp-page="/" asp-route-id="@Model.currentUser.UserId">Select new route</a><br>
+    <a class="button" asp-area="" asp-page="/" asp-route-id="@Model.currentUser.UserId">Your past routes</a><br>
+    <a class="button" asp-area="" asp-page="/" asp-route-id="@Model.currentUser.UserId">Favorites</a><br>
+    <a class="button" asp-area="" asp-page="/" asp-route-id="@Model.currentUser.UserId">Create new route</a><br>
+    <a class="button" asp-area="" asp-page="/" asp-route-id="@Model.currentUser.UserId">Your next route as driver</a><br>
+    <a class="button" asp-area="" asp-page="/" asp-route-id="@Model.currentUser.UserId">My routes</a><br>
+    <a class="button" asp-area="" asp-page="/" asp-route-id="@Model.currentUser.UserId">My messages</a>
+}
+else
+{
+    <p>You can't be found!</p>
+}
