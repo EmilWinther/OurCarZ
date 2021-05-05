@@ -20,9 +20,7 @@ namespace OurCarZ.Model
         [Key]
         [Column("RouteID")]
         public int RouteId { get; set; }
-        [StringLength(50)]
         public string StartPoint { get; set; }
-        [StringLength(50)]
         public string FinishPoint { get; set; }
         [Column("UserID")]
         public int? UserId { get; set; }

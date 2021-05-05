@@ -27,8 +27,8 @@ namespace OurCarZ.Model
         public string FirstName { get; set; }
         [StringLength(50)]
         public string LastName { get; set; }
-        [Column("LicensePlate")]
-        public String? LicensePlate { get; set; }
+        [StringLength(7)]
+        public string LicensePlate { get; set; }
         [StringLength(50)]
         public string Password { get; set; }
         [StringLength(50)]
@@ -37,8 +37,8 @@ namespace OurCarZ.Model
         public string ConfirmPassword { get; set; }
 
         [ForeignKey(nameof(LicensePlate))]
-        [InverseProperty("Users")]
-        public virtual Car Car { get; set; }
+        [InverseProperty(nameof(Car.Users))]
+        public virtual Car LicensePlateNavigation { get; set; }
         [InverseProperty(nameof(Route.User))]
         public virtual ICollection<Route> Routes { get; set; }
         [InverseProperty(nameof(UserRoute.User))]
