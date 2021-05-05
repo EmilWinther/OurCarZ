@@ -1,0 +1,38 @@
+﻿@page
+@model OurCarZ.Pages.MessageModel
+@{
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>From</th>
+            <th>Message</th>
+            <th>Date/time</th>
+            <th>Reply</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Message.Count != 0)
+        {
+            @foreach (var message in Model.Messages)
+            {
+                <tr>
+                    <td>
+                        @message.Value.messageFrom
+                    </td>
+                    <td>
+                        @message.Value.messageText
+                    </td>
+                    <td>
+                        @message.Value.messageDate
+                    </td>
+                    <td>
+                        <a asp-route-id="@message.Key"
+                           class="btn btn-success btn-group-lg pull-right">
+                            Reply
+                        </a>
+                    </td>
+                </tr>
+}}
+    </tbody>
+</table>
