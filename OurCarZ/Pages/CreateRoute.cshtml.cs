@@ -17,23 +17,32 @@ namespace OurCarZ.Pages
             _edb = edb;
         }
         [BindProperty]
-        public Address Address { get; set; }
+        public Address StartAddress { get; set; }
+        [BindProperty]
+        public Address EndAddress { get; set; }
         [BindProperty]
         public Route Route { get; set; }
 
         public void OnGet()
         {
+
         }
 
         public IActionResult OnPost()
         {
             if (ModelState.IsValid)
             {
-                _edb.Addresses.Add(Address);
+                Route route = new Route();
+                route.StartPoint = StartAddress.AddressId;
+                route.FinishPoint = EndAddress.AddressId;
+                
+                _edb.Addresses.Add(StartAddress);
+                _edb.Addresses.Add(EndAddress);
                 _edb.SaveChanges();
-                return null;
+                _edb.Routes.Add(route);
+                _edb.SaveChanges();
+                return Page();
             }
-
             return null;
         }
     }

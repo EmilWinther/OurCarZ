@@ -53,16 +53,14 @@
         <div id="myMap" style="position: relative; width: 800px; height: 600px;"></div>
 
         <div style="margin-top: 10px;">
-            <label asp-for="@Model.Address.RoadName" class="custom-control-label" ></label>
-            From: <input asp-for="@Model.Address.RoadName" id="fromTbx" type="text"/>
-            <span asp-validation-for="Address.RoadName"></span>
-            <span asp-validation-for="Route.StartPoint"></span>
-            
-            <label asp-for="@Model.Address.RoadName" class="custom-control-label"></label>
-            To: <input asp-for="@Model.Address.RoadName" id="toTbx" type="text"/>
-            <span asp-validation-for="Address.RoadName"></span>
-            <span asp-validation-for="Route.FinishPoint"></span>
-            <input type="submit" onclick="GetDirections()" value="Calculate"/>
+            <label asp-for="@Model.StartAddress.RoadName" class="custom-control-label" ></label>
+            From: <input asp-for="@Model.StartAddress.RoadName" id="fromTbx" type="text"/>
+            <span asp-validation-for="StartAddress.RoadName"></span>
+
+            <label asp-for="@Model.EndAddress.RoadName" class="custom-control-label"></label>
+            To: <input asp-for="@Model.EndAddress.RoadName" id="toTbx" type="text"/>
+            <span asp-validation-for="EndAddress.RoadName"></span>
+            <input type="submit" onclick="GetDirections()" value="Calculate" />
         </div>
 
         <fieldset style="width: 800px; margin-top: 10px;">
