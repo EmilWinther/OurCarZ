@@ -2,6 +2,7 @@
 @model OurCarZ.Pages.MessageModel
 @{
 }
+<h3>@Model.currentUser.FirstName @Model.currentUser.LastName's messages</h3>
 <table class="table">
     <thead>
         <tr>
@@ -12,27 +13,35 @@
         </tr>
     </thead>
     <tbody>
-        @if (Model.Message.Count != 0)
-        {
-            @foreach (var message in Model.Messages)
+        @foreach (var message in Model.DB.Messages)
+            if (message.MessageTo.Equals(Model.currentUser.UserId))
             {
-                <tr>
-                    <td>
-                        @message.Value.messageFrom
-                    </td>
-                    <td>
-                        @message.Value.messageText
-                    </td>
-                    <td>
-                        @message.Value.messageDate
-                    </td>
-                    <td>
-                        <a asp-route-id="@message.Key"
-                           class="btn btn-success btn-group-lg pull-right">
-                            Reply
-                        </a>
-                    </td>
-                </tr>
-}}
+                {
+                    <tr>
+                        <td>
+                            @foreach (var user in Model.UserList)
+                            {
+                                if (user.UserId.Equals(message.MessageFrom))
+                                {
+                                    @user.FirstName;
+                                }
+                            }
+                        </td>
+                        <td>
+                            @message.MessageText
+                        </td>
+                        <td>
+                            @message.DateTime.
+                        </td>
+                        <td>
+                            <a asp-route-page="/SendMessage" asp-route-id="@message.MessageTo"
+                               class="btn btn-success btn-group-lg pull-right">
+                                Reply
+                            </a>
+                        </td>
+                    </tr>
+                }
+            }
+
     </tbody>
 </table>

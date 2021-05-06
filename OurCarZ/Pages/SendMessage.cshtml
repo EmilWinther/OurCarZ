@@ -2,20 +2,43 @@
 @model OurCarZ.Pages.SendMessageModel
 @{
 }
-<div class="container">
+<h3>Send Message</h3>
+<form class="form-horizontal" method="post">
+    <br class="container">
     <div class="row">&nbsp;</div>
     <div class="row">
-        <div class="col-2">User</div>
-        <div class="col-4"><input type="text" id="userInput" /></div>
+        <div class="col-2">From</div>
+        <div class="col-4">
+            @*<p>@Model.CurrentUser.FirstName @Model.CurrentUser.LastName</p>*@
+        </div>
     </div>
+
+    <div class="row">
+        <div class="col-2">To</div>
+        <div class="col-4">
+            <select name="userList" id="form1">
+                <option>Please select</option>
+                @foreach (var user in Model.UserList)
+                {
+                    <option value="@user.FirstName @user.LastName">@user.FirstName @user.LastName</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    </br>
+
     <div class="row">
         <div class="col-2">Message</div>
-        <div class="col-4"><input type="text" id="messageInput" /></div>
+        <div class="col-4"><input type="text" asp-for="@Model.MessageText" id="@Model.MessageText" /></div>
     </div>
     <div class="row">&nbsp;</div>
     <div class="row">
         <div class="col-6">
-            <input type="button" id="sendButton" value="Send Message" />
+            <a asp-route-page="/MyMessages">
+                <input type="submit" id="sendButton" value="Send Message" />
+            </a>
         </div>
     </div>
-</div>
+    </div>
+</form>
