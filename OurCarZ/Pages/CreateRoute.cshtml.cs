@@ -17,11 +17,12 @@ namespace OurCarZ.Pages
             _edb = edb;
         }
         [BindProperty]
+        public Route Route { get; set; }
+        [BindProperty]
         public Address StartAddress { get; set; }
         [BindProperty]
         public Address EndAddress { get; set; }
-        [BindProperty]
-        public Route Route { get; set; }
+        
 
         public void OnGet()
         {
@@ -32,14 +33,15 @@ namespace OurCarZ.Pages
         {
             if (ModelState.IsValid)
             {
-                Route route = new Route();
-                route.StartPoint = StartAddress.AddressId;
-                route.FinishPoint = EndAddress.AddressId;
-                
+
                 _edb.Addresses.Add(StartAddress);
                 _edb.Addresses.Add(EndAddress);
                 _edb.SaveChanges();
-                _edb.Routes.Add(route);
+
+                Route.StartPoint = StartAddress.AddressId;
+                Route.FinishPoint = EndAddress.AddressId;
+
+                _edb.Routes.Add(Route);
                 _edb.SaveChanges();
                 return Page();
             }
