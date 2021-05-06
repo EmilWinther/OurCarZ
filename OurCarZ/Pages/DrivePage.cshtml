@@ -1,0 +1,13 @@
+﻿@page 
+@model OurCarZ.Pages.DrivePageModel
+@{
+}
+
+
+<p>@Model.CurrentUser.FirstName</p>
+<p>@Model.YourRoute.StartPoint</p>
+<p>@Model.StartAddress.RoadName</p>
+<p>@Model.EndAddress.RoadName</p>
+<input hidden="hidden" asp-for="@Model.CurrentUser.UserId"/>
+
+

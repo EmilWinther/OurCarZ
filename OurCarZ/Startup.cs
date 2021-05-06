@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using OurCarZ.Model;
 
 namespace OurCarZ
 {
@@ -26,6 +27,7 @@ namespace OurCarZ
         {
             services.AddRazorPages();
             services.AddSingleton<IUserPersistence, UserPersistence>();
+            services.AddSingleton<EmilDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
