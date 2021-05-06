@@ -34,8 +34,24 @@ namespace OurCarZ.Pages
             if (ModelState.IsValid)
             {
 
-                _edb.Addresses.Add(StartAddress);
-                _edb.Addresses.Add(EndAddress);
+                if (!_edb.Addresses.Any(x => x.RoadName == StartAddress.RoadName))
+                {
+                    _edb.Addresses.Add(StartAddress);
+                }
+                else 
+                {
+                    StartAddress = _edb.Addresses.FirstOrDefault(x => x.RoadName == StartAddress.RoadName);
+                }
+                
+                if (!_edb.Addresses.Any(x => x.RoadName == EndAddress.RoadName)) 
+                {
+                    _edb.Addresses.Add(EndAddress);
+                }
+                else
+                {
+                    EndAddress = _edb.Addresses.FirstOrDefault(x => x.RoadName == EndAddress.RoadName);
+                }
+
                 _edb.SaveChanges();
 
                 Route.StartPoint = StartAddress.AddressId;
