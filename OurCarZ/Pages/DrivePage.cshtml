@@ -5,8 +5,7 @@
 }
 <div class="item-container">
     <br />
-    @* the datetime.now doesnt make sense because its not a receipt for making a route but a page of your route, but whatever *@
-    <h3>Hello @Model.CurrentUser.FirstName @Model.CurrentUser.LastName Thank you for making this route at @DateTime.Now.</h3><br />
+    <h3>Hello @Model.CurrentUser.FirstName @Model.CurrentUser.LastName Thank you for making this route</h3><br />
     <!--<p>You have to take these passengers:</p>-->
     @*@foreach (var pas in @Model.Passenger.)
         {
@@ -47,9 +46,6 @@
             </tr>
         }
     }
-    <div class="card-footer">
-    <a class="btn" type="button" asp-page="Route" asp-route-id="@Model.YourRoute.RouteId"><i class="fas fa-map-marked-alt" title="View Route"></i></a>
-</div>
     <input hidden="hidden" asp-for="@Model.CurrentUser.UserId" />
     <form method="post">
         <div class="text-center">
