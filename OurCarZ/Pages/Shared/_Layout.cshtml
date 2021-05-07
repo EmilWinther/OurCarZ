@@ -6,6 +6,7 @@
     <title>@ViewData["Title"] - OurCarZ</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <script src="https://kit.fontawesome.com/95875560d8.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
@@ -18,19 +19,27 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        @*<li class="nav-item">
+                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/CreateRoute">Route</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Routes">Routes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Route">Route</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/UserPages/RegisterPage">Sign up</a>
                         </li>
+                        <li class="nav-item">
 
-                        </li>*@
-                        <li>
-                            <a class="nav-link text-dark" asp-area="" asp-page="/DrivePage" asp-route-userId="7" asp-route-routeId="9" asp-route-startAddressId="1" asp-route-endAddressId="2" asp-route-pasId="25" asp->DriverPage</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Profile" asp-route-id="7">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/EditProfile" asp-route-id="7">Edit Profile</a>
+                        </li>
+                        <li class="nav-item">
                         </li>
                     </ul>
                 </div>
