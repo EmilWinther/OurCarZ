@@ -67,7 +67,16 @@ namespace OurCarZ.Pages
 
             Message msg = new Message();
             msg.MessageFrom = CurrentUser.UserId;
-            msg.MessageText = MessageText;
+    
+            if (MessageText == null)
+            {
+                msg.MessageText = "This is an empty message";
+            }
+            else
+            {
+                msg.MessageText = MessageText;
+            }
+
             msg.DateTime = DateTime.Now;
             msg.MessageTo = FoundUser.UserId;
 

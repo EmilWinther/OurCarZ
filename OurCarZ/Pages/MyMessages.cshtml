@@ -18,38 +18,38 @@
             if (message.MessageTo.Equals(Model.currentUser.UserId) || message.MessageFrom.Equals(Model.currentUser.UserId))
             {
                 {
-        <tr>
-            <td>
-                @foreach (var user in Model.UserList)
-                {
-                    if (user.UserId.Equals(message.MessageFrom))
-                    {
-                        @user.FirstName;
-                    }
-                }
-            </td>
-            <td>
-                @message.MessageText
-            </td>
-            <td>
-                @foreach (var user in Model.UserList)
-                {
-                    if (user.UserId.Equals(message.MessageTo))
-                    {
-                        @user.FirstName;
-                    }
-                }
-            </td>
-            <td>
-                @message.DateTime
-            </td>
-            <td>
-                <a asp-route-page="/SendMessage" asp-route-id="@Model.currentUser.UserId" asp-route-id2="@message.MessageTo" asp-route-id3="@message.MessageFrom"
-                   class="btn btn-success btn-group-lg pull-right">
-                    Reply
-                </a>
-            </td>
-        </tr>
+                    <tr>
+                        <td>
+                            @foreach (var user in Model.UserList)
+                            {
+                                if (user.UserId.Equals(message.MessageFrom))
+                                {
+                                    <p>@user.FirstName  @user.LastName</p>
+                                }
+                            }
+                        </td>
+                        <td>
+                            @message.MessageText
+                        </td>
+                        <td>
+                            @foreach (var user in Model.UserList)
+                            {
+                                if (user.UserId.Equals(message.MessageTo))
+                                {
+                                    <p>@user.FirstName  @user.LastName</p>
+                                }
+                            }
+                        </td>
+                        <td>
+                            @message.DateTime
+                        </td>
+                        <td>
+                            <a asp-route-page="/SendMessage" asp-route-id="@Model.currentUser.UserId" asp-route-id2="@message.MessageTo" asp-route-id3="@message.MessageFrom"
+                               class="btn btn-success btn-group-lg pull-right">
+                                Reply
+                            </a>
+                        </td>
+                    </tr>
                 }
             }
 
