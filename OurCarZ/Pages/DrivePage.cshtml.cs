@@ -32,12 +32,17 @@ namespace OurCarZ.Pages
         [BindProperty]
         public Address EndAddress { get; set; }
 
-        public void OnGet(int id)
+        public void OnGet(int userId, int routeId, int startaddressId, int endaddressId)
         {
-            CurrentUser = _edb.Users.Find(id);
-            YourRoute = _edb.Routes.Find(9);
-            StartAddress = _edb.Addresses.Find(1);
-            EndAddress = _edb.Addresses.Find(2);
+            //Finds the current user (7)
+            CurrentUser = _edb.Users.Find(userId);
+            //finds route 9
+            YourRoute = _edb.Routes.Find(routeId);
+            //finds AddressId 1
+            StartAddress = _edb.Addresses.Find(startaddressId);
+            //finds AddressId 2
+            EndAddress = _edb.Addresses.Find(endaddressId);
+            //Checks if the FK in Route is == PK 
             if (YourRoute.UserId == CurrentUser.UserId)
             {
                 YourRoute.StartPoint = StartAddress.AddressId;
