@@ -44,23 +44,24 @@
 
         //Calculate directions.
         directionsManager.calculateDirections();
-    }
+        }
     </script>
-    <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap' async defer></script>
+    <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap' async defer>
+    </script>
 </head>
-<body>
+<body onload="GetDirections()">
     <form method="post">
         <div id="myMap" style="position: relative; width: 800px; height: 600px;"></div>
 
         <div style="margin-top: 10px;">
-            <label asp-for="@Model.StartAddress.RoadName" class="custom-control-label" ></label>
-            From: <input asp-for="@Model.StartAddress.RoadName" id="fromTbx" type="text"/>
+            <label asp-for="@Model.StartAddress.RoadName" class="custom-control-label"></label>
+            From: <input asp-for="@Model.StartAddress.RoadName" id="fromTbx" type="text" />
             <span asp-validation-for="StartAddress.RoadName"></span>
 
             <label asp-for="@Model.EndAddress.RoadName" class="custom-control-label"></label>
-            To: <input asp-for="@Model.EndAddress.RoadName" id="toTbx" type="text"/>
+            To: <input asp-for="@Model.EndAddress.RoadName" id="toTbx" type="text" />
             <span asp-validation-for="EndAddress.RoadName"></span>
-            <input type="submit" onclick="GetDirections()" value="Calculate" />
+            <input type="submit" value="Calculate" />
         </div>
 
         <fieldset style="width: 800px; margin-top: 10px;">

@@ -22,11 +22,9 @@ namespace OurCarZ.Pages
         public Address StartAddress { get; set; }
         [BindProperty]
         public Address EndAddress { get; set; }
-        
 
         public void OnGet()
         {
-
         }
 
         public IActionResult OnPost()
@@ -57,8 +55,12 @@ namespace OurCarZ.Pages
                 Route.StartPoint = StartAddress.AddressId;
                 Route.FinishPoint = EndAddress.AddressId;
 
+                //Implement Login Functionality here:
+                Route.UserId = 7;
+
                 _edb.Routes.Add(Route);
                 _edb.SaveChanges();
+
                 return Page();
             }
             return null;
