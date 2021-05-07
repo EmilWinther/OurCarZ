@@ -27,6 +27,7 @@ namespace OurCarZ.Pages
 
         public void OnGet(int id)
         {
+            CurrentUser = DB.Users.Find(7);
             FoundUser = DB.Users.Find(id);
             //Rating = DB.RatingDatabases.Find(keyValues: 1);
             //foreach (var rating in DB.RatingDatabases)

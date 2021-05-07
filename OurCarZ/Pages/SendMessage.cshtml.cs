@@ -16,6 +16,8 @@ namespace OurCarZ.Pages
         public EmilDbContext DB = new EmilDbContext();
         [BindProperty]
         public User CurrentUser { get; set; }
+        [BindProperty]
+        public User FoundUser { get; set; }
         public List<User> UserList { get; set; }
         public Message  message { get; set; }
 
@@ -33,24 +35,26 @@ namespace OurCarZ.Pages
             _logger = logger;
             DB = db;
         }
-        public void OnGet(int id)
+        public void OnGet(int id, int id2)
         {
             CurrentUser = DB.Users.Find(id);
+            FoundUser = DB.Users.Find(id2);
             UserList = DB.Users.ToList();
         }
 
-        public IActionResult OnPost(int id)
+        public void OnPost(int id, int id2)
         {
-            
             CurrentUser = DB.Users.Find(id);
-            MessageFrom = CurrentUser.UserId;
-            DateTime = DateTime.Now;
+            FoundUser = DB.Users.Find(id2);
 
-            DB.Messages.Add(new Message(MessageFrom, DateTime, MessageTo));
+            Message msg = new Message();
+            msg.MessageFrom = CurrentUser.UserId;
+            msg.MessageText = MessageText;
+            msg.DateTime = DateTime.Now;
+            msg.MessageTo = FoundUser.UserId;
+
+            DB.Messages.Add(msg);
             DB.SaveChanges();
-
-            
-            return RedirectToPage("/MyMessages");
         }
     }
 }
