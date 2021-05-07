@@ -35,17 +35,35 @@ namespace OurCarZ.Pages
             _logger = logger;
             DB = db;
         }
-        public void OnGet(int id, int id2)
+        public void OnGet(int id, int id2, int id3)
         {
             CurrentUser = DB.Users.Find(id);
             FoundUser = DB.Users.Find(id2);
+
+            if (FoundUser.UserId.Equals(CurrentUser.UserId))
+            {
+                FoundUser = DB.Users.Find(id3);
+            }
+            else
+            {
+                FoundUser = DB.Users.Find(id2);
+            }
+            
             UserList = DB.Users.ToList();
         }
 
-        public void OnPost(int id, int id2)
+        public IActionResult OnPost(int id, int id2, int id3)
         {
             CurrentUser = DB.Users.Find(id);
             FoundUser = DB.Users.Find(id2);
+            if (FoundUser.UserId.Equals(CurrentUser.UserId))
+            {
+                FoundUser = DB.Users.Find(id3);
+            }
+            else
+            {
+                FoundUser = DB.Users.Find(id2);
+            }
 
             Message msg = new Message();
             msg.MessageFrom = CurrentUser.UserId;
@@ -55,6 +73,8 @@ namespace OurCarZ.Pages
 
             DB.Messages.Add(msg);
             DB.SaveChanges();
+
+            return Page();
         }
     }
 }

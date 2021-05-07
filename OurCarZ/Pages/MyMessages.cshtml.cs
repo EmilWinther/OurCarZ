@@ -15,6 +15,8 @@ namespace OurCarZ.Pages
 
         public EmilDbContext DB = new EmilDbContext();
         public User currentUser { get; set; }
+
+        public User FoundUser { get; set; }
         public List<User> UserList { get; set; }
         public Message msg { get; set; }
 
@@ -29,6 +31,12 @@ namespace OurCarZ.Pages
         {
             currentUser = DB.Users.Find(id);
             UserList = DB.Users.ToList();
+        }
+
+        public void OnPost(int id, int id2)
+        {
+            currentUser = DB.Users.Find(id);
+            FoundUser = DB.Users.Find(id2);
         }
     }
 }

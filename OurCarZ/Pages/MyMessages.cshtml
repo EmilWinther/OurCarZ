@@ -41,10 +41,10 @@
                 }
             </td>
             <td>
-                @message.DateTime.
+                @message.DateTime
             </td>
             <td>
-                <a asp-route-page="/SendMessage" asp-route-id="@message.MessageTo" asp-route-id2="@message.MessageFrom"
+                <a asp-route-page="/SendMessage" asp-route-id="@Model.currentUser.UserId" asp-route-id2="@message.MessageTo" asp-route-id3="@message.MessageFrom"
                    class="btn btn-success btn-group-lg pull-right">
                     Reply
                 </a>

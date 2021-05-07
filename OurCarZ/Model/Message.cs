@@ -28,9 +28,5 @@ namespace OurCarZ.Model
         [InverseProperty(nameof(User.MessageMessageToNavigations))]
         public virtual User MessageToNavigation { get; set; }
 
-        public Message()
-        {
-
-        }
     }
 }
