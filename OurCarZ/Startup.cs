@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using OurCarZ.Model;
 
 namespace OurCarZ
 {
@@ -27,9 +28,6 @@ namespace OurCarZ
         {
 
             services.AddRazorPages();
-            services.AddSingleton<EmilDbContext>();
-            services.AddSingleton<IUserPersistence, UserPersistence>();
-            services.AddSingleton<IRoutePersistence, RoutePersistence>();
             services.AddSingleton<EmilDbContext>();
         }
 

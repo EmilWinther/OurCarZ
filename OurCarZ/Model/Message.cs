@@ -27,6 +27,5 @@ namespace OurCarZ.Model
         [ForeignKey(nameof(MessageTo))]
         [InverseProperty(nameof(User.MessageMessageToNavigations))]
         public virtual User MessageToNavigation { get; set; }
-
     }
 }
