@@ -1,0 +1,107 @@
+﻿@page
+@model OurCarZ.Pages.AdminStatsModel
+@{
+}
+@foreach (var x in Model.RouteList)
+{
+    @x
+}
+
+@foreach (var x in Model.AddressIdToRoadName)
+{
+    @x.Key
+    <br>
+    @x.Value
+    <br>
+}
+
+@*
+        <html>
+        <head>
+            <!--Load the AJAX API-->
+            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+            <script type="text/javascript">
+
+                // Load the Visualization API and the corechart package.
+                google.charts.load('current', { 'packages': ['corechart'] });
+
+                // Set a callback to run when the Google Visualization API is loaded.
+                google.charts.setOnLoadCallback(drawChart);
+
+
+                // Callback that creates and populates a data table,
+                // instantiates the pie chart, passes in the data and
+                // draws it.
+                function drawChart() {
+
+                    // Create the data table.
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'Orders');
+                    data.addColumn('number', 'Amount');
+                    data.addRows([
+
+                        ['Orders Delivered', @Model.howManyHide()],
+                        ['Orders Not Delivered', @Model.howManyShow()]
+
+                ]);
+
+                // Set chart options
+                var options = {
+                    'title': 'How Many Orders Delivered / Orders Still Not Delivered',
+                    'width': 400,
+                    'height': 300
+                };
+
+                // Instantiate and draw our chart, passing in some options.
+                var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+                chart.draw(data, options);
+
+
+
+
+
+                google.charts.setOnLoadCallback(drawChart1);
+
+                function drawChart1() {
+
+                    // Create the data table.
+                    var data1 = new google.visualization.DataTable();
+                    data1.addColumn('string', 'ZipCodes');
+                    data1.addColumn('number', 'Customers');
+                    data1.addRows([
+
+        ['4000', @Model.ZipCodeCount("4000")],
+        ['4440', @Model.ZipCodeCount("4440")],
+        ['4340', @Model.ZipCodeCount("4340")],
+        ['4600', @Model.ZipCodeCount("4600")],
+        ['2640', @Model.ZipCodeCount("2640")],
+        ['2630', @Model.ZipCodeCount("2630")],
+        ['4300', @Model.ZipCodeCount("4300")],
+        ['4520', @Model.ZipCodeCount("4520")],
+        ['3400', @Model.ZipCodeCount("3400")],
+        ['4100', @Model.ZipCodeCount("4100")],
+
+            ]);
+
+                    // Set chart options
+                    var options1 = {
+                        'title': 'Shopping by Zipcode',
+                        'width': 400,
+                        'height': 300
+                    };
+
+                    // Instantiate and draw our chart, passing in some options.
+                    var chart1 = new google.visualization.PieChart(document.getElementById('chart_div1'));
+                    chart1.draw(data1, options1);
+                }
+        }
+        </script>
+    </head>
+    <body>
+        <!--Div that will hold the pie chart-->
+        <div id="chart_div"></div>
+        <!--Div that will hold the pie chart-->
+        <div id="chart_div1"></div>
+    </body>
+    </html>
+*@
