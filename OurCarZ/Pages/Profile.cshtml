@@ -1,4 +1,4 @@
-﻿@page
+﻿@page 
 @model ProfileModel
 @{
     ViewData["Title"] = "Profile Page for User";
@@ -22,7 +22,7 @@
     <a class="button" asp-area="" asp-page="/" asp-route-id="@Model.currentUser.UserId">Create new route</a><br>
     <a class="button" asp-area="" asp-page="/" asp-route-id="@Model.currentUser.UserId">Your next route as driver</a><br>
     <a class="button" asp-area="" asp-page="/" asp-route-id="@Model.currentUser.UserId">My routes</a><br>
-    <a class="button" asp-area="" asp-page="/" asp-route-id="@Model.currentUser.UserId">My messages</a>
+    <a class="button" asp-area="" asp-page="/MyMessages" asp-route-id="@Model.currentUser.UserId">My messages</a>
 }
 else
 {

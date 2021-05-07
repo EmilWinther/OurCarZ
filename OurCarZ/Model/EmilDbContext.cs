@@ -21,6 +21,7 @@ namespace OurCarZ.Model
         public virtual DbSet<Address> Addresses { get; set; }
         public virtual DbSet<Car> Cars { get; set; }
         public virtual DbSet<Institution> Institutions { get; set; }
+        public virtual DbSet<Message> Messages { get; set; }
         public virtual DbSet<RatingDatabase> RatingDatabases { get; set; }
         public virtual DbSet<Route> Routes { get; set; }
         public virtual DbSet<User> Users { get; set; }
@@ -65,6 +66,21 @@ namespace OurCarZ.Model
                 entity.Property(e => e.Address).IsUnicode(false);
 
                 entity.Property(e => e.Zipcode).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Message>(entity =>
+            {
+                entity.Property(e => e.MessageText).IsUnicode(false);
+
+                entity.HasOne(d => d.MessageFromNavigation)
+                    .WithMany(p => p.MessageMessageFromNavigations)
+                    .HasForeignKey(d => d.MessageFrom)
+                    .HasConstraintName("FK__Messages__Messag__3B40CD36");
+
+                entity.HasOne(d => d.MessageToNavigation)
+                    .WithMany(p => p.MessageMessageToNavigations)
+                    .HasForeignKey(d => d.MessageTo)
+                    .HasConstraintName("FK__Messages__Messag__3A4CA8FD");
             });
 
             modelBuilder.Entity<RatingDatabase>(entity =>

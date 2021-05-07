@@ -18,9 +18,9 @@ namespace OurCarZ.Pages
         public List<Route> routes = new List<Route>()
         {
             //new Route(1, "Ahornlunden 5, 4000 Roskilde, Dk","humle 2, 4000 Roskilde, Dk"),
-            //new Route(2, "Århus 5000","Maglegårdsvej 2, 5000 Roskilde, Dk"),
-            //new Route(3, "Roskilde 4000, Dk","Maglegårdsvej 2, 4000 Roskilde, Dk"),
-            //new Route(4, "København 6000","sngel, 4000 Roskilde, Dk")
+            //new Route(2, "Ã…rhus 5000","MaglegÃ¥rdsvej 2, 5000 Roskilde, Dk"),
+            //new Route(3, "Roskilde 4000, Dk","MaglegÃ¥rdsvej 2, 4000 Roskilde, Dk"),
+            //new Route(4, "KÃ¸benhavn 6000","sngel, 4000 Roskilde, Dk")
         };
         public List<Route> UsedRoutes = new List<Route>();
         
@@ -46,6 +46,7 @@ namespace OurCarZ.Pages
                 //    UsedRoutes.Add(item);
                 //}
             } else { UsedRoutes = routes; }
+ 
 
             
         }
