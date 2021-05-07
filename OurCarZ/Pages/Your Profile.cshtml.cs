@@ -33,9 +33,5 @@ namespace OurCarZ.Pages
             var reviews = (from x in DB.RatingDatabases where x.UserRatedId.Equals(id) select x).ToList();
             avg = (from x in reviews select x.Rating).Average();
         }
-        public void OnPost()
-        {
-            Redirect ("Index");
-        }
     }
 }

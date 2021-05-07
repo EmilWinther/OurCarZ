@@ -74,7 +74,7 @@ namespace OurCarZ.Pages
             DB.Messages.Add(msg);
             DB.SaveChanges();
 
-            return Page();
+            return RedirectToPage("/Profile", new { id = CurrentUser.UserId });
         }
     }
 }
