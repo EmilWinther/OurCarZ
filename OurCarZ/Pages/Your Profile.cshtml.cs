@@ -29,14 +29,7 @@ namespace OurCarZ.Pages
         {
             CurrentUser = DB.Users.Find(7);
             FoundUser = DB.Users.Find(id);
-            //Rating = DB.RatingDatabases.Find(keyValues: 1);
-            //foreach (var rating in DB.RatingDatabases)
-            //{
-            //    if (FoundUser.Equals(rating.UserRated))
-            //    {
-            //        Rating = rating;
-            //    }
-            //}
+            
             var reviews = (from x in DB.RatingDatabases where x.UserRatedId.Equals(id) select x).ToList();
             avg = (from x in reviews select x.Rating).Average();
         }

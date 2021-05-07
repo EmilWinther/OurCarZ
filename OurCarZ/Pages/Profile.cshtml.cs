@@ -28,5 +28,12 @@ namespace OurCarZ.Pages
             var reviews = (from x in DB.RatingDatabases where x.UserRatedId.Equals(id) select x).ToList();
             avg = (from x in reviews select x.Rating).Average();
         }
+
+        public void OnPost(int id)
+        {
+            currentUser = DB.Users.Find(id);
+            var reviews = (from x in DB.RatingDatabases where x.UserRatedId.Equals(id) select x).ToList();
+            avg = (from x in reviews select x.Rating).Average();
+        }
     }
 }
