@@ -17,20 +17,17 @@ namespace OurCarZ.Model
             Users = new HashSet<User>();
         }
 
-        [Key]
-        [Column("LicensePlate")]
-        [StringLength(7)]
-        public string LicensePlate { get; set; }
         [StringLength(50)]
         public string Model { get; set; }
         [StringLength(50)]
         public string Year { get; set; }
         [StringLength(50)]
         public string Seats { get; set; }
-        
-        
+        [Key]
+        [StringLength(7)]
+        public string LicensePlate { get; set; }
 
-        [InverseProperty(nameof(User.Car))]
+        [InverseProperty(nameof(User.LicensePlateNavigation))]
         public virtual ICollection<User> Users { get; set; }
     }
 }

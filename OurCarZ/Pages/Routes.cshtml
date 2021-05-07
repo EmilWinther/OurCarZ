@@ -8,13 +8,9 @@
     <br />
     <h3 onclick="animateFilters()" style="cursor: pointer; user-select: none;">Filters <i class="fas fa-chevron-right" id="chevron"></i></h3>
     <form method="post" id="filter" class="filter" style="margin-bottom: 30px;">
-        
-            
+                @* Form for filter *@
                 <input type="text" class="form-control" id="inlineFormInput" name="ZipCodeSearch" placeholder="Zip Code">
-            
                 <input type="date" class="form-control" name="dateOfRoute" id="dateOfRoute" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
-            
-            
                 <button type="submit" class="btn btn-primary">Filter</button>
             
         
@@ -24,15 +20,30 @@
             {
                 <div class="card mb-3" style="height: 20rem">
                     <div class="card-header p-2">
-                        <h5 class="card-title">@route.StartPoint til @route.FinishPoint</h5>
+                        <h5 class="card-title">
+                            @Model.addresses.Where(a => a.AddressId == route.StartPoint).FirstOrDefault().RoadName,
+                            @Model.addresses.Where(a => a.AddressId == route.StartPoint).FirstOrDefault().ZipCode,
+                            @Model.addresses.Where(a => a.AddressId == route.StartPoint).FirstOrDefault().Country til
+                            @Model.addresses.Where(a => a.AddressId == route.FinishPoint).FirstOrDefault().RoadName,
+                            @Model.addresses.Where(a => a.AddressId == route.FinishPoint).FirstOrDefault().ZipCode,
+                            @Model.addresses.Where(a => a.AddressId == route.FinishPoint).FirstOrDefault().Country
+                        </h5>
                     </div>
                     <div class="card-body">
-                        <p class="card-text">Kører:</p>
-                        <p class="card-text">Tidspunkt:</p>
-                        <p class="card-text">Antal Pladser:</p>
+                        <p class="card-text">Kører: @Model.users.Where(u => u.UserId == route.UserId).Select(u => u.FirstName).DefaultIfEmpty("--Option unknown--").First()</p>
+                        <p class="card-text">Tidspunkt: @route.StartTime </p>
+                        <p class="card-text">Antal Pladser: 0 / @Model.cars.Where(c => c.LicensePlate ==
+                                                                Model.users.Where(u => u.UserId == route.UserId)
+                                                                .Select(u => u.LicensePlate).DefaultIfEmpty("--Option unknown--")
+                                                                .First()).Select(c => c.Seats).DefaultIfEmpty("--Option unknown--").First()</p>
                     </div>
                     <div class="card-footer">
+                        @* Shows the map *@
                         <a class="btn" type="button" asp-page="Route" asp-route-id="@route.RouteId"><i class="fas fa-map-marked-alt" title="View Route"></i></a>
+                        @* Shows the details of the route *@
+                        <a class="btn" type="button" asp-page="RouteDetails" asp-route-id="@route.RouteId"><i class="fas fa-info-circle" title="View Details"></i></a>
+                        @* If you are the creater of the route the button to edit it will appear. (To be implemented. *@
+                        <a class="btn" type="button" asp-page="EditRoute" asp-route-id="@route.RouteId"><i class="fas fas fa-edit" title="Edit Route"></i></a>
                     </div>
                 </div>
             }
