@@ -3,60 +3,54 @@
 @model OurCarZ.Pages.DrivePageModel
 @{
 }
-
-
-<p> Hello @Model.CurrentUser.FirstName you are going to drive from</p>
-<p>@Model.YourRoute.StartPoint @Model.YourRoute.FinishPoint</p>
-<p>@Model.StartAddress.RoadName</p>
-<p>@Model.EndAddress.RoadName</p>
-<input hidden="hidden" asp-for="@Model.CurrentUser.UserId"/>
-
-
 <div class="item-container">
     <br />
+    @* the datetime.now doesnt make sense because its not a receipt for making a route but a page of your route, but whatever *@
     <h3>Hello @Model.CurrentUser.FirstName @Model.CurrentUser.LastName Thank you for making this route at @DateTime.Now.</h3><br />
-
-    <p>You have to take these items to @Model.Customer.FirstName at @Model.Customer.Address , @Model.Customer.ZipCode @Model.Customer.City</p>
-
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Item ID</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Description</th>
-            <th>Image</th>
-        </tr>
-        </thead>
-        <tbody>
-        @if (Model.list.Count != 0)
+    <!--<p>You have to take these passengers:</p>-->
+    @*@foreach (var pas in @Model.Passenger.)
         {
-@foreach (var item in Model.list)
-{
-    <tr>
-        <td>
-            @item.Value.ItemID
-        </td>
-        <td>
-            @item.Value.Name
-        </td>
-        <td>
-            @item.Value.Price
-        </td>
-        <td>
-            @item.Value.Description
-        </td>
-        <td>
-            <img src="~/Images/@item.Value.ImagePath" width="80" height="70">
-        </td>
-    </tr>}}
-        </tbody>
-    </table>
-    <p>
-        The total price is: @Model.Order.TotalPrice().ToString("c")
-        <br>Have a nice day!
-    </p>
+            <p> @pas.FirstName @pas.LastName </p>
+        }*@
+    <p>@Model.Passenger.FirstName is ur passenger lol</p>
+    <p>From @Model.StartAddress.RoadName to @Model.EndAddress.RoadName</p>
+    <p class="btn" type="button" asp-page="Route" asp-route-id="@Model.YourRoute.RouteId"><i class="fas fa-map-marked-alt" title="View Route"></i>Click here to see the route</p>
+    <i></i>
 
+    @foreach (var message in @Model._edb.Messages)
+    {
+        if (message.MessageTo.Equals(Model.CurrentUser.UserId))
+        {
+            <tr>
+                <td>
+                    @foreach (var user in Model.UserList)
+                    {
+                        if (user.UserId.Equals(message.MessageFrom))
+                        {
+                            @user.FirstName @user.LastName
+                        }
+                    }
+                </td>
+                <td>
+                    @message.MessageText
+                </td>
+                <td>
+                    @message.DateTime
+                </td>
+                <br />
+                @if (@Model.Passenger.UserId.Equals(message.MessageFrom))
+                {
+                    <td>
+                        @message.MessageText.Count()
+                    </td>
+                }
+            </tr>
+        }
+    }
+    <div class="card-footer">
+    <a class="btn" type="button" asp-page="Route" asp-route-id="@Model.YourRoute.RouteId"><i class="fas fa-map-marked-alt" title="View Route"></i></a>
+</div>
+    <input hidden="hidden" asp-for="@Model.CurrentUser.UserId" />
     <form method="post">
         <div class="text-center">
             <a asp-page="/Index" class="btn btn-primary">To Home</a>
