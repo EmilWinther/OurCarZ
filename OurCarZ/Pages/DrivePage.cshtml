@@ -1,0 +1,59 @@
+﻿@page
+@using Microsoft.VisualBasic
+@model OurCarZ.Pages.DrivePageModel
+@{
+}
+<div class="item-container">
+    <br />
+    @* the datetime.now doesnt make sense because its not a receipt for making a route but a page of your route, but whatever *@
+    <h3>Hello @Model.CurrentUser.FirstName @Model.CurrentUser.LastName Thank you for making this route at @DateTime.Now.</h3><br />
+    <!--<p>You have to take these passengers:</p>-->
+    @*@foreach (var pas in @Model.Passenger.)
+        {
+            <p> @pas.FirstName @pas.LastName </p>
+        }*@
+    <p>@Model.Passenger.FirstName is ur passenger lol</p>
+    <p>From @Model.StartAddress.RoadName to @Model.EndAddress.RoadName</p>
+    <p class="btn" type="button" asp-page="Route" asp-route-id="@Model.YourRoute.RouteId"><i class="fas fa-map-marked-alt" title="View Route"></i>Click here to see the route</p>
+    <i></i>
+
+    @foreach (var message in @Model._edb.Messages)
+    {
+        if (message.MessageTo.Equals(Model.CurrentUser.UserId))
+        {
+            <tr>
+                <td>
+                    @foreach (var user in Model.UserList)
+                    {
+                        if (user.UserId.Equals(message.MessageFrom))
+                        {
+                            @user.FirstName @user.LastName
+                        }
+                    }
+                </td>
+                <td>
+                    @message.MessageText
+                </td>
+                <td>
+                    @message.DateTime
+                </td>
+                <br />
+                @if (@Model.Passenger.UserId.Equals(message.MessageFrom))
+                {
+                    <td>
+                        @message.MessageText.Count()
+                    </td>
+                }
+            </tr>
+        }
+    }
+    <div class="card-footer">
+    <a class="btn" type="button" asp-page="Route" asp-route-id="@Model.YourRoute.RouteId"><i class="fas fa-map-marked-alt" title="View Route"></i></a>
+</div>
+    <input hidden="hidden" asp-for="@Model.CurrentUser.UserId" />
+    <form method="post">
+        <div class="text-center">
+            <a asp-page="/Index" class="btn btn-primary">To Home</a>
+        </div>
+    </form>
+</div>

@@ -14,6 +14,7 @@ namespace OurCarZ.Pages
         private readonly ILogger<ProfileModel> _logger;
         public EmilDbContext DB = new EmilDbContext();
         public User currentUser { get; set; }
+        public double? avg { get; set; }
 
         public ProfileModel(ILogger<ProfileModel> logger, EmilDbContext db)
         {
@@ -24,6 +25,8 @@ namespace OurCarZ.Pages
         public void OnGet(int id)
         {
             currentUser = DB.Users.Find(id);
+            var reviews = (from x in DB.RatingDatabases where x.UserRatedId.Equals(id) select x).ToList();
+            avg = (from x in reviews select x.Rating).Average();
         }
     }
 }

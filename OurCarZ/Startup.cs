@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using OurCarZ.Model;
 using OurCarZ.Services;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,6 @@ namespace OurCarZ
 
             services.AddRazorPages();
             services.AddSingleton<EmilDbContext>();
-            services.AddSingleton<IUserPersistence, UserPersistence>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

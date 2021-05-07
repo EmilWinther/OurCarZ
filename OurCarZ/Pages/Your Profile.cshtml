@@ -11,8 +11,9 @@
     <p>Email: @Model.FoundUser.Email</p>
     <p>Phone Number: @Model.FoundUser.PhoneNumber</p>
     <p>License Plate: @Model.FoundUser.LicensePlate</p>
+    <p>Rating: @Model.avg</p>
     <br>
-    <a class="button" asp-area="" asp-page="/" asp-route-id="@Model.FoundUser.UserId">Send messages</a>
+    <a class="button" asp-area="" asp-page="/SendMessage" asp-route-id="@Model.CurrentUser.UserId" asp-route-id2="@Model.FoundUser.UserId">Send messages</a>
 
     <a class="button" asp-area="" asp-page="/Index" asp-route-id="">Sign Out</a>
 }
