@@ -23,19 +23,20 @@ namespace OurCarZ.Model
         [Key]
         [Column("UserID")]
         public int UserId { get; set; }
-        [StringLength(50)]
+        [StringLength(8), MinLength(8, ErrorMessage = "Your phonenumber should be 8 digits"), MaxLength(8, ErrorMessage = "Your phonenumber should be 8 digits"), Required(ErrorMessage = "Your phonenumber is required"), Phone]
         public string PhoneNumber { get; set; }
-        [StringLength(50)]
+        [StringLength(50), Required(ErrorMessage = "First name is required")]
         public string FirstName { get; set; }
-        [StringLength(50)]
+        [StringLength(50), Required(ErrorMessage = "Last name is required")]
         public string LastName { get; set; }
         [StringLength(7)]
         public string LicensePlate { get; set; }
-        [StringLength(50)]
+        [StringLength(28), MinLength(8, ErrorMessage = "Your password is too short"), MaxLength(28, ErrorMessage = "Your password is too long"), RegularExpression(@"(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{8,28})$",
+         ErrorMessage = "Password must contain one uppercase, one lowercase, one number, and be atleast 8 characters long"), Required]
         public string Password { get; set; }
-        [StringLength(50)]
+        [MinLength(6), MaxLength(30), Required, RegularExpression(@"^[a-zA-Z0-9_.+-]+@(edu.easj.dk)+$", ErrorMessage = "Invalid email format, use school mails")]
         public string Email { get; set; }
-        [StringLength(50)]
+        [StringLength(28), MinLength(8, ErrorMessage = "Your password is too short"), MaxLength(28, ErrorMessage = "Your password is too long"), Required, Compare(nameof(Password), ErrorMessage = "The passwords does not match")]
         public string ConfirmPassword { get; set; }
 
         [ForeignKey(nameof(LicensePlate))]

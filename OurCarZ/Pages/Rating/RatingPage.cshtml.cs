@@ -40,6 +40,7 @@ namespace OurCarZ.Pages.Rating
                 //Else, add a new entry to the database.
                 else
                 {
+                    RatingDatabase newRating = new RatingDatabase();
                     DB.RatingDatabases.Add(new RatingDatabase(UserRating, Rating, UserToBeRated));
                 }
                 //When in doubt, Try / Catch! This is here for when an incorrect UserID is input either as the Rater or the Ratee. 
