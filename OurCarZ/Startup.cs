@@ -29,6 +29,7 @@ namespace OurCarZ
 
             services.AddRazorPages();
             services.AddSingleton<EmilDbContext>();
+            services.AddSingleton<IUserPersistence, UserPersistence>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
