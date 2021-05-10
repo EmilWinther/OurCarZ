@@ -10,28 +10,23 @@ namespace OurCarZ.Pages
 {
     public class RoutesModel : PageModel
     {
-        [BindProperty]
-        public string ZipCode { get; set; }
-        [BindProperty]
-        public DateTime date { get; set; }
+        [BindProperty] public string ZipCode { get; set; }
+        [BindProperty] public DateTime date { get; set; }
 
         public EmilDbContext DB = new EmilDbContext();
-
+        
         public List<Route> UsedRoutes = new List<Route>();
-
+        
         public List<Address> addresses;
-
+        
         public List<User> users;
-
+        
         public List<Car> cars;
-
-
 
         public RoutesModel(EmilDbContext db)
         {
             DB = db;
         }
-
 
         public void OnGet()
         {
@@ -44,13 +39,15 @@ namespace OurCarZ.Pages
         public void OnPost()
         {
             ZipCode = Request.Form["ZipCodeSearch"];
-            if (Request.Form["dateOfRoute"].Count > 0) { date = Convert.ToDateTime(Request.Form["dateOfRoute"]); }
+            if (Request.Form["dateOfRoute"].Count > 0)
+            {
+                date = Convert.ToDateTime(Request.Form["dateOfRoute"]);
+            }
 
             var allRoutes = DB.Routes.ToList();
             addresses = DB.Addresses.ToList();
             users = DB.Users.ToList();
             cars = DB.Cars.ToList();
-
 
             if (!string.IsNullOrEmpty(ZipCode))
             {
@@ -64,7 +61,6 @@ namespace OurCarZ.Pages
                         UsedRoutes.Add(route);
                     }
                 }
-
             }
             else { UsedRoutes = allRoutes; }
 
@@ -78,8 +74,6 @@ namespace OurCarZ.Pages
                     }
                 }
             }
-
-
         }
     }
 }
