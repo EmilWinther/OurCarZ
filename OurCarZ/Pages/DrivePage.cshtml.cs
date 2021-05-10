@@ -23,7 +23,7 @@ namespace OurCarZ.Pages
         public User CurrentUser { get; set; }
         [BindProperty]
         public List<User> UserList { get; set; }
-        public User Passenger { get; set; }
+        public List<User> Passenger { get; set; }
         [BindProperty]
         public Route YourRoute { get; set; }
         [BindProperty]
@@ -44,9 +44,9 @@ namespace OurCarZ.Pages
             StartAddress = _edb.Addresses.Find(startAddressId);
             //finds AddressId 2
             EndAddress = _edb.Addresses.Find(endAddressId);
-            Passenger = _edb.Users.Find(pasId);
             //Checks if the FK in Route is == PK 
             UserList = _edb.Users.ToList();
+            Passenger = _edb.Users.ToList();
 
             if (YourRoute.UserId == CurrentUser.UserId)
             {
