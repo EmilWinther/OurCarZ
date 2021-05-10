@@ -27,7 +27,7 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[Messages]",
+         "Name": "[dbo].[RatingDatabase]",
          "ObjectType": 0
       },
       {

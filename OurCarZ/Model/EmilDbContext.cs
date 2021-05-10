@@ -69,6 +69,7 @@ namespace OurCarZ.Model
                 entity.Property(e => e.Zipcode).IsUnicode(false);
             });
 
+=======
             modelBuilder.Entity<Message>(entity =>
             {
                 entity.Property(e => e.MessageText).IsUnicode(false);
@@ -83,18 +84,13 @@ namespace OurCarZ.Model
                     .HasForeignKey(d => d.MessageTo)
                     .HasConstraintName("FK__Messages__Messag__3A4CA8FD");
             });
-
-            modelBuilder.Entity<RatingDatabase>(entity =>
-            {
-                entity.HasOne(d => d.UserRated)
-                    .WithMany()
-                    .HasForeignKey(d => d.UserRatedId)
-                    .HasConstraintName("FK__RatingDat__UserR__2A164134");
-
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__RatingDat__UserR__1332DBDC");
                 entity.HasOne(d => d.UserRating)
                     .WithMany()
                     .HasForeignKey(d => d.UserRatingId)
-                    .HasConstraintName("FK__RatingDat__UserR__2B0A656D");
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__RatingDat__UserR__14270015");
             });
 
             modelBuilder.Entity<Route>(entity =>
@@ -155,6 +151,11 @@ namespace OurCarZ.Model
                     .HasForeignKey(d => d.UserId)
                     .HasConstraintName("FK_UserRoute_ToUser");
             });
+
+            //Trick the DBContext into thinking the RatingDatabase Tables "UserRatedID" and "UserRatingID" is a composite primary key,
+            //even though it's a composite Foreign Key. Context doesn't have functionality for tables with no primary key, surprisingly.
+
+            modelBuilder.Entity<RatingDatabase>().HasKey(x => new { x.UserRatedId, x.UserRatingId });
 
             OnModelCreatingPartial(modelBuilder);
         }
