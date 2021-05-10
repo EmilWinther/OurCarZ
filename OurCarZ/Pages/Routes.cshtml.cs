@@ -14,22 +14,19 @@ namespace OurCarZ.Pages
         [BindProperty] public DateTime date { get; set; }
 
         public EmilDbContext DB = new EmilDbContext();
-
+        
         public List<Route> UsedRoutes = new List<Route>();
-
+        
         public List<Address> addresses;
-
+        
         public List<User> users;
-
+        
         public List<Car> cars;
-
-
 
         public RoutesModel(EmilDbContext db)
         {
             DB = db;
         }
-
 
         public void OnGet()
         {
@@ -52,7 +49,6 @@ namespace OurCarZ.Pages
             users = DB.Users.ToList();
             cars = DB.Cars.ToList();
 
-
             if (!string.IsNullOrEmpty(ZipCode))
             {
 
@@ -60,19 +56,13 @@ namespace OurCarZ.Pages
 
                 foreach (var route in allRoutes)
                 {
-                    if (addresses.Where(a =>
-                        (a.AddressId == route.StartPoint || a.AddressId == route.FinishPoint) &&
-                        a.ZipCode.ToString().Contains(ZipCode)).FirstOrDefault() != null)
+                    if (addresses.Where(a => (a.AddressId == route.StartPoint || a.AddressId == route.FinishPoint) && a.ZipCode.ToString().Contains(ZipCode)).FirstOrDefault() != null)
                     {
                         UsedRoutes.Add(route);
                     }
                 }
-
             }
-            else
-            {
-                UsedRoutes = allRoutes;
-            }
+            else { UsedRoutes = allRoutes; }
 
             if (date != null)
             {
