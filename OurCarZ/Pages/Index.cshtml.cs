@@ -19,7 +19,7 @@ namespace OurCarZ.Pages
 
         public void OnGet()
         {
-
+            RedirectToPage("/DrivePage");
         }
     }
 }

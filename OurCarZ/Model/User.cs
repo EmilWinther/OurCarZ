@@ -14,6 +14,8 @@ namespace OurCarZ.Model
     {
         public User()
         {
+            MessageMessageFromNavigations = new HashSet<Message>();
+            MessageMessageToNavigations = new HashSet<Message>();
             Routes = new HashSet<Route>();
             UserRoutes = new HashSet<UserRoute>();
         }
@@ -27,15 +29,22 @@ namespace OurCarZ.Model
         public string FirstName { get; set; }
         [StringLength(50)]
         public string LastName { get; set; }
-        [Column("CarID")]
-        public int? CarId { get; set; }
-        public double? Rating { get; set; }
-        public string? Password { get; set; }
-        public string? Email { get; set; }
+        [StringLength(7)]
+        public string LicensePlate { get; set; }
+        [StringLength(50)]
+        public string Password { get; set; }
+        [StringLength(50)]
+        public string Email { get; set; }
+        [StringLength(50)]
+        public string ConfirmPassword { get; set; }
 
-        [ForeignKey(nameof(CarId))]
-        [InverseProperty("Users")]
-        public virtual Car Car { get; set; }
+        [ForeignKey(nameof(LicensePlate))]
+        [InverseProperty(nameof(Car.Users))]
+        public virtual Car LicensePlateNavigation { get; set; }
+        [InverseProperty(nameof(Message.MessageFromNavigation))]
+        public virtual ICollection<Message> MessageMessageFromNavigations { get; set; }
+        [InverseProperty(nameof(Message.MessageToNavigation))]
+        public virtual ICollection<Message> MessageMessageToNavigations { get; set; }
         [InverseProperty(nameof(Route.User))]
         public virtual ICollection<Route> Routes { get; set; }
         [InverseProperty(nameof(UserRoute.User))]
