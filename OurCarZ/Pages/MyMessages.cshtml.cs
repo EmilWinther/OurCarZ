@@ -14,9 +14,11 @@ namespace OurCarZ.Pages
         private readonly ILogger<ProfileModel> _logger;
 
         public EmilDbContext DB = new EmilDbContext();
+        [BindProperty]
         public User currentUser { get; set; }
 
         public User FoundUser { get; set; }
+
         public List<User> UserList { get; set; }
         public Message msg { get; set; }
 
@@ -33,10 +35,19 @@ namespace OurCarZ.Pages
             UserList = DB.Users.ToList();
         }
 
-        public void OnPost(int id, int id2)
+        public IActionResult OnPost(int id, int id2, int DeleteID)
         {
             currentUser = DB.Users.Find(id);
             FoundUser = DB.Users.Find(id2);
+
+
+            msg = DB.Messages.Find(DeleteID);
+
+            DB.Messages.Remove(msg);
+            DB.SaveChanges();
+
+            return RedirectToPage("/Profile", new { id = currentUser.UserId });
         }
+
     }
 }

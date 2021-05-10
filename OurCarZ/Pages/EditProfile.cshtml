@@ -26,7 +26,7 @@
 
         <!-- Hidden input field is used, for storing the UserId needed to find the user, since there is no persistence between OnGet() and OnPost() -->
         <input hidden="hidden" asp-for="@Model.currentUser.UserId" />
-        <input type="submit" value="Submit">
+        <input type="submit" value="Submit" onclick="return confirm('Are you sure you want to change your information?')">
     </form>
 }
 else
