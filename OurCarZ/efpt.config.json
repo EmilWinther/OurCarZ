@@ -31,6 +31,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[RatingDatabase]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Route]",
          "ObjectType": 0
       },

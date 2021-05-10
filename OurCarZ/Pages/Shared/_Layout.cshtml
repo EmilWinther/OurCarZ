@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - OurCarZ</title>
+    @RenderSection("Styles", false)
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <script src="https://kit.fontawesome.com/95875560d8.js" crossorigin="anonymous"></script>
@@ -41,6 +42,13 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/DrivePage" asp-route-userId="7" asp-route-routeId="1" asp-route-startAddressId="1" asp-route-endAddressId="2" asp-route-pasid="6">DriverPage</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Your Profile" asp-route-id="6">Your Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/MyMessages" asp-route-id="7">My messages</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Rating/RatingPage">Rate Driver</a>
                         </li>
                         <li class="nav-item">
                         </li>

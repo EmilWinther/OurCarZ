@@ -155,6 +155,11 @@ namespace OurCarZ.Model
                     .HasConstraintName("FK_UserRoute_ToUser");
             });
 
+            //Trick the DBContext into thinking the RatingDatabase Tables "UserRatedID" and "UserRatingID" is a composite primary key,
+            //even though it's a composite Foreign Key. Context doesn't have functionality for tables with no primary key, surprisingly.
+
+            modelBuilder.Entity<RatingDatabase>().HasKey(x => new { x.UserRatedId, x.UserRatingId });
+
             OnModelCreatingPartial(modelBuilder);
         }
 
