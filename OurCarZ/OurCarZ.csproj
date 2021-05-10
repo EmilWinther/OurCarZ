@@ -3,10 +3,6 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Folder Include="Model\" />
-  </ItemGroup>
   <ItemGroup>
     <None Include="wwwroot\Images\star-off.svg" />
     <None Include="wwwroot\Images\star-on.svg" />
