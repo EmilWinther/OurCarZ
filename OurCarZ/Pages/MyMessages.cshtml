@@ -1,61 +1,58 @@
 ﻿@page
 @model OurCarZ.Pages.MessageModel
-@{ }
+@{
+}
 <h3>@Model.currentUser.FirstName @Model.currentUser.LastName's messages</h3>
 <table class="table">
-    <thead>
-        <tr>
-            <th>From</th>
-            <th>Message</th>
-            <th>To</th>
-            <th>Date/time</th>
-            <th>Reply</th>
-            <th>Delete</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var message in Model.DB.Messages)
-            if (message.MessageTo.Equals(Model.currentUser.UserId) || message.MessageFrom.Equals(Model.currentUser.UserId))
-            {
-                {
-<tr>
-    <td>
-        @foreach (var user in Model.UserList)
-        {
-            if (user.UserId.Equals(message.MessageFrom))
-            {
-<p>@user.FirstName  @user.LastName</p>}
-}
-    </td>
-    <td>
-        @message.MessageText
-    </td>
-    <td>
-        @foreach (var user in Model.UserList)
-        {
-            if (user.UserId.Equals(message.MessageTo))
-            {
-<p>@user.FirstName  @user.LastName</p>}
-}
-    </td>
-    <td>
-        @message.DateTime
-    </td>
-    <td>
-        <a asp-route-page="/SendMessage" asp-route-id="@Model.currentUser.UserId" asp-route-id2="@message.MessageTo" asp-route-id3="@message.MessageFrom"
-           class="btn btn-success btn-group-lg pull-right">
-            Reply
-        </a>
-    </td>
-    <td>
-        <form method="post">
-            <input hidden="hidden" asp-for="@Model.currentUser.UserId" />
-            <button type="submit" asp-route-DeleteID="@message.MessageId" asp-route-id="@Model.currentUser.UserId" onclick="return confirm('Are you sure you want to change your information?')">Remove</button>
-        </form>
-    </td>
-</tr>
-}
-}
+    <tr>
+        <th>From</th>
+        <th>Message</th>
+        <th>To</th>
+        <th>Date/time</th>
+        <th>Reply</th>
+        <th>Delete</th>
+    </tr>
 
+    <tbody>
+    @foreach (var message in Model.DB.Messages)
+    if (message.MessageTo.Equals(Model.currentUser.UserId) || message.MessageFrom.Equals(Model.currentUser.UserId))
+    {
+    <tr>
+        <td>
+            @foreach (var user in Model.UserList)
+            {
+                if (user.UserId.Equals(message.MessageFrom))
+                {
+                    <p>@user.FirstName @user.LastName</p>}
+            }
+        </td>
+        <td>
+            @message.MessageText
+        </td>
+        <td>
+            @foreach (var user in Model.UserList)
+            {
+                if (user.UserId.Equals(message.MessageTo))
+                {
+                    <p>@user.FirstName @user.LastName</p>}
+            }
+        </td>
+        <td>
+            @message.DateTime
+        </td>
+        <td>
+            <a asp-route-page="/SendMessage" asp-route-id="@Model.currentUser.UserId" asp-route-id2="@message.MessageTo" asp-route-id3="@message.MessageFrom"
+               class="btn btn-success btn-group-lg pull-right">
+                Reply
+            </a>
+        </td>
+        <td>
+            <form method="post">
+                <input hidden="hidden" asp-for="@Model.currentUser.UserId"/>
+                <button type="submit" asp-route-DeleteID="@message.MessageId" asp-route-id="@Model.currentUser.UserId" onclick="return confirm('Are you sure you want to change your information?')">Remove</button>
+            </form>
+        </td>
+    </tr>
+    }
     </tbody>
 </table>

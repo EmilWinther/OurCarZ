@@ -46,7 +46,7 @@ namespace OurCarZ.Pages
             DB.Messages.Remove(msg);
             DB.SaveChanges();
 
-            return RedirectToPage("/Profile", new { id = currentUser.UserId });
+            return RedirectToPage("/MyMessages", new { id = currentUser.UserId });
         }
 
     }
