@@ -26,7 +26,6 @@ namespace OurCarZ.Pages
             DB = db;
         }
 
-
         public void OnGet(int id)
         {
             currentUser = DB.Users.Find(id);

@@ -1,0 +1,20 @@
+﻿@page
+@model OurCarZ.Pages.MyRoutesModel
+@{
+}
+
+@foreach (var routes in Model.myRoutes)
+{
+    if (@Model.CurrentUser.UserId.Equals(routes.UserId))
+    {
+        @foreach (var add in Model.AllAddresses)
+        {
+            if (add.AddressId.Equals(routes.StartPoint))
+            {
+                <p>
+                    @add.RoadName
+                </p>
+            }
+        }
+    }
+}
