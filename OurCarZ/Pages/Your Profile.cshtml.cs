@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using OurCarZ.Pages.UserPages;
 
 namespace OurCarZ.Pages
 {
@@ -27,11 +28,15 @@ namespace OurCarZ.Pages
 
         public void OnGet(int id)
         {
-            CurrentUser = DB.Users.Find(7);
-            FoundUser = DB.Users.Find(id);
+            if (LogInPageModel.LoggedInUser != null)
+            {
+                CurrentUser = LogInPageModel.LoggedInUser;
+                FoundUser = DB.Users.Find(id);
+
+                var reviews = (from x in DB.RatingDatabases where x.UserRatedId.Equals(id) select x).ToList();
+                avg = (from x in reviews select x.Rating).Average();
+            }
             
-            var reviews = (from x in DB.RatingDatabases where x.UserRatedId.Equals(id) select x).ToList();
-            avg = (from x in reviews select x.Rating).Average();
         }
     }
 }

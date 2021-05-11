@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using OurCarZ.Pages.UserPages;
 
 namespace OurCarZ.Pages
 {
@@ -23,20 +24,27 @@ namespace OurCarZ.Pages
             DB = db;
         }
 
-        public void OnGet(int id)
+        public void OnGet()
         {
-            currentUser = DB.Users.Find(id);
-            var reviews = (from x in DB.RatingDatabases where x.UserRatedId.Equals(id) select x).ToList();
-            avg = (from x in reviews select x.Rating).Average();
+
+            if (LogInPageModel.LoggedInUser != null)
+            {
+                currentUser = DB.Users.Find(UserPages.LogInPageModel.LoggedInUser.UserId);
+
+                var reviews = (from x in DB.RatingDatabases where x.UserRatedId.Equals(currentUser) select x).ToList();
+                avg = (from x in reviews select x.Rating).Average();
+            }
 
         }
+
 
         public IActionResult OnPost(int DeleteID)
         {
             currentUser = DB.Users.Find(DeleteID);
 
-            
-            var RatingUser = DB.RatingDatabases.Where(x => x.UserRatedId == DeleteID || x.UserRatingId == DeleteID).ToList();
+
+            var RatingUser = DB.RatingDatabases.Where(x => x.UserRatedId == DeleteID || x.UserRatingId == DeleteID)
+                .ToList();
             foreach (var rating in RatingUser)
             {
                 DB.RatingDatabases.Remove(rating);
@@ -59,6 +67,7 @@ namespace OurCarZ.Pages
             {
                 DB.Routes.Remove(user2);
             }
+
 
             if (currentUser.LicensePlate != null)
             {
