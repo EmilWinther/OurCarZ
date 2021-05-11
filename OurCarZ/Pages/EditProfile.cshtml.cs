@@ -40,6 +40,7 @@ namespace OurCarZ.Pages
         [MinLength(6), MaxLength(30), RegularExpression(@"^[a-zA-Z0-9_.+-]+@(edu.easj.dk)+$", ErrorMessage = "Invalid email format, use school mails")]
         public string? Email { get; set; }
         [BindProperty]
+        [StringLength(7)]
         public string? LicensePlate { get; set; }
         #nullable disable
         public EditProfileModel(ILogger<EditProfileModel> logger, EmilDbContext db)
@@ -53,7 +54,7 @@ namespace OurCarZ.Pages
         }
         public IActionResult OnPost()
         {
-           if (!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return Page();
             }

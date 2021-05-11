@@ -12,45 +12,58 @@ namespace OurCarZ.Pages.UserPages
 {
     public class RegisterPageModel : PageModel
     {
-        private IUserPersistence _userDb;
+        private EmilDbContext DB = new EmilDbContext();
 
-        public RegisterPageModel(IUserPersistence userDb)
+        public RegisterPageModel(EmilDbContext userDb)
         {
-            _userDb = userDb;
+            DB = userDb;
         }
 
         [BindProperty]
-        public User NewUser { get; set; }
-        #nullable enable
+        public User currentUser { get; set; }
+#nullable enable
         [BindProperty]
-        public string? ConfirmPass { get; set; }
-        
-        public bool comparePasswords(string? pass, string? confirm) 
-        {
-            bool comparefavorably;
-            if (pass == confirm)
-            {
-                comparefavorably = true;
-            }
-            else 
-            {
-                comparefavorably = false;
-            }
-            return comparefavorably;
-        }
+        [Required(ErrorMessage = "First Name is required"), StringLength(50)]
+        public string? FirstName { get; set; }
+        [BindProperty]
+        [Required(ErrorMessage = "Last Name is required"), StringLength(50)]
+        public string? LastName { get; set; }
+        [BindProperty]
+        [Required(ErrorMessage = "Password is required"), StringLength(28), MinLength(8, ErrorMessage = "Your password is too short"), MaxLength(28, ErrorMessage = "Your password is too long"), RegularExpression(@"(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{8,28})$",
+        ErrorMessage = "Password must contain one uppercase, one lowercase, one number, and be atleast 8 characters long")]
+        public string? Password { get; set; }
+        [BindProperty]
+        [StringLength(28), MinLength(8, ErrorMessage = "Your password is too short"), MaxLength(28, ErrorMessage = "Your password is too long"), Required, Compare(nameof(Password), ErrorMessage = "The passwords does not match")]
+        public string? ConfirmPassword { get; set; }
+        [BindProperty]
+        [Required(ErrorMessage = "Phone Number is required."), StringLength(8), MinLength(8, ErrorMessage = "Your phonenumber should be 8 digits"), MaxLength(8, ErrorMessage = "Your phonenumber should be 8 digits"), Phone]
+        public string? PhoneNumber { get; set; }
+        [BindProperty]
+        [Required(ErrorMessage = "Email is require."), MinLength(6), MaxLength(30), RegularExpression(@"^[a-zA-Z0-9_.+-]+@(edu.easj.dk)+$", ErrorMessage = "Invalid email format, use school mails")]
+        public string? Email { get; set; }
+        [BindProperty]
+        [StringLength(7)]
+        public string? LicensePlate { get; set; }
         #nullable disable
         public IActionResult OnPost()
         {
-            if(ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                if (comparePasswords(NewUser.Password, ConfirmPass)) 
-                {
-                    _userDb.Create(NewUser);
-                    return RedirectToPage("/Index");
-                }
-                
+                return Page();
             }
-            return Page();
+            currentUser = new User();
+            currentUser.FirstName = FirstName;
+            currentUser.LastName = LastName;
+            currentUser.PhoneNumber = PhoneNumber;
+            currentUser.Email = Email;
+            currentUser.LicensePlate = LicensePlate;
+            currentUser.Password = Password;
+            currentUser.ConfirmPassword = ConfirmPassword;
+
+            DB.Users.Add(currentUser);
+            DB.SaveChanges();
+
+            return RedirectToPage("/Index");
         }
     }
 }
