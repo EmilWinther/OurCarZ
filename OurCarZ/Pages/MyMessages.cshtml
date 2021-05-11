@@ -57,7 +57,7 @@
                 <th>
                     <form method="post">
                         <input hidden="hidden" asp-for="@Model.currentUser.UserId" />
-                        <button type="submit" asp-route-DeleteID="@message.MessageId" asp-route-id="@Model.currentUser.UserId" onclick="return confirm('Are you sure you want to change your information?')">Remove</button>
+                        <button type="submit" asp-route-DeleteID="@message.MessageId" asp-route-id="@Model.currentUser.UserId" onclick="return confirm('Are you sure you want to change your information?')">Delete</button>
                     </form>
                 </th>
             </tr>

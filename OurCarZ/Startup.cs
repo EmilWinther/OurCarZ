@@ -10,6 +10,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using OurCarZ.Model;
 
 namespace OurCarZ
@@ -31,6 +34,16 @@ namespace OurCarZ
             services.AddSingleton<EmilDbContext>();
             services.AddSingleton<IUserPersistence, UserPersistence>();
             services.AddSingleton<EmilDbContext>();
+            services.Configure<CookiePolicyOptions>(options => {
+
+                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            }); services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(cookieOptions => {
+                cookieOptions.LoginPath = "/Login/LoginPage";
+            }); services.AddMvc().AddRazorPagesOptions(options => {
+                options.Conventions.AuthorizeFolder("/Item");
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,6 +64,8 @@ namespace OurCarZ
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
