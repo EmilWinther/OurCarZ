@@ -21,13 +21,34 @@ namespace OurCarZ.Pages.UserPages
 
         [BindProperty]
         public User NewUser { get; set; }
-
+        #nullable enable
+        [BindProperty]
+        public string? ConfirmPass { get; set; }
+        
+        public bool comparePasswords(string? pass, string? confirm) 
+        {
+            bool comparefavorably;
+            if (pass == confirm)
+            {
+                comparefavorably = true;
+            }
+            else 
+            {
+                comparefavorably = false;
+            }
+            return comparefavorably;
+        }
+        #nullable disable
         public IActionResult OnPost()
         {
             if(ModelState.IsValid)
             {
-                _userDb.Create(NewUser);
-                return RedirectToPage("/Index");
+                if (comparePasswords(NewUser.Password, ConfirmPass)) 
+                {
+                    _userDb.Create(NewUser);
+                    return RedirectToPage("/Index");
+                }
+                
             }
             return Page();
         }
