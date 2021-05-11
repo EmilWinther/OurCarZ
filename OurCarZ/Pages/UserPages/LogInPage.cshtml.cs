@@ -21,6 +21,8 @@ namespace OurCarZ.Pages.UserPages
         public string Email { get; set; }
         [BindProperty, DataType(DataType.Password)]
         public string Password { get; set; }
+        [BindProperty]
+        public int UserId { get; set; }
         public string Message { get; set; }
 
         public LogInPageModel(IUserPersistence userP)
@@ -37,6 +39,8 @@ namespace OurCarZ.Pages.UserPages
             List<User> users = _userPersistence.GetAll();
             foreach (User user in users)
             {
+                //if (UserId == 1) claims.Add(new Claim(ClaimTypes.Role, "admin"));
+
                 if (Email == user.Email && Password == user.Password)
                 {
 
@@ -51,6 +55,7 @@ namespace OurCarZ.Pages.UserPages
                 }
 
             }
+            
 
             Message = "Invalid attempt";
             return Page();
