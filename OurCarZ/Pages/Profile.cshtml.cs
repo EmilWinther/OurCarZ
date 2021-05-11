@@ -35,17 +35,29 @@ namespace OurCarZ.Pages
         {
             currentUser = DB.Users.Find(DeleteID);
 
-            if (avg > 0)
-            {
-                var RatingUser = DB.RatingDatabases.Where(x => x.UserRatedId == DeleteID || x.UserRatingId == DeleteID).First();
-                DB.RatingDatabases.Remove(RatingUser);
-            }
             
+            var RatingUser = DB.RatingDatabases.Where(x => x.UserRatedId == DeleteID || x.UserRatingId == DeleteID).ToList();
+            foreach (var rating in RatingUser)
+            {
+                DB.RatingDatabases.Remove(rating);
+            }
 
             var MessageUser = DB.Messages.Where(x => x.MessageFrom == DeleteID || x.MessageTo == DeleteID).ToList();
             foreach (var message in MessageUser)
             {
                 DB.Messages.Remove(message);
+            }
+
+            var RouteUser = DB.UserRoutes.Where(x => x.UserId == DeleteID).ToList();
+            foreach (var user in RouteUser)
+            {
+                DB.UserRoutes.Remove(user);
+            }
+
+            var RouteUser2 = DB.Routes.Where(x => x.UserId == DeleteID).ToList();
+            foreach (var user2 in RouteUser2)
+            {
+                DB.Routes.Remove(user2);
             }
 
             if (currentUser.LicensePlate != null)
@@ -58,7 +70,7 @@ namespace OurCarZ.Pages
             DB.Users.Remove(currentUser);
             DB.SaveChanges();
 
-            return RedirectToPage("Index");
+            return RedirectToPage("/UserPages/LogOutPage");
         }
     }
 }
