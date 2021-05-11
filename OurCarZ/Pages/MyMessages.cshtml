@@ -1,57 +1,86 @@
 ﻿@page
-@model OurCarZ.Pages.MessageModel
+@using OurCarZ.Model
+@model OurCarZ.Pages.MyMessagesModel
+
 @{
+    ViewData["Title"] = "MyMessages";
 }
-<h3>@Model.currentUser.FirstName @Model.currentUser.LastName's messages</h3>
+
+<h2>My Messages</h2>
+
+
 <table class="table">
     <thead>
         <tr>
             <th>From</th>
-            <th>Message</th>
+            <th>Text</th>
             <th>To</th>
-            <th>Date/time</th>
+            <th>DateTime</th>
             <th>Reply</th>
+            <th>Delete</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var message in Model.DB.Messages)
-            if (message.MessageTo.Equals(Model.currentUser.UserId) || message.MessageFrom.Equals(Model.currentUser.UserId))
-            {
-                {
-                    <tr>
-                        <td>
-                            @foreach (var user in Model.UserList)
-                            {
-                                if (user.UserId.Equals(message.MessageFrom))
-                                {
-                                    <p>@user.FirstName  @user.LastName</p>
-                                }
-                            }
-                        </td>
-                        <td>
-                            @message.MessageText
-                        </td>
-                        <td>
-                            @foreach (var user in Model.UserList)
-                            {
-                                if (user.UserId.Equals(message.MessageTo))
-                                {
-                                    <p>@user.FirstName  @user.LastName</p>
-                                }
-                            }
-                        </td>
-                        <td>
-                            @message.DateTime
-                        </td>
-                        <td>
-                            <a asp-route-page="/SendMessage" asp-route-id="@Model.currentUser.UserId" asp-route-id2="@message.MessageTo" asp-route-id3="@message.MessageFrom"
-                               class="btn btn-success btn-group-lg pull-right">
-                                Reply
-                            </a>
-                        </td>
-                    </tr>
-                }
-            }
-
+        @foreach (var message in Model.Messages)
+        {
+            <tr>
+                <td>
+                    @foreach (var user in Model.UserList)
+                    {
+                        if (user.UserId.Equals(message.MessageFrom))
+                        {
+                            <p>@user.FirstName @user.LastName</p>
+                        }
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => message.MessageText)
+                </td>
+                <td>
+                    @foreach (var user in Model.UserList)
+                    {
+                        if (user.UserId.Equals(message.MessageTo))
+                        {
+                            <p>@user.FirstName @user.LastName</p>
+                        }
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => message.DateTime)
+                </td>
+                <th>
+                    <a asp-route-page="/SendMessage" asp-route-id="@Model.currentUser.UserId" asp-route-id2="@message.MessageTo" asp-route-id3="@message.MessageFrom"
+                       class="btn btn-success btn-group-lg pull-right">
+                        Reply
+                    </a>
+                </th>
+                <th>
+                    <form method="post">
+                        <input hidden="hidden" asp-for="@Model.currentUser.UserId" />
+                        <button type="submit" asp-route-DeleteID="@message.MessageId" asp-route-id="@Model.currentUser.UserId" onclick="return confirm('Are you sure you want to change your information?')">Delete</button>
+                    </form>
+                </th>
+            </tr>
+        }
     </tbody>
 </table>
+
+@{
+    var prevDisabled = !Model.Messages.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.Messages.HasNextPage ? "disabled" : "";
+}
+
+<a asp-page="./MyMessages"
+   asp-route-sortOrder="@Model.CurrentSort"
+   asp-route-pageIndex="@(Model.Messages.PageIndex - 1)"
+   asp-route-id="@Model.currentUser.UserId"
+   class="btn btn-primary @prevDisabled">
+    Previous
+</a>
+<a asp-page="./MyMessages"
+   asp-route-sortOrder="@Model.CurrentSort"
+   asp-route-pageIndex="@(Model.Messages.PageIndex + 1)"
+   asp-route-id="@Model.currentUser.UserId"
+   class="btn btn-primary @nextDisabled">
+    Next
+</a>
