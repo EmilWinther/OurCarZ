@@ -1,15 +1,104 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+.theme-light {
+    --color-primary: #181818;
+    --color-secondary: #333333;
+    --color-harsh: #1b1b1b;
+    --color-accent: #12cdea;
+    --font-color: #ffffa4;
+    --filter: invert(87%) sepia(36%) saturate(394%) hue-rotate(3deg) brightness(108%) contrast(107%);
+}
+
+.theme-dark {
+    --color-primary: #ffffa4;
+    --color-secondary: #ffffd3;
+    --color-harsh: #ffff99;
+    --color-accent: #fd6f53;
+    --font-color: black;
+    --filter: invert(0%) sepia(23%) saturate(413%) hue-rotate(335deg) brightness(97%) contrast(81%);
+}
+
+.color-prim{
+    background-color: var(--color-primary);
+}
+
+.font-primary {
+    color: var(--font-color);
+}
+
+h1, h2, h3, h4, h5, p, label {
+    color: var(--font-color);
+}
+
+.fa, .fas {
+    color: var(--font-color);
+}
+
+.var-harsh {
+    background-color: var(--color-harsh);
+}
+
+.var-sec {
+    background-color: var(--color-secondary);
+}
+
+.var-filter {
+    filter: var(--filter);
+}
+
+.neon-button {
+    font-size: 2rem;
+    margin: 0 auto 0 auto;
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--font-color);
+    border: var(--font-color) 0.125em solid;
+    padding: 0.15em 0.8em;
+    font-family: 'Bebas Neue', cursive;
+    border-radius: 0.25em;
+    position: relative;
+}
+
+.neon-button::before {
+    content: "";
+    position: absolute;
+    background: var(--font-color);
+    top: 120%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    transform: perspective(1em) rotateX(40deg) scale(1, 0.35);
+    filter: blur(1.5em);
+    opacity: 0.5;
+}
+
+.neon-button:hover{
+    text-decoration: none;
+    background: var(--font-color);
+    color: var(--color-primary);
+}
+
+.FrontPageGrid {
+    margin-top: 50px;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    grid-gap: 15rem;
+    grid-auto-flow: column;
+}
+
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
 }
 
 /* Provide sufficient contrast against white background */
 a {
-  color: #0366d6;
+  color: var(--font-color);
 }
 
 .btn-primary {
@@ -19,15 +108,17 @@ a {
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: yellow;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: yellow;
+    background-color: var(--color-primary);
+    border-color: #1861ac;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  font-size: 14px;
+    font-size: 14px;
+    background-color: var(--color-primary);
+    color: var(--font-color);
 }
 @media (min-width: 768px) {
   html {
@@ -67,6 +158,7 @@ html {
 body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
+  background-color: var(--color-primary)
 }
 .footer {
   position: absolute;
@@ -196,3 +288,79 @@ body {
         transform: rotate(0deg);
     }
 }
+
+/*CSS for dark-light switch*/
+
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+    /* Hide default HTML checkbox */
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+}
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 40px;
+        width: 40px;
+        left: 0px;
+        bottom: 4px;
+        top: 0;
+        bottom: 0;
+        margin: auto 0;
+        -webkit-transition: 0.4s;
+        transition: 0.4s;
+        box-shadow: 0 0px 15px #2020203d;
+        background: white url('https://i.ibb.co/FxzBYR9/night.png');
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+input:checked + .slider {
+    background-color: #2196f3;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196f3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(24px);
+    -ms-transform: translateX(24px);
+    transform: translateX(24px);
+    background: white url('https://i.ibb.co/7JfqXxB/sunny.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+    .slider.round:before {
+        border-radius: 50%;
+    }

@@ -18,7 +18,7 @@
         <div class="routes">
             @foreach (var route in Model.UsedRoutes)
             {
-                <div class="card mb-3" style="height: 20rem">
+                <div class="card mb-3 var-harsh" style="height: 20rem">
                     <div class="card-header p-2">
                         <h5 class="card-title">
                             @Model.addresses.Where(a => a.AddressId == route.StartPoint).FirstOrDefault().RoadName,
@@ -29,7 +29,7 @@
                             @Model.addresses.Where(a => a.AddressId == route.FinishPoint).FirstOrDefault().Country
                         </h5>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body var-sec">
                         <p class="card-text">Kører: @Model.users.Where(u => u.UserId == route.UserId).Select(u => u.FirstName).DefaultIfEmpty("--Option unknown--").First()</p>
                         <p class="card-text">Tidspunkt: @route.StartTime </p>
                         <p class="card-text">Antal Pladser: 0 / @Model.cars.Where(c => c.LicensePlate ==
@@ -37,7 +37,7 @@
                                                                 .Select(u => u.LicensePlate).DefaultIfEmpty("--Option unknown--")
                                                                 .First()).Select(c => c.Seats).DefaultIfEmpty("--Option unknown--").First()</p>
                     </div>
-                    <div class="card-footer">
+                    <div class="card-footer var-harsh">
                         @* Shows the map *@
                         <a class="btn" type="button" asp-page="Route" asp-route-id="@route.RouteId"><i class="fas fa-map-marked-alt" title="View Route"></i></a>
                         @* Shows the details of the route *@
