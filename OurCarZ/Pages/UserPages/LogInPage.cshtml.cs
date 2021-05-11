@@ -39,24 +39,19 @@ namespace OurCarZ.Pages.UserPages
             List<User> users = _userPersistence.GetAll();
             foreach (User user in users)
             {
-                //if (UserId == 1) claims.Add(new Claim(ClaimTypes.Role, "admin"));
-
                 if (Email == user.Email && Password == user.Password)
                 {
-
                     LoggedInUser = user;
 
                     var claims = new List<Claim> { new Claim(ClaimTypes.Email, Email) };
+                    if (LoggedInUser.UserId == 35) claims.Add(new Claim(ClaimTypes.Role, "admin"));
 
                     var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
                     return RedirectToPage("/index");
-
                 }
 
             }
-            
-
             Message = "Invalid attempt";
             return Page();
         }

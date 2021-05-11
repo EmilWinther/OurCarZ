@@ -74,6 +74,12 @@
                                     <a class="nav-link" asp-area="" asp-page="/UserPages/LogOutPage">Logout</a>
                                 </li>
                             }
+                            if (LogInPageModel.LoggedInUser != null && LogInPageModel.LoggedInUser.UserId == 35)
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-area="" asp-page="">Statistics</a>
+                                    </li>
+                                }
                         }
                     </ul>
                 </div>
