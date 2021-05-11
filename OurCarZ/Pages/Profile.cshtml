@@ -1,4 +1,4 @@
-﻿@page 
+﻿@page
 @model ProfileModel
 @{
     ViewData["Title"] = "Profile Page for User";
@@ -14,8 +14,6 @@
     <p>Rating: @Model.avg</p>
     <br>
     <a class="button" asp-area="" asp-page="/EditProfile" asp-route-id="@Model.currentUser.UserId">Edit User</a><br>
-    <a class="button" asp-area="" asp-page="/" asp-route-id="@Model.currentUser.UserId">Delete Profile</a><br>
-    <a class="button" asp-area="" asp-page="/Index" asp-route-id="@Model.currentUser.UserId">Sign Out</a><br>
     <a class="button" asp-area="" asp-page="/" asp-route-id="@Model.currentUser.UserId">Select new route</a><br>
     <a class="button" asp-area="" asp-page="/" asp-route-id="@Model.currentUser.UserId">Your past routes</a><br>
     <a class="button" asp-area="" asp-page="/" asp-route-id="@Model.currentUser.UserId">Favorites</a><br>
@@ -23,6 +21,10 @@
     <a class="button" asp-area="" asp-page="/" asp-route-id="@Model.currentUser.UserId">Your next route as driver</a><br>
     <a class="button" asp-area="" asp-page="/" asp-route-id="@Model.currentUser.UserId">My routes</a><br>
     <a class="button" asp-area="" asp-page="/MyMessages" asp-route-id="@Model.currentUser.UserId">My messages</a>
+
+    <form method="post">
+        <button type="submit" asp-route-DeleteID="@Model.currentUser.UserId" onclick="return confirm('Are you sure you want to change your Profile?')">Delete Profile</button>
+    </form>
 }
 else
 {
