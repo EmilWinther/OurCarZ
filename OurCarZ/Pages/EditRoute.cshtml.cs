@@ -1,27 +1,28 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Logging;
 using OurCarZ.Model;
-using OurCarZ.Services;
 
 namespace OurCarZ.Pages
 {
-    public class DrivePageModel : PageModel
+    public class EditRouteModel : PageModel
     {
         public EmilDbContext _edb = new EmilDbContext();
-        public DrivePageModel(EmilDbContext edb)
+        public EditRouteModel(EmilDbContext edb)
         {
-            _edb = edb; 
+            _edb = edb;
         }
-
-        [BindProperty]
-        public UserRoute CancelUser { get; set; }
-
-        [BindProperty (SupportsGet = true)]
+        
+        [BindProperty(SupportsGet = true)]
         public User CurrentUser { get; set; }
         [BindProperty]
         public List<User> UserList { get; set; }
@@ -29,7 +30,7 @@ namespace OurCarZ.Pages
         public List<UserRoute> PassengerList { get; set; }
         [BindProperty]
         public Route YourRoute { get; set; }
-        [BindProperty] 
+        [BindProperty]
         public Car YourCar { get; set; }
         [BindProperty]
         public List<Message> YourMessages { get; set; }
@@ -37,8 +38,9 @@ namespace OurCarZ.Pages
         public Address StartAddress { get; set; }
         [BindProperty]
         public Address EndAddress { get; set; }
+      
 
-        public void OnGet(int userId, int routeId, int startAddressId, int endAddressId, int pasId)
+        public void OnGet(int userId, int routeId, int startAddressId, int endAddressId)
         {
             //I guess we dont need to find all these ids when we implement login
             //Finds the current user (7)
@@ -69,23 +71,51 @@ namespace OurCarZ.Pages
                 YourRoute.FinishPoint = EndAddress.AddressId;
             }
 
-           
-            
+
+
         }
-
-        public IActionResult OnPost(int userId, int routeid, int DeleteID, int startAddressId, int endAddressId)
+        public IActionResult OnPost()
         {
-            CurrentUser = _edb.Users.Find(userId);
-            YourRoute = _edb.Routes.Find(routeid);
-            //finds AddressId 1
-            StartAddress = _edb.Addresses.Find(startAddressId);
-            //finds AddressId 2
-            EndAddress = _edb.Addresses.Find(endAddressId);
-            CancelUser = _edb.UserRoutes.Find(DeleteID);
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+            if (StartAddress == null && EndAddress == null && YourCar.Seats == null)
+            {
+                return Page();
+            }
+            //No persistence between OnGet and OnPost, load the currentUser to update:
+            YourRoute = _edb.Routes.Find(YourRoute.RouteId);
 
-            _edb.UserRoutes.Remove(CancelUser);
+            //Change the desired values, we grab from the page:
+            if ( StartAddress != null)
+            {
+                YourRoute.StartPoint = StartAddress.AddressId;
+            }
+            if (EndAddress != null)
+            {
+                YourRoute.FinishPoint = EndAddress.AddressId;
+            }
+            if (YourRoute.StartTime != null)
+            {
+                YourRoute.StartTime = YourRoute.StartTime;
+            }
+            if (YourRoute.ArrivalTime != null)
+            {
+                YourRoute.ArrivalTime = YourRoute.ArrivalTime;
+            }
+            if (YourCar.Seats != null)
+            {
+                YourCar.Seats = YourCar.Seats;
+            }
+            
+
+            //Update the user. Finds the user based on the primary key (UserId). If a new primary key is somehow inserted, it makes a new user instead.
+            _edb.Cars.Update(YourCar);
+            _edb.Routes.Update(YourRoute);
             _edb.SaveChanges();
 
+            //Go to profile for the specified user.
             return RedirectToPage("/DrivePage", new { UserId = CurrentUser.UserId, routeId = YourRoute.RouteId, startAddressId = StartAddress.AddressId, endAddressId = EndAddress.AddressId });
         }
     }

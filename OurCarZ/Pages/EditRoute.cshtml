@@ -1,0 +1,65 @@
+﻿@page
+@model OurCarZ.Pages.EditRouteModel
+@{
+    ViewData["Title"] = "Edit Profile Page for User";
+}
+
+@if (Model.YourRoute != null)
+{
+    <h2>Current Route Details: </h2>
+    <p>From: @Model.StartAddress.RoadName</p>
+    <p>Via: </p>
+    <p>To: @Model.EndAddress.RoadName </p>
+    <p>Departure Time: @Model.YourRoute.StartTime </p>
+    <p>Arrival Time: @Model.YourRoute.ArrivalTime </p>
+    <p>Seats available: @Model.YourCar.Seats</p>
+    <p>Dates: </p>
+
+    <form method="post">
+        <h2>Change the Route details: </h2>
+        <div class="form-group">
+            <label for="startaddress">Start Address:</label>
+            <input type="text" id="@Model.StartAddress" name="startaddress">
+            <span asp-validation-for="StartAddress" class="text-danger"></span><br><br>
+        </div>
+        <div class="form-group">
+            <label for="via">Via:</label>
+            @*<input type="text" id="@Model." name="via">
+            <span asp-validation-for="Via" class="text-danger"></span><br><br>*@
+        </div>
+        <div class="form-group">
+            <label for="endaddress">End Address:</label>
+            <input type="text" id="@Model.EndAddress" name="endaddress">
+            <span asp-validation-for="EndAddress" class="text-danger"></span><br><br>
+        </div>
+        <div class="form-group">
+            <label for="starttime">Start Time:</label>
+            <input type="text" id="@Model.YourRoute.StartTime" name="starttime">
+            <span asp-validation-for="YourRoute.StartTime" class="text-danger"></span><br><br>
+        </div>
+        <div class="form-group">
+            <label for="arrivaltime">Arrival Time:</label>
+            <input type="text" id="@Model.YourRoute.ArrivalTime" name="arrivaltime">
+            <span asp-validation-for="YourRoute.ArrivalTime" class="text-danger"></span><br><br>
+        </div>
+        <div class="form-group">
+            <label for="seats">Seats:</label>
+            <input type="text" id="@Model.YourCar.Seats" name="seats">
+            <span asp-validation-for="YourCar.Seats" class="text-danger"></span><br><br>
+        </div>
+        <div class="form-group">
+            <label for="dates">Dates:</label>
+            @*<input type="text" id="@Model." name="dates">
+            <span asp-validation-for="" class="text-danger"></span><br><br>*@
+        </div>
+        <!-- Hidden input field is used, for storing the UserId needed to find the user, since there is no persistence between OnGet() and OnPost() -->
+        <input hidden="hidden" asp-for="@Model.YourRoute.RouteId" />
+        <input type="submit" value="Submit" onclick="return confirm('Are you sure you want to change your information? remember to restart program')">
+    </form>
+}
+else
+{
+    <p>Route can't be found!</p>
+}
+<br>
+<br>

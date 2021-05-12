@@ -1,58 +1,94 @@
 ﻿@page
 @using Microsoft.VisualBasic
+@using OurCarZ.Pages.UserPages
 @model OurCarZ.Pages.DrivePageModel
 @{
 }
 <div class="item-container">
-    <br />
-    <h3>Hello @Model.CurrentUser.FirstName @Model.CurrentUser.LastName Thank you for making this route.</h3><br />
-    <div>
-        <ul>
-            <td>
-                implement list of passengers here
-            </td>
-        </ul>
-    </div>
-    <p>From @Model.StartAddress.RoadName to @Model.EndAddress.RoadName</p>
-    <p class="btn" type="button" asp-page="Route" asp-route-id="@Model.YourRoute.RouteId"><i class="fas fa-map-marked-alt" title="View Route"></i>Click here to see the route</p>
-    <i></i>
+    <br/>
 
-    @* shows all messages to the userid but doesnt look very well. *@
-
-    @foreach (var message in @Model._edb.Messages)
+    @if (Model.CurrentUser != null)
     {
-        if (message.MessageTo.Equals(Model.CurrentUser.UserId))
-        {
+        <h3>Hello @Model.CurrentUser.FirstName @Model.CurrentUser.LastName Thank you for making this route.</h3><br/>
+        <p>From: @Model.StartAddress.RoadName</p>
+        <p>Via: </p>
+        <p>To: @Model.EndAddress.RoadName </p>
+        <p>Departure Time: @Model.YourRoute.StartTime </p>
+        <p>Arrival Time: @Model.YourRoute.ArrivalTime </p>
+        <p>Seats available: @Model.YourCar.Seats</p>
+        <p>Dates: </p>
+        <br>
+        <a class="button" asp-area="" asp-page="/EditRoute" asp-route-routeid="@Model.YourRoute.RouteId" asp-route-userId="@Model.CurrentUser.UserId" asp-route-startAddressId="@Model.StartAddress.AddressId" asp-route-endAddressId="@Model.EndAddress.AddressId">Change Route</a><br>
+        <a class="button" asp-area="" asp-page="/RateYourDriver" asp-route-id="">Start Route</a><br>
+
+        @* redirects to the route by the routeid *@
+        <a class="btn" type="button" asp-page="Route" asp-route-id="@Model.YourRoute.RouteId">
+            <i class="fas fa-map-marked-alt" title="View Route">View Route</i>
+        </a>
+
+
+        <h3>Passengers who have chosen your route</h3><br/>
+        <table class="table">
+            <thead>
             <tr>
-                <td>
+                <th>Passenger</th>
+                <th>Pickup Point</th>
+                <th>Cancel Passenger</th>
+                <th>Message(s)</th>
+                <th>Reply</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var passenger in Model.PassengerList)
+            {
+                <tr>
+                    <td>
                     @foreach (var user in Model.UserList)
                     {
-                        if (user.UserId.Equals(message.MessageFrom))
+                        if (user.UserId.Equals(passenger.UserId))
                         {
-                            @user.FirstName @user.LastName
+                            <a asp-route-page="/Your Profile" asp-route-id="@passenger.UserId"
+                               class="btn btn-success btn-group-lg pull-right">
+                                <p>@user.FirstName @user.LastName</p>
+                            </a>
                         }
                     }
-                </td>
-                <td>
-                    @message.MessageText
-                </td>
-                <td>
-                    @message.DateTime
-                </td>
-                <br />
-                @if (@Model.Passenger.Equals(message.MessageFrom))
-                {
                     <td>
-                        @message.MessageText.Count()
+                        <p>Pickup Point</p>
                     </td>
-                }
-            </tr>
-        }
+                    <td>
+                        <form method="post">
+                            <input hidden="hidden" asp-for="@passenger.UserRouteId"/>
+                            <button type="submit" asp-route-DeleteID="@passenger.UserRouteId" asp-route-routeid="@passenger.RouteId" asp-route-userId="@Model.CurrentUser.UserId" asp-route-startAddressId="@Model.StartAddress.AddressId" asp-route-endAddressId="@Model.EndAddress.AddressId"
+                                    onclick="return confirm('Are you sure you want to cancel?')">cancel Passenger</button>
+                        </form>
+                    </td>
+                    <th>
+                        @foreach (var message in Model.YourMessages)
+                        {
+                            if (message.MessageFrom == passenger.UserId || message.MessageTo == passenger.UserId && message.MessageFrom == @Model.CurrentUser.UserId || message.MessageTo == @Model.CurrentUser.UserId)
+                            {
+                                <p>You have message(s)</p>
+                            }
+                            else
+                            {
+                                <p>You have no message(s)</p>
+                            }
+                        }
+                    </th>
+                    <th>
+                        <a asp-route-page="/SendMessage" asp-route-id="@Model.CurrentUser.UserId" asp-route-id2="@passenger.UserId" asp-route-id3="@Model.CurrentUser.UserId"
+                           class="btn btn-success btn-group-lg pull-right">
+                            Reply
+                        </a>
+                    </th>
+                </tr>
+            }
+            </tbody>
+        </table>
     }
-    
-    @* redirects to the route by the routeid *@
-    <div class="card-footer">
-        <a class="btn" type="button" asp-page="Route" asp-route-id="@Model.YourRoute.RouteId"><i class="fas fa-map-marked-alt" title="View Route"></i></a>
-    </div>
-    <input hidden="hidden" asp-for="@Model.CurrentUser.UserId" />
+    else
+    {
+        <p>You can't be found!</p>
+    }
 </div>

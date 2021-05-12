@@ -20,7 +20,6 @@ namespace OurCarZ.Model
         [Column("UserID")]
         public int? UserId { get; set; }
         [Column(TypeName = "datetime")]
-        public DateTime? PickupTime { get; set; }
 
         [ForeignKey(nameof(RouteId))]
         [InverseProperty("UserRoutes")]
