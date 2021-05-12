@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
@@ -14,6 +15,7 @@ namespace OurCarZ.Pages
     {
         private readonly ILogger<EditProfileModel> _logger;
         public EmilDbContext DB = new EmilDbContext();
+        private PasswordHasher<string> passwordHasher = new PasswordHasher<string>();
         [BindProperty]
         public User currentUser { get; set; }
         #nullable enable
@@ -86,10 +88,12 @@ namespace OurCarZ.Pages
             {
                 currentUser.LicensePlate = LicensePlate;
             }
-            if (OldPassword == currentUser.Password && Password != null && Password == ConfirmPassword)
+            
+            if (passwordHasher.VerifyHashedPassword(null, currentUser.Password, OldPassword) ==
+                PasswordVerificationResult.Success)
             {
-                currentUser.Password = Password;
-                currentUser.ConfirmPassword = ConfirmPassword;
+                currentUser.Password = passwordHasher.HashPassword(null, Password);
+                currentUser.ConfirmPassword = passwordHasher.HashPassword(null, ConfirmPassword); ;
             }
 
             //Update the user. Finds the user based on the primary key (UserId). If a new primary key is somehow inserted, it makes a new user instead.

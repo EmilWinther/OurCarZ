@@ -13,6 +13,18 @@ namespace OurCarZ.Model
     [Table("RatingDatabase")]
     public partial class RatingDatabase
     {
+        public RatingDatabase()
+        {
+            
+        }
+
+        public RatingDatabase(int? userRatedId, int? rating, int? userRatingId)
+        {
+            UserRatedId = userRatedId;
+            Rating = rating;
+            UserRatingId = userRatingId;
+        }
+
         [Column("UserRatedID")]
         public int? UserRatedId { get; set; }
         public int? Rating { get; set; }
@@ -23,15 +35,5 @@ namespace OurCarZ.Model
         public virtual User UserRated { get; set; }
         [ForeignKey(nameof(UserRatingId))]
         public virtual User UserRating { get; set; }
-        public RatingDatabase()
-        {
-
-        }
-        public RatingDatabase(int Rater, int rating, int Rated)
-        {
-            UserRatedId = Rated;
-            Rating = rating;
-            UserRatingId = Rater;
-        }
     }
 }
