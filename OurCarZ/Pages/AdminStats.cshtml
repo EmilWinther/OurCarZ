@@ -1,30 +1,13 @@
 ﻿@page
 @model OurCarZ.Pages.AdminStatsModel
 @{
+    ViewData["Title"] = "Stats for Admins";
 }
-
-<p>How'd you get here?</p>
-@foreach (var item in Model.RouteList)
-{
-    <p>
-    @item.FinishPoint
-    @item.StartPoint
-    @item.UserId
-    </p>
-}
-@foreach (var itemz in Model.AddressIdToRoadName)
-{
-<p>
-    @itemz.Key
-    @itemz.Value
-</p>
-}
-
-        <html>
-        <head>
-            <!--Load the AJAX API-->
-            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-            <script type="text/javascript">
+<html>
+<head>
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
 
                 // Load the Visualization API and the corechart package.
                 google.charts.load('current', { 'packages': ['corechart'] });
@@ -37,34 +20,31 @@
                 // instantiates the pie chart, passes in the data and
                 // draws it.
                 function drawChart() {
-
                     // Create the data table.
                     var data = new google.visualization.DataTable();
-                    data.addColumn('string', 'Orders');
-                    data.addColumn('number', 'Amount');
-                    data.addRows([
-                        ['Order Guide You', @Model.AddressIdToRoadName.Keys.Count],
-                        ['Order Guide You2', @Model.RouteList.Count]
-                ]);
+                    data.addColumn('string', 'Route');
+                    data.addColumn('number', 'Nr. of times route was made');
+
+                    @foreach (var route in Model.HowManySameRoutes())
+                    {
+                        @: data.addRow(["@Model.AddressIdsToName(route.Key).Replace('æ', 'a').Replace('ø', 'o').Replace('å', 'a')", @route.Value]);
+                    }
 
                 // Set chart options
                 var options = {
-                    'title': 'How Many Orders Delivered / Orders Still Not Delivered',
-                    'width': 400,
+                    'title': 'Graphic representation over the amount of times different routes appear in the database',
+                    'width': 500,
                     'height': 300
                 };
 
                 // Instantiate and draw our chart, passing in some options.
                 var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
                 chart.draw(data, options);
-}
-            </script>
-    </head>
-    <body>
-        <!--Div that will hold the pie chart-->
-        <div id="chart_div"></div>
-        <!--Div that will hold the pie chart-->
-        <div id="chart_div1"></div>
-    </body>
-    </html>
-    
+    }
+    </script>
+</head>
+<body>
+    <!--Div that will hold the pie chart-->
+    <div id="chart_div"></div>
+</body>
+</html>
