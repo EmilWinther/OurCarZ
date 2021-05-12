@@ -12,9 +12,9 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3 color-prim">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm box-shadow mb-3 color-prim">
             <div class="container color-prim">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">OurCarZ</a>
+                <a class="navbar-brand" asp-area="" asp-page="/Index"><h2>OurCarZ</h2></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -35,10 +35,10 @@
                         </li>
                         <li class="nav-item">
 
-                            <a class="nav-link font-primary" asp-area="" asp-page="/Profile" asp-route-id="7">Profile</a>
+                            <a class="nav-link font-primary" asp-area="" asp-page="/Profile" asp-route-id="6">Profile</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link font-primary" asp-area="" asp-page="/EditProfile" asp-route-id="7">Edit Profile</a>
+                            <a class="nav-link font-primary" asp-area="" asp-page="/EditProfile" asp-route-id="6">Edit Profile</a>
                         </li>
                         <li class="nav-item">
 
@@ -55,12 +55,13 @@
         </nav>
     </header>
     <div class="container">
+        <div class="loadingWrapper"><img src="~/Pictures/Logo.png" alt="logo" style="width:20vw;"></div>
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="footer box-shadow text-muted">
         <div class="container">
             <p>&copy; 2021 - OurCarZ - <a asp-area="" asp-page="/Privacy">Privacy</a></p>
         </div>
@@ -73,6 +74,24 @@
     @await RenderSectionAsync("Scripts", required: false)
 
     <script>
+
+        let wrapper = document.querySelector('.loadingWrapper');
+
+        window.addEventListener('load', function () {
+            wrapper.animate([
+
+                { opacity: '1' },
+                { opacity: '0' }
+
+            ], {
+                    duration: 300,
+                    iterations: 1
+            });
+            this.setTimeout(function () {
+                wrapper.parentElement.removeChild(wrapper);
+            }, 300);
+        });
+
         function setTheme(themeName) {
             localStorage.setItem('theme', themeName);
             document.documentElement.className = themeName;
