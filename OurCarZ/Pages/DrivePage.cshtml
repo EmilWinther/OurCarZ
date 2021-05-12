@@ -39,7 +39,7 @@
             </tr>
             </thead>
             <tbody>
-            @foreach (var passenger in Model.PassengerList)
+            @foreach (var passenger in Model.PassengerList.Take(int.Parse(@Model.YourCar.Seats)))
             {
                 <tr>
                     <td>
