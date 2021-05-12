@@ -25,20 +25,23 @@ namespace OurCarZ.Pages
         [BindProperty(SupportsGet = true)]
         public User CurrentUser { get; set; }
         [BindProperty]
-        public List<User> UserList { get; set; }
-        [BindProperty]
-        public List<UserRoute> PassengerList { get; set; }
-        [BindProperty]
         public Route YourRoute { get; set; }
         [BindProperty]
         public Car YourCar { get; set; }
         [BindProperty]
-        public List<Message> YourMessages { get; set; }
-        [BindProperty]
         public Address StartAddress { get; set; }
         [BindProperty]
         public Address EndAddress { get; set; }
-      
+        [BindProperty]
+        public DateTime StartTime { get; set; }
+        [BindProperty]
+        public DateTime ArrivalTime { get; set; }
+        [BindProperty]
+        public string Start { get; set; }
+
+
+
+
 
         public void OnGet(int userId, int routeId, int startAddressId, int endAddressId)
         {
@@ -52,67 +55,42 @@ namespace OurCarZ.Pages
             //finds AddressId 2
             EndAddress = _edb.Addresses.Find(endAddressId);
             //Checks if the FK in Route is == PK 
-            UserList = _edb.Users.ToList();
-
             YourCar = _edb.Cars.Find(CurrentUser.LicensePlate);
-
-            IQueryable<UserRoute> userRouteList = from s in _edb.UserRoutes
-                select s;
-
-            userRouteList = userRouteList.Where(s => s.RouteId == routeId);
-
-            PassengerList = userRouteList.ToList();
-
-            YourMessages = _edb.Messages.ToList();
-
-            if (YourRoute.UserId == CurrentUser.UserId)
-            {
-                YourRoute.StartPoint = StartAddress.AddressId;
-                YourRoute.FinishPoint = EndAddress.AddressId;
-            }
-
-
 
         }
         public IActionResult OnPost()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-            if (StartAddress == null && EndAddress == null && YourCar.Seats == null)
-            {
-                return Page();
-            }
-            //No persistence between OnGet and OnPost, load the currentUser to update:
             YourRoute = _edb.Routes.Find(YourRoute.RouteId);
+            CurrentUser = _edb.Users.Find(YourRoute.UserId);
+            YourCar = _edb.Cars.Find(CurrentUser.LicensePlate);
+            //finds AddressId 1
+            StartAddress = _edb.Addresses.Find(YourRoute.StartPoint);
+            //finds AddressId 2
+            EndAddress = _edb.Addresses.Find(YourRoute.FinishPoint);
 
             //Change the desired values, we grab from the page:
-            if ( StartAddress != null)
+            if (Start != null)
             {
-                YourRoute.StartPoint = StartAddress.AddressId;
+                StartAddress.RoadName = Start;
             }
-            if (EndAddress != null)
+            if (EndAddress.RoadName != null)
             {
-                YourRoute.FinishPoint = EndAddress.AddressId;
+                EndAddress = EndAddress;
             }
-            if (YourRoute.StartTime != null)
-            {
-                YourRoute.StartTime = YourRoute.StartTime;
-            }
-            if (YourRoute.ArrivalTime != null)
-            {
-                YourRoute.ArrivalTime = YourRoute.ArrivalTime;
-            }
-            if (YourCar.Seats != null)
-            {
-                YourCar.Seats = YourCar.Seats;
-            }
-            
+
+            YourRoute.StartTime = StartTime;
+
+            YourRoute.ArrivalTime = ArrivalTime;
+
+            //if (YourCar.Seats != null)
+            //{
+            //    YourCar.Seats = YourCar.Seats;
+            //}
+
 
             //Update the user. Finds the user based on the primary key (UserId). If a new primary key is somehow inserted, it makes a new user instead.
-            _edb.Cars.Update(YourCar);
             _edb.Routes.Update(YourRoute);
+            _edb.Cars.Update(YourCar);
             _edb.SaveChanges();
 
             //Go to profile for the specified user.

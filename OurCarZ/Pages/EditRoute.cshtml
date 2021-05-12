@@ -18,9 +18,9 @@
     <form method="post">
         <h2>Change the Route details: </h2>
         <div class="form-group">
-            <label for="startaddress">Start Address:</label>
-            <input type="text" id="@Model.StartAddress" name="startaddress">
-            <span asp-validation-for="StartAddress" class="text-danger"></span><br><br>
+            <label for="start">Start Address:</label>
+            <input type="text" id="@Model.Start" name="start">
+            <span asp-validation-for="Start" class="text-danger"></span><br><br>
         </div>
         <div class="form-group">
             <label for="via">Via:</label>
@@ -29,8 +29,8 @@
         </div>
         <div class="form-group">
             <label for="endaddress">End Address:</label>
-            <input type="text" id="@Model.EndAddress" name="endaddress">
-            <span asp-validation-for="EndAddress" class="text-danger"></span><br><br>
+            <input type="text" id="@Model.EndAddress.RoadName" name="endaddress">
+            <span asp-validation-for="EndAddress.RoadName" class="text-danger"></span><br><br>
         </div>
         <div class="form-group">
             <label for="starttime">Start Time:</label>
