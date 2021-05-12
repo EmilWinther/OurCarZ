@@ -11,6 +11,7 @@ namespace OurCarZ.Pages
     public class MyRoutesModel : PageModel
     {
         public List<Route> myRoutes { get; set; }
+        public List<UserRoute> userRoutes { get; set; }
         public Route CurrentRoute { get; set; }
         public EmilDbContext DB = new EmilDbContext();
         public List<Address> AllAddresses { get; set; }
@@ -29,18 +30,30 @@ namespace OurCarZ.Pages
         public IActionResult OnPost(int DeleteRid, int DeleteAid, int userId)
         {
             CurrentUser = DB.Users.Find(userId);
-            var DeleteRoute2 = DB.UserRoutes.Where(x => x.RouteId == DeleteRid).First();
-            DB.UserRoutes.Remove(DeleteRoute2);
+            myRoutes = DB.Routes.ToList();
+            userRoutes = DB.UserRoutes.ToList();
 
-            var DeleteAddress = DB.Addresses.Where(x => x.AddressId == DeleteAid).ToList();
-            foreach (var addresses in DeleteAddress)
+            
+            foreach (var route in myRoutes)
             {
-                DB.Addresses.Remove(addresses);
+                if (CurrentUser.UserId == route.UserId)
+                {
+                    DeleteAid = route.StartPoint;
+                    DB.Routes.Remove(route);
+                }
             }
 
-            DB.UserRoutes.Remove(DeleteRoute2);
+            foreach (var userRoute in userRoutes)
+            {
+                if (CurrentUser.UserId == userRoute.UserId)
+                {
+                    DB.UserRoutes.Remove(userRoute);
+                }
+            }
+
             DB.SaveChanges();
-            return RedirectToPage("/MyRoutes", new { id = CurrentUser.UserId });
+
+            return RedirectToPage("/MyRoutes", new{ id = 6 });
         }
     }
 }
