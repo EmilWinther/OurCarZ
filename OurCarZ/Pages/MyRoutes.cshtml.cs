@@ -32,28 +32,16 @@ namespace OurCarZ.Pages
             CurrentUser = DB.Users.Find(userId);
             myRoutes = DB.Routes.ToList();
             userRoutes = DB.UserRoutes.ToList();
+            DB.Routes.Find(DeleteRid);
 
-            
-            foreach (var route in myRoutes)
+            var RouteUser = DB.Routes.Where(x => x.RouteId == DeleteRid).ToList();
+            foreach (var route in RouteUser)
             {
-                if (CurrentUser.UserId == route.UserId)
-                {
-                    DeleteAid = route.StartPoint;
-                    DB.Routes.Remove(route);
-                }
-            }
-
-            foreach (var userRoute in userRoutes)
-            {
-                if (CurrentUser.UserId == userRoute.UserId)
-                {
-                    DB.UserRoutes.Remove(userRoute);
-                }
+                DB.Routes.Remove(route);
             }
 
             DB.SaveChanges();
-
-            return RedirectToPage("/MyRoutes", new{ id = 6 });
+            return RedirectToPage("/MyRoutes", new {userId = CurrentUser.UserId});
         }
     }
 }

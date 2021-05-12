@@ -45,7 +45,7 @@
                             <form method="post">
                                 <input hidden="hidden" asp-for="@Model.CurrentUser.UserId"/>
 
-                                <button type="submit" asp-route-userId="@Model.CurrentUser.UserId" asp-route-DeleteRid="@routes.RouteId" asp-route-DeleteAid="@add.AddressId" onclick="return confirm('Are you sure you want to change your information?')">Delete</button>
+                                <button type="submit" asp-route-userId="@routes.UserId" asp-route-DeleteRid="@routes.RouteId" asp-route-DeleteAid="@add.AddressId" onclick="return confirm('Are you sure you want to change your information?')">Delete</button>
                             </form>
                         </td>
                     }
