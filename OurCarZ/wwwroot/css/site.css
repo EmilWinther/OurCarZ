@@ -551,7 +551,7 @@ input:checked + .slider:before {
 
 @keyframes TransformDown {
     0% {
-        transform: translateY(50px) rotate(5deg);
+        transform: translateY(50px) rotate(1deg);
         opacity: 0;
     }
 

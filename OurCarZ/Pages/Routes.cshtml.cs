@@ -25,6 +25,7 @@ namespace OurCarZ.Pages
 
         public List<Car> cars;
 
+        public int count;
 
 
         public RoutesModel(EmilDbContext db)
@@ -39,6 +40,7 @@ namespace OurCarZ.Pages
             addresses = DB.Addresses.ToList();
             users = DB.Users.ToList();
             cars = DB.Cars.ToList();
+            count = 0;
         }
 
         public void OnPost()
@@ -78,6 +80,12 @@ namespace OurCarZ.Pages
             }
 
             
+        }
+
+        public int increaseCount()
+        {
+            count++;
+            return count;
         }
 
 

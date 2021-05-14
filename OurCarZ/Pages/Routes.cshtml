@@ -8,17 +8,18 @@
     <br />
     <h3 onclick="animateFilters()" style="cursor: pointer; user-select: none;">Filters <i class="fas fa-chevron-right" id="chevron"></i></h3>
     <form method="post" id="filter" class="filter" style="margin-bottom: 30px;">
-                @* Form for filter *@
-                <input type="text" class="form-control" id="inlineFormInput" name="ZipCodeSearch" placeholder="Zip Code">
-                <input type="date" class="form-control" name="dateOfRoute" id="dateOfRoute" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
-                <button type="submit" class="btn btn-primary">Filter</button>
-            
-        
+        @* Form for filter *@
+        <input class="default-form" id="inlineFormInput" type="text" name="ZipCodeSearch" placeholder="Zip Code"/>
+        <input type="date" class="default-form" name="dateOfRoute" id="dateOfRoute" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+        <button type="submit" class="ubutton">Filter</button>
+
+
     </form>
         <div class="routes">
             @foreach (var route in Model.UsedRoutes)
             {
-                <div class="card mb-3 var-harsh" style="height: 20rem">
+                
+                <div class="card mb-3 var-harsh anim-Load" style="height: 20rem; --i:@Model.increaseCount()">
                     <div class="card-header p-2">
                         <h5 class="card-title">
                             @Model.addresses.Where(a => a.AddressId == route.StartPoint).FirstOrDefault().RoadName,
