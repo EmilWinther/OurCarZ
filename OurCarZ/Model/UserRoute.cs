@@ -19,8 +19,7 @@ namespace OurCarZ.Model
         public int? RouteId { get; set; }
         [Column("UserID")]
         public int? UserId { get; set; }
-        [Column(TypeName = "datetime")]
-        public DateTime? PickupTime { get; set; }
+        public int? Via { get; set; }
 
         [ForeignKey(nameof(RouteId))]
         [InverseProperty("UserRoutes")]
@@ -28,5 +27,8 @@ namespace OurCarZ.Model
         [ForeignKey(nameof(UserId))]
         [InverseProperty("UserRoutes")]
         public virtual User User { get; set; }
+        [ForeignKey(nameof(Via))]
+        [InverseProperty(nameof(Address.UserRoutes))]
+        public virtual Address ViaNavigation { get; set; }
     }
 }
