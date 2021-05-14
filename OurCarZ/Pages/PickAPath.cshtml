@@ -52,6 +52,8 @@
     </script>
 </head>
 <body onload="GetDirections()">
+    @if (Model.Route != null)
+    {
     <form method="post">
         <div id="myMap" style="position: relative; width: 800px; height: 600px;"></div>
 
@@ -66,11 +68,28 @@
 
             <input type="submit" value="Calculate" />
         </div>
-
         <fieldset style="width: 800px; margin-top: 10px;">
             <legend>Simple Custom Directions Input Panel Sample</legend>
             This sample shows how to create a simple custom input panel for direction calculations.
         </fieldset>
-    </form>
+        <br />
+        </form>
+        <form method="post">
+
+            <div style="margin-top: 10px;">
+                <input asp-for="@Model.StartAddress.RoadName" id="fromTbx" type="hidden" />
+
+                <input asp-for="@Model.EndAddress.RoadName" id="toTbx" type="hidden" />
+
+                <input asp-for="@Model.Lookatthisphotopath" id="pather" type="hidden" />
+
+                <input type="submit" value="DEBUG FOR LATER" />
+            </div>
+        </form>
+    }
+    else
+    {
+        <p> something went wrong, try again? </p>
+    }
 </body>
 </html>

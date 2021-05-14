@@ -26,17 +26,14 @@ namespace OurCarZ.Pages
         [BindProperty]
         public string Lookatthisphotopath { get; set; }
 
-        public void OnGet()
+        public void OnGet(int id)
         {
-            StartAddress = new Address();
-            StartAddress.RoadName = "Roskilde, DK";
-            EndAddress = new Address();
-            EndAddress.RoadName = "København, DK";
-        }
-
-        public IActionResult OnPost()
-        {
-            return null;
+            Route = _edb.Routes.Find(id);
+            if (Route != null)
+            {
+                StartAddress = _edb.Addresses.Find(Route.StartPoint);
+                EndAddress = _edb.Addresses.Find(Route.FinishPoint);
+            }
         }
     }
 }
