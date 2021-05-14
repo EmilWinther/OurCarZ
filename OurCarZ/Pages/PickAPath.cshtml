@@ -1,0 +1,76 @@
+﻿@page
+@using OurCarZ.Model
+@model OurCarZ.Pages.PickAPathModel
+@{
+}
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <script type='text/javascript'>
+        var map, directionsManager;
+
+        function GetMap() {
+            map = new Microsoft.Maps.Map('#myMap', {
+                credentials: 'AlLVvMQ7ncFUH_ZyTOTAmH0sSZvoejNtcn9OmuOtPXjsvfiRkwCDM0GFX2wNU0R0',
+                /*customMapStyle: MapStyle*/
+            });
+
+            //Load the directions module.
+            Microsoft.Maps.loadModule('Microsoft.Maps.Directions', function () {
+                //Create an instance of the directions manager.
+                directionsManager = new Microsoft.Maps.Directions.DirectionsManager(map);
+
+                //Specify where to display the route instructions.
+                directionsManager.setRenderOptions({ itineraryContainer: '#directionsItinerary' });
+
+                //Specify the where to display the input panel
+                directionsManager.showInputPanel('directionsPanel');
+            });
+        }
+
+        function GetDirections() {
+            //Clear any previously calculated directions.
+            directionsManager.clearAll();
+            directionsManager.clearDisplay();
+
+            //Create waypoints to route between.
+            var start = new Microsoft.Maps.Directions.Waypoint({ address: document.getElementById('fromTbx').value });
+            directionsManager.addWaypoint(start);
+
+            var middle = new Microsoft.Maps.Directions.Waypoint({ address: document.getElementById('pather').value });
+            directionsManager.addWaypoint(middle);
+
+            var end = new Microsoft.Maps.Directions.Waypoint({ address: document.getElementById('toTbx').value });
+            directionsManager.addWaypoint(end);
+
+            //Calculate directions.
+            directionsManager.calculateDirections();
+        }
+    </script>
+    <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap' async defer>
+    </script>
+</head>
+<body onload="GetDirections()">
+    <form method="post">
+        <div id="myMap" style="position: relative; width: 800px; height: 600px;"></div>
+
+        <div style="margin-top: 10px;">
+            <input asp-for="@Model.StartAddress.RoadName" id="fromTbx" type="hidden" />
+
+            <input asp-for="@Model.EndAddress.RoadName" id="toTbx" type="hidden" />
+
+            <label asp-for="@Model.Lookatthisphotopath" class="custom-control-label"></label>
+            <input asp-for="@Model.Lookatthisphotopath" id="pather" type="text" />
+            <span asp-validation-for="Lookatthisphotopath"></span>
+
+            <input type="submit" value="Calculate" />
+        </div>
+
+        <fieldset style="width: 800px; margin-top: 10px;">
+            <legend>Simple Custom Directions Input Panel Sample</legend>
+            This sample shows how to create a simple custom input panel for direction calculations.
+        </fieldset>
+    </form>
+</body>
+</html>

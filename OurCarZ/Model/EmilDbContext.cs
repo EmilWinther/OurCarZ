@@ -32,7 +32,7 @@ namespace OurCarZ.Model
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=emilzealanddb.database.windows.net;Initial Catalog=emil-db;User ID=emiladmin;Password=Sql12345");
+                optionsBuilder.UseSqlServer("Data Source=emilzealanddb.database.windows.net;Initial Catalog=emil-db;Persist Security Info=True;User ID=emiladmin;Password=Sql12345");
             }
         }
 
@@ -98,6 +98,8 @@ namespace OurCarZ.Model
 
             modelBuilder.Entity<Route>(entity =>
             {
+                entity.Property(e => e.ArrivalTime).HasDefaultValueSql("(getdate())");
+
                 entity.Property(e => e.StartTime).HasDefaultValueSql("(getdate())");
 
                 entity.HasOne(d => d.FinishPointNavigation)
@@ -153,7 +155,17 @@ namespace OurCarZ.Model
                     .WithMany(p => p.UserRoutes)
                     .HasForeignKey(d => d.UserId)
                     .HasConstraintName("FK_UserRoute_ToUser");
+
+                entity.HasOne(d => d.ViaNavigation)
+                    .WithMany(p => p.UserRoutes)
+                    .HasForeignKey(d => d.Via)
+                    .HasConstraintName("FK_UserRoute_ViaPickupPoint");
             });
+
+            //Trick the DBContext into thinking the RatingDatabase Tables "UserRatedID" and "UserRatingID" is a composite primary key,
+            //even though it's a composite Foreign Key. Context doesn't have functionality for tables with no primary key, surprisingly.
+
+            modelBuilder.Entity<RatingDatabase>().HasKey(x => new { x.UserRatedId, x.UserRatingId });
 
             OnModelCreatingPartial(modelBuilder);
         }
