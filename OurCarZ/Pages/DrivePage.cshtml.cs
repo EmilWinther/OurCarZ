@@ -20,6 +20,8 @@ namespace OurCarZ.Pages
 
         [BindProperty]
         public UserRoute CancelUser { get; set; }
+        [BindProperty]
+        public Address ViaAddress { get; set; }
 
         [BindProperty (SupportsGet = true)]
         public User CurrentUser { get; set; }
@@ -37,8 +39,9 @@ namespace OurCarZ.Pages
         public Address StartAddress { get; set; }
         [BindProperty]
         public Address EndAddress { get; set; }
+        public string RouteDate { get; set; }
 
-        public void OnGet(int userId, int routeId, int startAddressId, int endAddressId, int pasId)
+        public void OnGet(int userId, int routeId, int startAddressId, int endAddressId, int viaId)
         {
             //I guess we dont need to find all these ids when we implement login
             //Finds the current user (7)
@@ -51,6 +54,8 @@ namespace OurCarZ.Pages
             EndAddress = _edb.Addresses.Find(endAddressId);
             //Checks if the FK in Route is == PK 
             UserList = _edb.Users.ToList();
+
+            ViaAddress = _edb.Addresses.Find(viaId);
 
             YourCar = _edb.Cars.Find(CurrentUser.LicensePlate);
 
@@ -70,8 +75,11 @@ namespace OurCarZ.Pages
                 YourRoute.FinishPoint = EndAddress.AddressId;
             }
 
-           
-            
+            if (YourRoute.StartTime.Date == YourRoute.ArrivalTime.Value.Date)
+            {
+                RouteDate = YourRoute.StartTime.ToShortDateString();
+            }
+
         }
 
         public IActionResult OnPost(int userId, int routeid, int DeleteID, int startAddressId, int endAddressId)

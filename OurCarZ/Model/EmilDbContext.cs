@@ -98,6 +98,8 @@ namespace OurCarZ.Model
 
             modelBuilder.Entity<Route>(entity =>
             {
+                entity.Property(e => e.ArrivalTime).HasDefaultValueSql("(getdate())");
+
                 entity.Property(e => e.StartTime).HasDefaultValueSql("(getdate())");
 
                 entity.HasOne(d => d.FinishPointNavigation)
@@ -153,6 +155,11 @@ namespace OurCarZ.Model
                     .WithMany(p => p.UserRoutes)
                     .HasForeignKey(d => d.UserId)
                     .HasConstraintName("FK_UserRoute_ToUser");
+
+                entity.HasOne(d => d.ViaNavigation)
+                    .WithMany(p => p.UserRoutes)
+                    .HasForeignKey(d => d.Via)
+                    .HasConstraintName("FK_UserRoute_ViaPickupPoint");
             });
 
             OnModelCreatingPartial(modelBuilder);

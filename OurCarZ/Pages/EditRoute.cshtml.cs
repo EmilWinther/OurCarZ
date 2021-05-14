@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using OurCarZ.Model;
+using Xceed.Wpf.Toolkit;
 
 namespace OurCarZ.Pages
 {
@@ -42,12 +43,12 @@ namespace OurCarZ.Pages
         public string End { get; set; }
         [BindProperty]
         public string Seats { get; set; }
+        public string RouteDate { get; set; }
+        public Address Via { get; set; }
 
 
 
-
-
-        public void OnGet(int userId, int routeId, int startAddressId, int endAddressId)
+        public void OnGet(int userId, int routeId, int startAddressId, int endAddressId, int viaId)
         {
             //I guess we dont need to find all these ids when we implement login
             //Finds the current user (7)
@@ -60,6 +61,12 @@ namespace OurCarZ.Pages
             EndAddress = _edb.Addresses.Find(endAddressId);
             //Checks if the FK in Route is == PK 
             YourCar = _edb.Cars.Find(CurrentUser.LicensePlate);
+            if (YourRoute.StartTime.Date == YourRoute.ArrivalTime.Value.Date)
+            {
+                RouteDate = YourRoute.StartTime.ToShortDateString();
+            }
+
+            Via = _edb.Addresses.Find(viaId);
 
         }
         public IActionResult OnPost()
@@ -82,14 +89,22 @@ namespace OurCarZ.Pages
                 EndAddress.RoadName = End;
             }
 
-            YourRoute.StartTime = StartTime;
+            if (StartTime.Date != DateTime.MinValue)
+            {
+                YourRoute.StartTime = StartTime;
+            }
+            
 
-            YourRoute.ArrivalTime = ArrivalTime;
+            if (ArrivalTime != DateTime.MinValue)
+            {
+                YourRoute.ArrivalTime = ArrivalTime;
+            }
 
             if (Seats != null)
             {
                 YourCar.Seats = Seats;
             }
+
 
 
             //Update the user. Finds the user based on the primary key (UserId). If a new primary key is somehow inserted, it makes a new user instead.
