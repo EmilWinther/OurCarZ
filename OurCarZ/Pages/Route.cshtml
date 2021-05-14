@@ -46,8 +46,16 @@
 
 
             //Create waypoints to route between.
-            directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: '@*@Html.Raw(Model.StartPoint)*@ Roskilde, Dk' }));
-            directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: '@*@Html.Raw(Model.FinishPoint)*@ København, Dk' }));
+            @if (Model.route != null)
+            {
+                @: directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: '@Html.Raw(Model.StartPoint)' }));
+                @: directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: '@Html.Raw(Model.FinishPoint)' }));
+            }
+            else
+            {
+                @: directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: 'Roskilde, Dk' }));
+                @: directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: 'København, Dk' }));
+            }
 
             //Set the request options that avoid highways and uses kilometers.
             directionsManager.setRequestOptions({
