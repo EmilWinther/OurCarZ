@@ -44,11 +44,12 @@ namespace OurCarZ.Pages
         [BindProperty]
         public string Seats { get; set; }
         public string RouteDate { get; set; }
-        public Address Via { get; set; }
+        public List<Address> AddressList { get; set; }
+        public List<UserRoute> PassengerList { get; set; }
 
 
 
-        public void OnGet(int userId, int routeId, int startAddressId, int endAddressId, int viaId)
+        public void OnGet(int userId, int routeId, int startAddressId, int endAddressId)
         {
             //I guess we dont need to find all these ids when we implement login
             //Finds the current user (7)
@@ -66,9 +67,18 @@ namespace OurCarZ.Pages
                 RouteDate = YourRoute.StartTime.ToShortDateString();
             }
 
-            Via = _edb.Addresses.Find(viaId);
+            AddressList = _edb.Addresses.Where(s => s.AddressId > 0).ToList();
+            IQueryable<UserRoute> userRouteList = from s in _edb.UserRoutes
+                select s;
+
+            userRouteList = userRouteList.Where(s => s.RouteId == routeId);
+            PassengerList = userRouteList.ToList();
 
         }
+
+        
+
+
         public IActionResult OnPost()
         {
             YourRoute = _edb.Routes.Find(YourRoute.RouteId);
