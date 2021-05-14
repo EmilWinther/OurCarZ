@@ -38,6 +38,10 @@ namespace OurCarZ.Pages
         public DateTime ArrivalTime { get; set; }
         [BindProperty]
         public string Start { get; set; }
+        [BindProperty]
+        public string End { get; set; }
+        [BindProperty]
+        public string Seats { get; set; }
 
 
 
@@ -73,19 +77,19 @@ namespace OurCarZ.Pages
             {
                 StartAddress.RoadName = Start;
             }
-            if (EndAddress.RoadName != null)
+            if (End != null)
             {
-                EndAddress = EndAddress;
+                EndAddress.RoadName = End;
             }
 
             YourRoute.StartTime = StartTime;
 
             YourRoute.ArrivalTime = ArrivalTime;
 
-            //if (YourCar.Seats != null)
-            //{
-            //    YourCar.Seats = YourCar.Seats;
-            //}
+            if (Seats != null)
+            {
+                YourCar.Seats = Seats;
+            }
 
 
             //Update the user. Finds the user based on the primary key (UserId). If a new primary key is somehow inserted, it makes a new user instead.
