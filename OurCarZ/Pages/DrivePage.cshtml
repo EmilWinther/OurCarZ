@@ -11,14 +11,17 @@
     {
         <h3>Hello @Model.CurrentUser.FirstName @Model.CurrentUser.LastName Thank you for making this route.</h3><br/>
         <p>From: @Model.StartAddress.RoadName</p>
-        <p>
-            Via: @*@foreach (var user in Model.PassengerList)
+        <p> via:
+            @foreach (var passenger in Model.PassengerList.Take(int.Parse(Model.YourCar.Seats)))
             {
-                if (user.Via == Model.StartAddress.AddressId)
+                @foreach (var address in Model.AddressList)
                 {
-                    @Model.StartAddress.RoadName;
+                    if (address.AddressId.Equals(passenger.Via))
+                    {
+                        <p>@address.RoadName @address.ZipCode</p>
+                    }
                 }
-            }*@
+            }
         </p>
        
         <p>To: @Model.EndAddress.RoadName </p>
@@ -34,7 +37,7 @@
             <p>Date: @Model.RouteDate</p>
         }
         <br>
-        <a class="button" asp-area="" asp-page="/EditRoute" asp-route-routeid="@Model.YourRoute.RouteId" asp-route-userId="@Model.CurrentUser.UserId" asp-route-startAddressId="@Model.StartAddress.AddressId" asp-route-endAddressId="@Model.EndAddress.AddressId" asp-route-viaId="@Model.ViaAddress.AddressId">Change Route</a><br>
+        <a class="button" asp-area="" asp-page="/EditRoute" asp-route-routeid="@Model.YourRoute.RouteId" asp-route-userId="@Model.CurrentUser.UserId" asp-route-startAddressId="@Model.StartAddress.AddressId" asp-route-endAddressId="@Model.EndAddress.AddressId">Change Route</a><br>
         <a class="button" asp-area="" asp-page="/RateYourDriver" asp-route-id="">Start Route</a><br>
 
         @* redirects to the route by the routeid *@
@@ -70,27 +73,27 @@
                         }
                     }
                     <td>
-                        <p>
-                            Via: @*@foreach (var user in Model.PassengerList)
-            {
-                if (user.Via == Model.StartAddress.AddressId)
-                {
-                    @Model.StartAddress.RoadName;
-                }
-            }*@
-                        </p>
+                        @foreach (var address in Model.AddressList)
+                            {
+                                if (address.AddressId.Equals(passenger.Via))
+                                {
+                                    <p>@address.RoadName @address.ZipCode</p>
+                                }
+                            }
                     </td>
                     <td>
                         <form method="post">
                             <input hidden="hidden" asp-for="@passenger.UserRouteId"/>
                             <button type="submit" asp-route-DeleteID="@passenger.UserRouteId" asp-route-routeid="@passenger.RouteId" asp-route-userId="@Model.CurrentUser.UserId" asp-route-startAddressId="@Model.StartAddress.AddressId" asp-route-endAddressId="@Model.EndAddress.AddressId"
-                                    onclick="return confirm('Are you sure you want to cancel?')">cancel Passenger</button>
+                                    onclick="return confirm('Are you sure you want to cancel?')">
+                                cancel Passenger
+                            </button>
                         </form>
                     </td>
                     <th>
                         @foreach (var message in Model.YourMessages)
                         {
-                            if (((message.MessageFrom == passenger.UserId) || (message.MessageTo == passenger.UserId)) && ((message.MessageFrom == @Model.CurrentUser.UserId) || (message.MessageTo == @Model.CurrentUser.UserId)))
+                            if ((message.MessageFrom == passenger.UserId || (message.MessageTo == passenger.UserId)) && ((message.MessageFrom == @Model.CurrentUser.UserId) || (message.MessageTo == @Model.CurrentUser.UserId)))
                             {
                                 <p>You have message(s) from this user</p>
                             }
