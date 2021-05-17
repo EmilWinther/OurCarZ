@@ -38,7 +38,10 @@
         }
         <br>
         <a class="button" asp-area="" asp-page="/EditRoute" asp-route-routeid="@Model.YourRoute.RouteId" asp-route-userId="@Model.CurrentUser.UserId" asp-route-startAddressId="@Model.StartAddress.AddressId" asp-route-endAddressId="@Model.EndAddress.AddressId">Change Route</a><br>
-        <a class="button" asp-area="" asp-page="/RateYourDriver" asp-route-id="">Start Route</a><br>
+        <form asp-route-routeid="@Model.YourRoute.RouteId" asp-route-userId="@Model.CurrentUser.UserId" asp-route-startAddressId="@Model.StartAddress.AddressId" asp-route-endAddressId="@Model.EndAddress.AddressId" asp-page-handler="start" method="post">
+            <button class="btn btn-default">Start Route</button>
+            </form>
+        
 
         @* redirects to the route by the routeid *@
         <a class="btn" type="button" asp-page="Route" asp-route-id="@Model.YourRoute.RouteId">
