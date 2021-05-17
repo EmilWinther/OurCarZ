@@ -3,6 +3,7 @@ for details on configuring this project to bundle and minify static web assets. 
 
 .theme-light {
     --color-primary: #ffffa4;
+    --color-lighter: #ffffb6;
     --color-secondary: #ffffd3;
     --color-harsh: #ffff99;
     --color-accent: #fd6f53;
@@ -12,8 +13,8 @@ for details on configuring this project to bundle and minify static web assets. 
 }
 
 .theme-dark {
-
     --color-primary: #181818;
+    --color-lighter: #212121;
     --color-secondary: #333333;
     --color-harsh: #1b1b1b;
     --color-accent: #12cdea;
@@ -65,15 +66,23 @@ hr {
     filter: var(--filter);
 }
 
+.svg {
+    width:clamp(30vw, 35vw, 90%);
+}
+
 .navbar-brand h2 {
     margin-bottom:0px;
 }
 
+form {
+    padding:0;
+}
+
 .form-container {
-    width: 60%;
+    width: clamp(80%, 60vw, 90%);
     margin: 60px auto;
     background: var(--color-secondary);
-    padding: 60px 120px 80px 120px;
+    padding: 60px 7% 80px 7%;
     text-align: center;
     -webkit-box-shadow: 2px 2px 3px rgba(0,0,0,0.1);
     box-shadow: 2px 2px 3px rgba(0,0,0,0.1);
@@ -97,7 +106,7 @@ hr {
 }
 
 label {
-    margin-top: 0.2rem;
+    margin-top: 0.25rem;
     margin-bottom: 0.2rem;
 }
 
@@ -349,9 +358,13 @@ html {
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
-  background-color: var(--color-primary)
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    background-color: var(--color-primary);
+    background: linear-gradient(45deg, var(--color-primary) 0%, var(--color-primary) 0% 55%, var(--color-lighter) 55%, var(--color-lighter) 80%, var(--color-primary) 80%);
+    min-height: 100vh;
+    width: 100vw;
+    height: auto;
 }
 .footer {
   position: absolute;
