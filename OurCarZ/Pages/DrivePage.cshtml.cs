@@ -39,6 +39,7 @@ namespace OurCarZ.Pages
         [BindProperty]
         public Address EndAddress { get; set; }
         public string RouteDate { get; set; }
+     
 
         public void OnGet(int userId, int routeId, int startAddressId, int endAddressId)
         {
