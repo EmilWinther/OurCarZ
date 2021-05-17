@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -39,10 +40,12 @@ namespace OurCarZ.Pages
         [BindProperty]
         public Address EndAddress { get; set; }
         public string RouteDate { get; set; }
-     
+        public List<Message> MessageList { get; set; }
+        public bool Debug { get; set; }
 
         public void OnGet(int userId, int routeId, int startAddressId, int endAddressId)
         {
+            Debug = false;
             //I guess we dont need to find all these ids when we implement login
             //Finds the current user (7)
             CurrentUser = _edb.Users.Find(userId);
@@ -82,6 +85,8 @@ namespace OurCarZ.Pages
             }
 
         }
+
+
 
         public IActionResult OnPost(int userId, int routeid, int DeleteID, int startAddressId, int endAddressId)
         {

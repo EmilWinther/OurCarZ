@@ -93,23 +93,24 @@
                             </button>
                         </form>
                     </td>
-                    @*<th>
+                    <th>
                         @foreach (var message in Model.YourMessages)
                         {
                             if ((message.MessageFrom == passenger.UserId || message.MessageTo == passenger.UserId) && (message.MessageFrom == Model.CurrentUser.UserId || message.MessageTo == Model.CurrentUser.UserId))
                             {
-                                Model.MessageList.Add(message);
+                                Model.Debug = true;
                             }
                         }
-                        @if (Model.MessageList != null)
+                        @if (Model.Debug == true)
                         {
-                            <p>You have no message(s) from this user</p>
+                            <p>You have message(s) from this user</p>
                         }
                         else
                         {
                             <p>You have no message(s) from this user</p>
                         }
-                    </th>*@
+
+                    </th>
                     <th>
                         <a asp-route-page="/MyMessages" asp-route-id="@Model.CurrentUser.UserId" 
                            class="btn btn-success btn-group-lg pull-right">
