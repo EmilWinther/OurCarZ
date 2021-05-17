@@ -40,12 +40,12 @@ namespace OurCarZ.Pages
         [BindProperty]
         public Address EndAddress { get; set; }
         public string RouteDate { get; set; }
-        public List<Message> MessageList { get; set; }
-        public bool Debug { get; set; }
+  
+        public List<string> MessageList { get; set; }
+        
 
         public void OnGet(int userId, int routeId, int startAddressId, int endAddressId)
         {
-            Debug = false;
             //I guess we dont need to find all these ids when we implement login
             //Finds the current user (7)
             CurrentUser = _edb.Users.Find(userId);
@@ -84,6 +84,7 @@ namespace OurCarZ.Pages
                 RouteDate = YourRoute.StartTime.ToShortDateString();
             }
 
+
         }
 
 
@@ -98,6 +99,13 @@ namespace OurCarZ.Pages
             EndAddress = _edb.Addresses.Find(endAddressId);
             CancelUser = _edb.UserRoutes.Find(DeleteID);
 
+            Message msg = new Message();
+            msg.MessageFrom = CurrentUser.UserId;
+            msg.DateTime = DateTime.Now;
+            msg.MessageText = $"You have been removed from route {StartAddress.RoadName} to {EndAddress.RoadName} start time {YourRoute.StartTime} by {CurrentUser.FirstName} {CurrentUser.LastName}";
+            msg.MessageTo = CancelUser.UserId;
+            
+            _edb.Messages.Add(msg);
             _edb.UserRoutes.Remove(CancelUser);
             _edb.SaveChanges();
 
@@ -130,7 +138,6 @@ namespace OurCarZ.Pages
 
             return RedirectToPage("/Rating/RatingPage", new { UserId = CurrentUser.UserId, routeId = YourRoute.RouteId, startAddressId = StartAddress.AddressId, endAddressId = EndAddress.AddressId });
         }
-
 
     }
 }

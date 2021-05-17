@@ -1,5 +1,6 @@
 ﻿@page
 @using Microsoft.VisualBasic
+@using OurCarZ.Model
 @using OurCarZ.Pages.UserPages
 @model OurCarZ.Pages.DrivePageModel
 @{
@@ -98,16 +99,23 @@
                         {
                             if ((message.MessageFrom == passenger.UserId || message.MessageTo == passenger.UserId) && (message.MessageFrom == Model.CurrentUser.UserId || message.MessageTo == Model.CurrentUser.UserId))
                             {
-                                Model.Debug = true;
+                                if (Model.MessageList == null || Model.MessageList.Count == 0)
+                                {
+                                    Model.MessageList = new List<string>();
+                                    Model.MessageList.Add(message.ToString());
+                                }
+
                             }
                         }
-                        @if (Model.Debug == true)
+                        @if (Model.MessageList == null || Model.MessageList.Count == 0)
                         {
-                            <p>You have message(s) from this user</p>
+                            <p>You have no message(s) from this user</p>
+
                         }
                         else
                         {
-                            <p>You have no message(s) from this user</p>
+                            <p>You have message(s) from this user</p>
+                            Model.MessageList.Clear();
                         }
 
                     </th>
