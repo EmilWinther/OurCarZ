@@ -31,8 +31,8 @@ namespace OurCarZ
         {
 
             services.AddRazorPages();
-            services.AddSingleton<EmilDbContext>();
             services.AddSingleton<IUserPersistence, UserPersistence>();
+            services.AddSingleton<IRoutePersistence, RoutePersistence>();
             services.AddSingleton<EmilDbContext>();
             services.Configure<CookiePolicyOptions>(options => {
 
