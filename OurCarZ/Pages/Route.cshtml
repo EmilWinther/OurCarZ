@@ -48,15 +48,15 @@
             //Create waypoints to route between.
             @if (Model.route != null)
             {
-                @: directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: '@Html.Raw(Model.StartPoint)' }));
-                @if (Model.ExtraStopsDupe != null)
+                @: directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: '@Html.Raw(@Model.CombineZipAndRoad(Model.route.StartPoint))' }));
+                @if (Model.XtraStopsDupe != null)
                 {
-                    foreach (string stop in Model.ExtraStopsDupe)
+                    foreach (int? numb in Model.XtraStopsDupe)
                     {
-                        @: directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: '@Html.Raw(stop)' }));
+                        @: directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: '@Html.Raw(@Model.CombineZipAndRoad(numb))' }));
                     }
                 }
-                @: directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: '@Html.Raw(Model.FinishPoint)' }));
+                @: directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: '@Html.Raw(@Model.CombineZipAndRoad(Model.route.FinishPoint))' }));
             }
             else
             {

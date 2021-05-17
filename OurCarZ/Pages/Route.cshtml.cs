@@ -19,17 +19,23 @@ namespace OurCarZ.Pages
         [BindProperty]
         public string FinishPoint { get; set; }
         public List<string> ExtraStops { get; set; }
-        public List<string> ExtraStopsDupe { get; set; }
+        public List<int?> XtraStopsDupe { get; set; }
         public RouteModel(EmilDbContext edb) 
         {
             DB = edb;
+        }
+        public string CombineZipAndRoad(int? id) 
+        {
+            string returner;
+            returner = DB.Addresses.Find(id).RoadName + " " + DB.Addresses.Find(id).ZipCode;
+            return returner;
         }
         public void ExtraWaypoints(int router) 
         {
             List<int?> XtraStops;
             XtraStops = DB.UserRoutes.Where(x => x.RouteId == router)
                 .Select(x => x.Via).ToList();
-            List<int?> XtraStopsDupe = XtraStops.Distinct().ToList();
+            XtraStopsDupe = XtraStops.Distinct().ToList();
             if (XtraStopsDupe.Contains(route.StartPoint)) 
             {
                 XtraStopsDupe.Remove(route.StartPoint);
@@ -39,7 +45,8 @@ namespace OurCarZ.Pages
                 XtraStopsDupe.Remove(route.FinishPoint);
             }
             ExtraStops = new List<string>();
-            ExtraStopsDupe = new List<string>();
+
+            List<string> ExtraStopsDupe = new List<string>();
             foreach (int? y in XtraStopsDupe) 
             {
                 ExtraStopsDupe.Add(DB.Addresses.Find(y).RoadName);
