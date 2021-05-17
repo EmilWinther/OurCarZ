@@ -1,0 +1,58 @@
+﻿@page
+@model OurCarZ.Pages.MyRoutesModel
+@{
+}
+<div class="item-container">
+    <h1>Hello @Model.CurrentUser.FirstName @Model.CurrentUser.LastName. This is all your routes.</h1><br />
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Route id</th>
+            <th>Start Address</th>
+            <th>StartAddress id</th>
+            <th>Startpoint</th>
+            <td>End Address</td>
+            <td>End address id</td>
+            <td>End finish point</td>
+            <td>StartTime</td>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var routes in Model.myRoutes)
+        {
+            if (@Model.CurrentUser.UserId.Equals(routes.UserId))
+            {
+            <tr>
+                @foreach (var add in Model.AllAddresses)
+                {
+                    if (add.AddressId.Equals(routes.StartPoint))
+                    {
+                            <td>@routes.RouteId</td>
+                            <td>@add.RoadName</td>
+                            <td>@add.AddressId</td>
+                            <td>@routes.StartPoint</td>
+                    }
+                }
+                @foreach (var add in Model.AllAddresses)
+                {
+                    if (add.AddressId.Equals(routes.FinishPoint))
+                    {
+                            <td>@add.RoadName</td>
+                            <td>@add.AddressId</td>
+                            <td>@routes.FinishPoint</td>
+                            <td>@routes.StartTime</td>
+                        <td>
+                            <form method="post">
+                                <input hidden="hidden" asp-for="@Model.CurrentUser.UserId"/>
+
+                                <button type="submit" asp-route-userId="@routes.UserId" asp-route-DeleteRid="@routes.RouteId" asp-route-DeleteAid="@add.AddressId" onclick="return confirm('Are you sure you want to change your information?')">Delete</button>
+                            </form>
+                        </td>
+                    }
+                }
+        </tr>
+            }
+        }
+        </tbody>
+    </table>
+</div>

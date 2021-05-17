@@ -1,4 +1,5 @@
 ﻿@page
+@using OurCarZ.Pages.UserPages
 @model YourProfileModel
 @{
     ViewData["Title"] = "Profile Page for the Found User";
@@ -13,12 +14,9 @@
     <p>License Plate: @Model.FoundUser.LicensePlate</p>
     <p>Rating: @Model.avg</p>
     <br>
-    <a class="button" asp-area="" asp-page="/" asp-route-id="@Model.FoundUser.UserId">Send messages</a>
-
-    <a class="button" asp-area="" asp-page="/Index" asp-route-id="">Sign Out</a>
+    <a class="button" asp-area="" asp-page="/SendMessage" asp-route-id="@LogInPageModel.LoggedInUser.UserId" asp-route-id2="@Model.FoundUser.UserId">Send messages</a>
 }
 else
 {
     <p>You can't be found!</p>
 }
-<a class="button" asp-area="" asp-page="/Profile" asp-route-id="7">My Profile</a>

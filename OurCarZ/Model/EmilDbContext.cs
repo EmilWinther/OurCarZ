@@ -21,6 +21,7 @@ namespace OurCarZ.Model
         public virtual DbSet<Address> Addresses { get; set; }
         public virtual DbSet<Car> Cars { get; set; }
         public virtual DbSet<Institution> Institutions { get; set; }
+        public virtual DbSet<Message> Messages { get; set; }
         public virtual DbSet<RatingDatabase> RatingDatabases { get; set; }
         public virtual DbSet<Route> Routes { get; set; }
         public virtual DbSet<User> Users { get; set; }
@@ -31,7 +32,7 @@ namespace OurCarZ.Model
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=emilzealanddb.database.windows.net;Initial Catalog=emil-db;User ID=emiladmin;Password=Sql12345;Connect Timeout=30;Encrypt=True");
+                optionsBuilder.UseSqlServer("Data Source=emilzealanddb.database.windows.net;Initial Catalog=emil-db;User ID=emiladmin;Password=Sql12345");
             }
         }
 
@@ -67,6 +68,21 @@ namespace OurCarZ.Model
                 entity.Property(e => e.Zipcode).IsUnicode(false);
             });
 
+            modelBuilder.Entity<Message>(entity =>
+            {
+                entity.Property(e => e.MessageText).IsUnicode(false);
+
+                entity.HasOne(d => d.MessageFromNavigation)
+                    .WithMany(p => p.MessageMessageFromNavigations)
+                    .HasForeignKey(d => d.MessageFrom)
+                    .HasConstraintName("FK__Messages__Messag__3B40CD36");
+
+                entity.HasOne(d => d.MessageToNavigation)
+                    .WithMany(p => p.MessageMessageToNavigations)
+                    .HasForeignKey(d => d.MessageTo)
+                    .HasConstraintName("FK__Messages__Messag__3A4CA8FD");
+            });
+
             modelBuilder.Entity<RatingDatabase>(entity =>
             {
                 entity.HasOne(d => d.UserRated)
@@ -82,6 +98,8 @@ namespace OurCarZ.Model
 
             modelBuilder.Entity<Route>(entity =>
             {
+                entity.Property(e => e.ArrivalTime).HasDefaultValueSql("(getdate())");
+
                 entity.Property(e => e.StartTime).HasDefaultValueSql("(getdate())");
 
                 entity.HasOne(d => d.FinishPointNavigation)
@@ -137,6 +155,11 @@ namespace OurCarZ.Model
                     .WithMany(p => p.UserRoutes)
                     .HasForeignKey(d => d.UserId)
                     .HasConstraintName("FK_UserRoute_ToUser");
+
+                entity.HasOne(d => d.ViaNavigation)
+                    .WithMany(p => p.UserRoutes)
+                    .HasForeignKey(d => d.Via)
+                    .HasConstraintName("FK_UserRoute_ViaPickupPoint");
             });
 
             OnModelCreatingPartial(modelBuilder);

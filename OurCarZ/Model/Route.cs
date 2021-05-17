@@ -16,23 +16,24 @@ namespace OurCarZ.Model
         {
             UserRoutes = new HashSet<UserRoute>();
         }
-
         public Route(int id, int sp, int fp)
         {
+            UserRoutes = new HashSet<UserRoute>();
             RouteId = id;
             StartPoint = sp;
             FinishPoint = fp;
         }
-
         [Key]
         [Column("RouteID")]
         public int RouteId { get; set; }
         public int StartPoint { get; set; }
         public int FinishPoint { get; set; }
-        [Column(TypeName = "date")]
+        [Column(TypeName = "datetime")]
         public DateTime StartTime { get; set; }
         [Column("UserID")]
         public int? UserId { get; set; }
+        [Column(TypeName = "datetime")]
+        public DateTime? ArrivalTime { get; set; }
 
         [ForeignKey(nameof(FinishPoint))]
         [InverseProperty(nameof(Address.RouteFinishPointNavigations))]
