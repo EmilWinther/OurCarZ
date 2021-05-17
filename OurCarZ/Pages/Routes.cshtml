@@ -42,8 +42,10 @@
     <div class="card-footer">
         @* Shows the map *@
         <a class="btn" type="button" asp-page="Route" asp-route-id="@route.RouteId"><i class="fas fa-map-marked-alt" title="View Route"></i></a>
+        @* Choose route *@
+        <a class="button" type="button" asp-page="ChosenRoute" asp-route-userId="6" asp-route-routeId="@route.RouteId"><i class="fas fa-map-marked-alt" title="Choose route"></i></a>
         @* Shows the details of the route *@
-        <a class="btn" type="button" asp-page="RouteDetails" asp-route-id="@route.RouteId"><i class="fas fa-info-circle" title="View Details"></i></a>
+        <a class="btn" type="button" asp-page="RouteDetails" asp-route-routeId="@route.RouteId" asp-route-driverId="34"><i class="fas fa-info-circle" title="View Details"></i></a>
         @* If you are the creater of the route the button to edit it will appear. (To be implemented. *@
         <a class="btn" type="button" asp-page="EditRoute" asp-route-id="@route.RouteId"><i class="fas fas fa-edit" title="Edit Route"></i></a>
     </div>

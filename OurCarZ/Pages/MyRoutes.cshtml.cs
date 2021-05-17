@@ -27,7 +27,7 @@ namespace OurCarZ.Pages
             AllAddresses = DB.Addresses.ToList();
         }
 
-        public IActionResult OnPost(int DeleteRid, int DeleteAid, int userId)
+        public IActionResult OnPost(int DeleteRid, int userId)
         {
             CurrentUser = DB.Users.Find(userId);
             myRoutes = DB.Routes.ToList();
