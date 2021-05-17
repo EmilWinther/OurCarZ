@@ -49,6 +49,13 @@
             @if (Model.route != null)
             {
                 @: directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: '@Html.Raw(Model.StartPoint)' }));
+                @if (Model.ExtraStopsDupe != null)
+                {
+                    foreach (string stop in Model.ExtraStopsDupe)
+                    {
+                        @: directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: '@Html.Raw(stop)' }));
+                    }
+                }
                 @: directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: '@Html.Raw(Model.FinishPoint)' }));
             }
             else
@@ -80,3 +87,11 @@
     }
 </script>
 <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap' async defer></script>
+@if (Model.ExtraStops != null)
+{ 
+    <p>Extraordinary Stopping Points for this Route is: </p>
+    foreach (string stopch in Model.ExtraStops)
+    {
+        <p>RoadName: @stopch</p>
+    }
+}
