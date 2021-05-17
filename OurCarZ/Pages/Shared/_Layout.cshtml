@@ -22,37 +22,36 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link font-primary" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link font-primary" asp-area="" asp-page="/Routes">Routes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link font-primary" asp-area="" asp-page="/Route">Route</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link font-primary" asp-area="" asp-page="/UserPages/RegisterPage">Sign up</a>
-                        </li>
-                        <li class="nav-item">
 
-                            <a class="nav-link font-primary" asp-area="" asp-page="/Profile" asp-route-id="6">Profile</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link font-primary" asp-area="" asp-page="/EditProfile" asp-route-id="6">Edit Profile</a>
-                        </li>
-                        <li class="nav-item">
 
-                            <a class="nav-link font-primary" asp-area="" asp-page="/Your Profile" asp-route-id="6">Your Profile</a>
-                        </li>
-                        <label id="switch" class="switch">
-                            <input type="checkbox" onchange="toggleTheme()" id="slider">
-                            <span class="slider round"></span>
-                        </label>
                     </ul>
+                    
+                    <h3 style="cursor: pointer; user-select: none;" class="font-primary" onclick="openProfileBox()"><i class="fas fa-user" style="font-size: 2rem; margin-right: 20px;" title="Your Profile"></i></h3>
+                    <a class="nav-link font-primary" asp-area="" asp-page="/UserPages/RegisterPage"><div class="ubutton">Sign up</div></a>
+                    <a class="nav-link font-primary" asp-area="" asp-page="/UserPages/LogIn"><div class="ubutton">Log In</div></a>
+
 
                 </div>
             </div>
         </nav>
+        <div class="profile-popup" id="myForm">
+            <a class="nav-link font-primary" asp-area="" asp-page="/Routes"><i class="fas fa-map-marked-alt"></i>Your Routes</a>
+            <a class="nav-link font-primary" asp-area="" asp-page="/Profile" asp-route-id="6"><i class="fas fa-user-alt"></i>Your Profile</a>
+            <hr />
+
+            <p><i class="fas fa-moon"></i>Dark Theme</p>
+
+            <div class="toggle">
+                <input type="checkbox" onchange="toggleTheme()" id="toggle" aria-checked="false";>
+                <label class="slider" for="toggle">
+                    
+                </label>
+            </div>
+        </div>
     </header>
     <div class="container">
         <div class="loadingWrapper"><img src="~/Pictures/Logo.png" alt="logo" style="width:20vw;"></div>
@@ -74,7 +73,7 @@
     @await RenderSectionAsync("Scripts", required: false)
 
     <script>
-
+        var profilebool = 0;
         let wrapper = document.querySelector('.loadingWrapper');
 
         window.addEventListener('load', function () {
@@ -98,20 +97,39 @@
         }
         // function to toggle between light and dark theme
         function toggleTheme() {
+            
             if (localStorage.getItem('theme') === 'theme-dark') {
                 setTheme('theme-light');
+
             } else {
                 setTheme('theme-dark');
+
             }
         }
         // Immediately invoked function to set the theme on initial load
         (function () {
+            let checkbox = document.getElementById('toggle');
             if (localStorage.getItem('theme') === 'theme-dark') {
                 setTheme('theme-dark');
+                checkbox.setAttribute('checked', 'checked');
             } else {
                 setTheme('theme-light');
+                checkbox.removeAttribute('checked');
             }
         })();
+
+        function openProfileBox() {
+            if (profilebool == 0) {
+                profilebool = 1;
+                document.getElementById("myForm").style.display = "block";
+                return;
+            }
+            if (profilebool == 1) {
+                profilebool = 0;
+                document.getElementById("myForm").style.display = "none";
+                return;
+            }
+        }
     </script>
 </body>
 </html>

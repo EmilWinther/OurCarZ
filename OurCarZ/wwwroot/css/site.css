@@ -2,16 +2,6 @@
 for details on configuring this project to bundle and minify static web assets. */
 
 .theme-light {
-    --color-primary: #181818;
-    --color-secondary: #333333;
-    --color-harsh: #1b1b1b;
-    --color-accent: #12cdea;
-    --font-color: #ffffa4;
-    --font-weak: #61614b;
-    --filter: invert(87%) sepia(36%) saturate(394%) hue-rotate(3deg) brightness(108%) contrast(107%);
-}
-
-.theme-dark {
     --color-primary: #ffffa4;
     --color-secondary: #ffffd3;
     --color-harsh: #ffff99;
@@ -19,6 +9,17 @@ for details on configuring this project to bundle and minify static web assets. 
     --font-color: black;
     --font-weak: #5f5f5f;
     --filter: invert(0%) sepia(23%) saturate(413%) hue-rotate(335deg) brightness(97%) contrast(81%);
+}
+
+.theme-dark {
+
+    --color-primary: #181818;
+    --color-secondary: #333333;
+    --color-harsh: #1b1b1b;
+    --color-accent: #12cdea;
+    --font-color: #ffffa4;
+    --font-weak: #61614b;
+    --filter: invert(87%) sepia(36%) saturate(394%) hue-rotate(3deg) brightness(108%) contrast(107%);
 }
 
 .color-prim{
@@ -35,10 +36,17 @@ for details on configuring this project to bundle and minify static web assets. 
 
 h1, h2, h3, h4, h5, h6, p, label {
     color: var(--font-color);
+    margin-bottom: 0px !important;
 }
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Bebas Neue', cursive;
+}
+
+hr {
+    margin: 1rem 1rem;
+    background-color: var(--font-weak)
+
 }
 
 .fa, .fas {
@@ -120,7 +128,7 @@ label {
     text-decoration: none;
     color: var(--font-color);
     border: var(--font-color) 0.125em solid;
-    padding: 0.15em 0.8em;
+    padding: 0.15em 0.8em 0em 0.8em;
     font-family: 'Bebas Neue', cursive;
     border-radius: 0.25em;
     position: relative;
@@ -161,6 +169,16 @@ form .ubutton {
     width: 100% !important;
     background-color: var(--color-primary);
     font-size: 1.4rem !important;
+}
+
+.navbar-collapse .ubutton {
+    font-size: 1rem;
+    border-radius: 1em;
+    margin-left: -30px;
+}
+
+.navbar{
+    padding-bottom: 0.3rem;
 }
 
 .ProfileGrid {
@@ -401,69 +419,45 @@ body {
 /*CSS for dark-light switch*/
 
 /* The switch - the box around the slider */
-.switch {
-    position: relative;
+.toggle {
+    margin-left: 1rem;
+    position:absolute;
+}
+
+#toggle {
+    display: none;
+}
+
+.toggle .slider {
+    width: 2rem;
+    height: 1rem;
     display: inline-block;
-    width: 60px;
-    height: 34px;
-    margin-top: auto;
-    margin-bottom: auto;
-}
-
-    /* Hide default HTML checkbox */
-    .switch input {
-        opacity: 0;
-        width: 0;
-        height: 0;
-    }
-
-/* The slider */
-.slider {
-    position: absolute;
+    border-radius: 40px;
+    border: 1px solid var(--font-color);
     cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    -webkit-transition: 0.4s;
-    transition: 0.4s;
+    transition: background .15s;
+    position: relative;
 }
 
-    .slider:before {
-        position: absolute;
-        content: "";
-        height: 40px;
-        width: 40px;
-        left: 0px;
-        bottom: 4px;
-        top: 0;
-        bottom: 0;
-        margin: auto 0;
-        -webkit-transition: 0.4s;
-        transition: 0.4s;
-        box-shadow: 0 0px 15px #2020203d;
-        background: white url('https://i.ibb.co/FxzBYR9/night.png');
-        background-repeat: no-repeat;
-        background-position: center;
-    }
-
-input:checked + .slider {
-    background-color: #2196f3;
+.slider::after {
+    content: '';
+    width: 1rem;
+    height: 1rem;
+    background: var(--font-color);
+    border-radius: 50%;
+    transition: all .15s;
+    transform: scale(0.8);
+    position:absolute;
+    left: -1px;
+    top: -1px;
 }
 
-input:focus + .slider {
-    box-shadow: 0 0 1px #2196f3;
+
+
+#toggle:checked ~ .slider::after {
+    transform: translateX(1rem) scale(0.8);
 }
 
-input:checked + .slider:before {
-    -webkit-transform: translateX(24px);
-    -ms-transform: translateX(24px);
-    transform: translateX(24px);
-    background: white url('https://i.ibb.co/7JfqXxB/sunny.png');
-    background-repeat: no-repeat;
-    background-position: center;
-}
 
 /* Rounded sliders */
 .slider.round {
@@ -475,10 +469,32 @@ input:checked + .slider:before {
     }
 
 
-/*Animation Keyframes*/
+.profile-popup {
+    display: none;
+    position: fixed;
+    top: 65px;
+    right: 15px;
+    border: 3px solid var(--color-secondary);
+    z-index: 9;
+    width: 200px;
+    height: 600px;
+    border-radius: 0.35em;
+    background-color: var(--color-primary);
+    -webkit-box-shadow: 0px 7px 7px 1px #000000;
+    box-shadow: 0px 7px 7px 1px #000000;
+}
 
-@keyframes slidein {
-    0% {
+    .profile-popup p, h3, h4, h5 {
+        margin-left: 1rem;
+    }
+
+    .profile-popup .fas {margin-right: 10px;}
+
+
+
+    /*Animation Keyframes*/
+    @keyframes slidein {
+        0% {
         width: 0px;
         margin-bottom: 30px;
         opacity: 0%;
@@ -551,7 +567,7 @@ input:checked + .slider:before {
 
 @keyframes TransformDown {
     0% {
-        transform: translateY(50px) rotate(1deg);
+        transform: translateY(35px) rotate(1deg);
         opacity: 0;
     }
 
@@ -578,3 +594,4 @@ input:checked + .slider:before {
         opacity: 1;
     }
 }
+
