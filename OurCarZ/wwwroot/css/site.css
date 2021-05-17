@@ -97,7 +97,7 @@ hr {
 }
 
 label {
-    margin-top: 0.5rem;
+    margin-top: 0.3rem;
     margin-bottom: 0.2rem;
 }
 
@@ -416,13 +416,20 @@ body {
     animation-fill-mode: forwards;
 }
 
+section p {
+    display: inline-block;
+}
+
 /*CSS for dark-light switch*/
 
 /* The switch - the box around the slider */
 .toggle {
     margin-left: 1rem;
     position:absolute;
+    display: inline-block;
 }
+
+
 
 #toggle {
     display: none;
@@ -477,7 +484,8 @@ body {
     border: 3px solid var(--color-secondary);
     z-index: 9;
     width: 200px;
-    height: 600px;
+    height: max-content;
+    padding-bottom: 1em;
     border-radius: 0.35em;
     background-color: var(--color-primary);
     -webkit-box-shadow: 0px 7px 7px 1px #000000;

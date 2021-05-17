@@ -42,15 +42,16 @@
             <a class="nav-link font-primary" asp-area="" asp-page="/Routes"><i class="fas fa-map-marked-alt"></i>Your Routes</a>
             <a class="nav-link font-primary" asp-area="" asp-page="/Profile" asp-route-id="6"><i class="fas fa-user-alt"></i>Your Profile</a>
             <hr />
+            <section>
+                <p><i class="fas fa-moon"></i>Dark Theme</p>
 
-            <p><i class="fas fa-moon"></i>Dark Theme</p>
+                <div class="toggle">
+                    <input type="checkbox" onchange="toggleTheme()" id="toggle" aria-checked="false" ;>
+                    <label class="slider" for="toggle">
 
-            <div class="toggle">
-                <input type="checkbox" onchange="toggleTheme()" id="toggle" aria-checked="false";>
-                <label class="slider" for="toggle">
-                    
-                </label>
-            </div>
+                    </label>
+                </div>
+            </section>
         </div>
     </header>
     <div class="container">
