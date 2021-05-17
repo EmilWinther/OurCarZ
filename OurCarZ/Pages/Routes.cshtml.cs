@@ -51,7 +51,6 @@ namespace OurCarZ.Pages
 
             if (!string.IsNullOrEmpty(ZipCode))
             {
-
                 UsedRoutes = new List<Route>();
 
                 foreach (var route in allRoutes)
@@ -63,7 +62,7 @@ namespace OurCarZ.Pages
                 }
             }
             else { UsedRoutes = allRoutes; }
-
+            
             if (date != null)
             {
                 foreach (var route in UsedRoutes.ToList())

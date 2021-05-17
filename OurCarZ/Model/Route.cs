@@ -16,7 +16,13 @@ namespace OurCarZ.Model
         {
             UserRoutes = new HashSet<UserRoute>();
         }
-
+        public Route(int id, int sp, int fp)
+        {
+            UserRoutes = new HashSet<UserRoute>();
+            RouteId = id;
+            StartPoint = sp;
+            FinishPoint = fp;
+        }
         [Key]
         [Column("RouteID")]
         public int RouteId { get; set; }
