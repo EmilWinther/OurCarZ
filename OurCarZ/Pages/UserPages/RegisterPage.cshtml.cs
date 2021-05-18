@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OurCarZ.Model;
-using OurCarZ.Services;
 using System.ComponentModel.DataAnnotations;
 
 namespace OurCarZ.Pages.UserPages
@@ -44,7 +39,7 @@ namespace OurCarZ.Pages.UserPages
         [BindProperty]
         [StringLength(7)]
         public string? LicensePlate { get; set; }
-        #nullable disable
+#nullable disable
         public IActionResult OnPost()
         {
             if (!ModelState.IsValid)

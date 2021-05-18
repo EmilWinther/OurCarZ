@@ -1,12 +1,8 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using OurCarZ.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using OurCarZ.Pages.UserPages;
+using System.Linq;
 
 namespace OurCarZ.Pages
 {
@@ -36,7 +32,7 @@ namespace OurCarZ.Pages
                 var reviews = (from x in DB.RatingDatabases where x.UserRatedId.Equals(id) select x).ToList();
                 avg = (from x in reviews select x.Rating).Average();
             }
-            
+
         }
     }
 }

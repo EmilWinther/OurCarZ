@@ -1,12 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OurCarZ.Model;
-using OurCarZ.Services;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace OurCarZ.Pages
 {
@@ -15,11 +11,11 @@ namespace OurCarZ.Pages
         public EmilDbContext _edb = new EmilDbContext();
         public DrivePageModel(EmilDbContext edb)
         {
-            _edb = edb; 
+            _edb = edb;
         }
 
 
-        [BindProperty (SupportsGet = true)]
+        [BindProperty(SupportsGet = true)]
         public User CurrentUser { get; set; }
         [BindProperty]
         public List<User> UserList { get; set; }

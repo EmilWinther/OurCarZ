@@ -5,8 +5,49 @@
 <h1>Choose route</h1>
 <h2>Are you sure you want to join this route?</h2>
 
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <script type='text/javascript'>
+        var map, directionsManager;
 
-@* Make yes do something lol *@
+        function GetMap()
+        {
+            map = new Microsoft.Maps.Map('#myMap', {});
+
+            //Load the directions module.
+            Microsoft.Maps.loadModule('Microsoft.Maps.Directions', function () {
+                //Create an instance of the directions manager.
+                directionsManager = new Microsoft.Maps.Directions.DirectionsManager(map);
+
+                //Specify where to display the route instructions.
+                directionsManager.setRenderOptions({ itineraryContainer: '#directionsItinerary' });
+
+                //Specify the where to display the input panel
+                directionsManager.showInputPanel('directionsPanel');
+            });
+        }
+
+        function GetDirections() {
+            //Clear any previously calculated directions.
+            directionsManager.clearAll();
+            directionsManager.clearDisplay();
+
+            //Create waypoints to route between.
+            var start = new Microsoft.Maps.Directions.Waypoint({ address: '@*@Html.Raw(Model.AModel)*@ Roskilde, Dk'});
+            directionsManager.addWaypoint(start);
+
+            var end = new Microsoft.Maps.Directions.Waypoint({ address: '@*@Html.Raw(Model.AModel)*@ København, Dk' });
+            directionsManager.addWaypoint(end);
+
+            //Calculate directions.
+            directionsManager.calculateDirections();
+        }
+    </script>
+    <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap' async defer></script>
+</head>
+
+
 <a asp-route-page="/Rating/RatingPage"
    class="btn btn-success btn-group-lg pull-right">
     Yes
@@ -33,14 +74,6 @@
 <p>Driver: @Model.Driver.FirstName @Model.Driver.LastName</p>
 
 <p>Seats left: 0/4 (non functional)</p>
-@*<p>massive picture of a route which we dont have working</p>
-    <p>From: @Model.ChosenRoute.RouteId </p>
-    <p>Destination: </p>
-    <p>departure time: @Model.ChosenRoute.StartTime</p>
-    <p>arrival time: @Model.ChosenRoute.ArrivalTime</p>
-    <p>seats left: 0/4</p>
-    <p>Date: @Model.ChosenRoute.Star*@<!--tTime</p>-->
-
 
 <a asp-route-page="/SendMessage" asp-route-id="@Model.CurrentUser.UserId" asp-route-id2="@Model.myRoute.UserId" asp-route-id3="@Model.CurrentUser.UserId"
    class="btn btn-success btn-group-lg pull-right">
@@ -52,5 +85,3 @@
    class="btn btn-success btn-group-lg pull-right">
     Make pickup point
 </a>
-
-

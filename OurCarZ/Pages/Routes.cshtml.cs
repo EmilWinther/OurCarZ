@@ -1,10 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OurCarZ.Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace OurCarZ.Pages
 {
@@ -14,13 +13,13 @@ namespace OurCarZ.Pages
         [BindProperty] public DateTime date { get; set; }
 
         public EmilDbContext DB = new EmilDbContext();
-        
+
         public List<Route> UsedRoutes = new List<Route>();
-        
+
         public List<Address> addresses;
-        
+
         public List<User> users;
-        
+
         public List<Car> cars;
 
         public RoutesModel(EmilDbContext db)

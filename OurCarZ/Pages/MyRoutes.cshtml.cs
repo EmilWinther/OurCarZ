@@ -1,10 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OurCarZ.Model;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace OurCarZ.Pages
 {
@@ -41,7 +39,7 @@ namespace OurCarZ.Pages
             }
 
             DB.SaveChanges();
-            return RedirectToPage("/MyRoutes", new {userId = CurrentUser.UserId});
+            return RedirectToPage("/MyRoutes", new { userId = CurrentUser.UserId });
         }
     }
 }

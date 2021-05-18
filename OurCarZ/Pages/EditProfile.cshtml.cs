@@ -1,12 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using OurCarZ.Model;
+using System.ComponentModel.DataAnnotations;
 
 namespace OurCarZ.Pages
 {
@@ -16,7 +12,7 @@ namespace OurCarZ.Pages
         public EmilDbContext DB = new EmilDbContext();
         [BindProperty]
         public User currentUser { get; set; }
-        #nullable enable
+#nullable enable
         [BindProperty]
         [StringLength(50)]
         public string? FirstName { get; set; }
@@ -42,7 +38,7 @@ namespace OurCarZ.Pages
         [BindProperty]
         [StringLength(7)]
         public string? LicensePlate { get; set; }
-        #nullable disable
+#nullable disable
         public EditProfileModel(ILogger<EditProfileModel> logger, EmilDbContext db)
         {
             _logger = logger;
@@ -97,7 +93,7 @@ namespace OurCarZ.Pages
             DB.SaveChanges();
 
             //Go to profile for the specified user.
-            return RedirectToPage("/Profile", new { id = currentUser.UserId});
+            return RedirectToPage("/Profile", new { id = currentUser.UserId });
         }
     }
 }
