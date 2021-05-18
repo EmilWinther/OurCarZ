@@ -12,8 +12,6 @@
         <input type="text" class="form-control" id="inlineFormInput" name="ZipCodeSearch" placeholder="Zip Code">
         <input type="date" class="form-control" name="dateOfRoute" id="dateOfRoute" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
         <button type="submit" class="btn btn-primary">Filter</button>
-
-
     </form>
     <div class="routes">
         @foreach (var route in Model.UsedRoutes)
@@ -33,19 +31,16 @@
         <p class="card-text">Kører: @Model.users.Where(u => u.UserId == route.UserId).Select(u => u.FirstName).DefaultIfEmpty("--Option unknown--").First()</p>
         <p class="card-text">Tidspunkt: @route.StartTime </p>
         <p class="card-text">
-            Antal Pladser: 0 / @Model.cars.Where(c => c.LicensePlate ==
+            Antal Pladser: @Model.UsedRoutes.Count(s => s.RouteId == route.RouteId) / @Model.cars.Where(c => c.LicensePlate ==
             Model.users.Where(u => u.UserId == route.UserId)
             .Select(u => u.LicensePlate).DefaultIfEmpty("--Option unknown--")
             .First()).Select(c => c.Seats).DefaultIfEmpty("--Option unknown--").First()
         </p>
     </div>
     <div class="card-footer">
-        @* Shows the map *@
-        <a class="btn" type="button" asp-page="Route" asp-route-id="@route.RouteId"><i class="fas fa-map-marked-alt" title="View Route"></i></a>
-        @* Shows the details of the route *@
-        <a class="btn" type="button" asp-page="RouteDetails" asp-route-id="@route.RouteId"><i class="fas fa-info-circle" title="View Details"></i></a>
-        @* If you are the creater of the route the button to edit it will appear. (To be implemented. *@
-        <a class="btn" type="button" asp-page="EditRoute" asp-route-id="@route.RouteId"><i class="fas fas fa-edit" title="Edit Route"></i></a>
+        @* Shows the choose route page *@
+        <a class="btn" type="button" asp-page="ChosenRoute" asp-route-id="@route.RouteId"><i class="fas fa-map-marked-alt" title="View Route"></i></a>
+        
     </div>
 </div>            }
     </div>

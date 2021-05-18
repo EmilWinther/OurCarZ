@@ -25,13 +25,13 @@ namespace OurCarZ.Pages
         [BindProperty]
         public Address EndAddress { get; set; }
 
-        public void OnGet()
-        {
-        }
-
-        public IActionResult OnPost(int id)
+        public void OnGet(int id)
         {
             CurrentUser = _edb.Users.Find(id);
+        }
+
+        public IActionResult OnPost()
+        {
             if (ModelState.IsValid)
             {
 

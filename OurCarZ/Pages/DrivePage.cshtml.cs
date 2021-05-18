@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OurCarZ.Model;
+using OurCarZ.Pages.UserPages;
 using OurCarZ.Services;
 
 namespace OurCarZ.Pages
@@ -44,11 +45,11 @@ namespace OurCarZ.Pages
         public List<string> MessageList { get; set; }
         
 
-        public void OnGet(int userId, int routeId, int startAddressId, int endAddressId)
+        public void OnGet(int routeId, int startAddressId, int endAddressId)
         {
             //I guess we dont need to find all these ids when we implement login
             //Finds the current user (7)
-            CurrentUser = _edb.Users.Find(userId);
+            CurrentUser = _edb.Users.Find(LogInPageModel.LoggedInUser.UserId);
             //finds route 9
             YourRoute = _edb.Routes.Find(routeId);
             //finds AddressId 1
@@ -89,9 +90,9 @@ namespace OurCarZ.Pages
 
 
 
-        public IActionResult OnPost(int userId, int routeid, int DeleteID, int startAddressId, int endAddressId)
+        public IActionResult OnPost(int routeid, int DeleteID, int startAddressId, int endAddressId)
         {
-            CurrentUser = _edb.Users.Find(userId);
+            CurrentUser = _edb.Users.Find(LogInPageModel.LoggedInUser.UserId);
             YourRoute = _edb.Routes.Find(routeid);
             //finds AddressId 1
             StartAddress = _edb.Addresses.Find(startAddressId);

@@ -1,5 +1,6 @@
 ﻿@page
 @using OurCarZ.Model
+@using OurCarZ.Pages.UserPages
 @model OurCarZ.Pages.CreateRouteModel
 @{
 }
@@ -65,8 +66,7 @@
     <div><b>Remember to write the name or zipcode of the city</b></div>
 </form>
 <form method="post">
-    <input hidden="hidden" asp-for="@Model.CurrentUser.UserId" />
-    <button type="submit" asp-route-id="@Model.CurrentUser.UserId" asp-route-routeId="" onclick="return confirm('Are you sure you want to continue?')">On to Drive Page</button>
+    <button type="submit" asp-route-routeId="" asp-page="/DrivePage" onclick="return confirm('Are you sure you want to continue?')">On to Drive Page</button>
 </form>
 
 </body>
