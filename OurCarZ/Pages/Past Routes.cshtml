@@ -1,107 +1,93 @@
 ﻿@page
+@using OurCarZ.Model
 @model OurCarZ.Pages.Past_RoutesModel
 @{
-    ViewData["zipCode"] = "ZipCodeSearch";
 }
-<div class="routes-container">
-    <h1>Routes</h1>
+
+<div class="item-container">
     <br/>
-    <h3 onclick="animateFilters()" style="cursor: pointer; user-select: none;">Filters <i class="fas fa-chevron-right" id="chevron"></i></h3>
-    <form method="post" id="filter" class="filter" style="margin-bottom: 30px;">
-        @* Form for filter *@
-        <input type="text" class="form-control" id="inlineFormInput" name="ZipCodeSearch" placeholder="Zip Code">
-        <input type="date" class="form-control" name="dateOfRoute" id="dateOfRoute" value="@DateTime.Today.ToString("yyyy-MM-dd")"/>
-        <button type="submit" class="btn btn-primary">Filter</button>
 
-
-    </form>
-    <div class="routes">
-        @foreach (var id in Model.RouteList)
-        {
-            <div class="card mb-3" style="height: 20rem">
-                <div class="card-header p-2">
-                    <h5 class="card-title">
-                        @foreach (var userRoutes in Model.PassengerRoutes)
+    @if (Model.CurrentUser != null)
+    {
+        <h3>Past Routes</h3><br/>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Driver</th>
+                <th>Route start</th>
+                <th>Route end</th>
+                <th>Map</th>
+                <th>Like</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var id in Model.RouteList)
+            {
+                <tr>
+                    @*Denne her foreach er for at finde de ruter hvor useren er Driver*@
+                    @foreach (var userRoutes in Model.UsedRoutes)
+                    {
+                        if (id == userRoutes.RouteId)
                         {
-                            if (id == userRoutes.RouteId)
+                            foreach (var routes in Model.UsedRoutes.Where(s => s.RouteId == id && s.ArrivalTime < DateTime.Now))
                             {
-                                foreach (var routes in Model.UsedRoutes.Where(s => s.RouteId == id && s.ArrivalTime < DateTime.Now))
-                                {
-                                    <div class="card-body">
-                                        <p class="card-text">Kører: @Model.users.Where(u => u.UserId == routes.UserId).Select(u => u.FirstName).DefaultIfEmpty("--Option unknown--").First()</p>
-                                        <p class="card-text">Tidspunkt: @routes.StartTime </p>
-                                        <p class="card-text">
-                                            Antal Pladser: 0 / @Model.cars.Where(c => c.LicensePlate ==
-                                                                                      Model.users.Where(u => u.UserId == routes.UserId)
-                                                                                          .Select(u => u.LicensePlate).DefaultIfEmpty("--Option unknown--")
-                                                                                          .First()).Select(c => c.Seats).DefaultIfEmpty("--Option unknown--").First()
-                                        </p>
-                                    </div>
-                                }
+                                <td>
+                                    <p>@Model.users.Where(u => u.UserId == routes.UserId).Select(u => u.FirstName).DefaultIfEmpty("--Option unknown--").First() @Model.users.Where(u => u.UserId == routes.UserId).Select(u => u.LastName).DefaultIfEmpty("--Option unknown--").First()</p>
+                                </td>
+                                <td>
+                                    <p>address: @Model.addresses.Where(a => a.AddressId == routes.StartPoint).Select(a => a.RoadName).First() time: @routes.StartTime </p>
+                                </td>
+                                <td>
+                                    <p>address: @Model.addresses.Where(a => a.AddressId == routes.FinishPoint).Select(a => a.RoadName).First() time: @routes.ArrivalTime </p>
+
+                                </td>
+                                <td>
+                                    <a class="btn" type="button" asp-page="Route" asp-route-id="@id">
+                                        <i class="fas fa-map-marked-alt" title="View Route"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a class="btn" type="button" asp-page="FavRoute" asp-route-id="@id" asp-route-routeId="@routes.RouteId">
+                                        <i class="fas fa-heart" title="Like"></i>
+                                    </a>
+                                </td>
                             }
                         }
-                        @foreach (var routes in Model.UsedRoutes.Where(s => s.ArrivalTime > DateTime.Now))
+                    }
+                    @*Denne her foreach er for at finde de ruter hvor useren er passager*@
+                    @foreach (var routes in Model.PassengerRoutes.Where(p => p.RouteId == id))
+                    {
+                        if (Model.DB.Routes.Find(routes.RouteId).ArrivalTime < DateTime.Now)
                         {
-                            if (id == routes.RouteId)
-                            {
-                                <div class="card-body">
-                                    <p class="card-text">Kører: @Model.users.Where(u => u.UserId == routes.UserId).Select(u => u.FirstName).DefaultIfEmpty("--Option unknown--").First()</p>
-                                    <p class="card-text">Tidspunkt: @routes.StartTime </p>
-                                    <p class="card-text">
-                                        Antal Pladser: 0 / @Model.cars.Where(c => c.LicensePlate ==
-                                                                                  Model.users.Where(u => u.UserId == routes.UserId)
-                                                                                      .Select(u => u.LicensePlate).DefaultIfEmpty("--Option unknown--")
-                                                                                      .First()).Select(c => c.Seats).DefaultIfEmpty("--Option unknown--").First()
-                                    </p>
-                                </div>
-                            }
+                            <td>
+                                <p>@Model.DB.Users.Find(Model.DB.Routes.Find(routes.RouteId).UserId).FirstName @Model.DB.Users.Find(Model.DB.Routes.Find(routes.RouteId).UserId).LastName</p>
+                            </td>
+                            <td>
+                                <p>address: @Model.addresses.Where(a => a.AddressId == Model.DB.Routes.Find(routes.RouteId).StartPoint).Select(a => a.RoadName).First() time: @Model.DB.Routes.Find(routes.RouteId).StartTime </p>
+                            </td>
+                            <td>
+                                address: @Model.addresses.Where(a => a.AddressId == Model.DB.Routes.Find(routes.RouteId).FinishPoint).Select(a => a.RoadName).First() time: @Model.DB.Routes.Find(routes.RouteId).ArrivalTime
+
+                            </td>
+                            <td>
+                                <a class="btn" type="button" asp-page="Route" asp-route-id="@id">
+                                    <i class="fas fa-map-marked-alt" title="View Route"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <a class="btn" type="button" asp-page="FavRoute" asp-route-id="@id" asp-route-routeId="@routes.RouteId">
+                                    <i class="fas fa-heart" title="Like"></i>
+                                </a>
+                            </td>
                         }
-                    </h5>
-                </div>
-                <div class="card-footer">
-                    Shows the map
-                    <!--<a class="btn" type="button" asp-page="Route" asp-route-id="@id">
-        <i class="fas fa-map-marked-alt" title="View Route"></i>
-    </a>-->
-                    Shows the details of the route
-                    <!--<a class="btn" type="button" asp-page="RouteDetails" asp-route-id="@@id">
-        <i class="fas fa-info-circle" title="View Details"></i>
-    </a>-->
-                    If you are the creater of the route the button to edit it will appear. (To be implemented.
-                    <a class="btn" type="button" asp-page="EditRoute" asp-route-id="@id">
-                        <i class="fas fas fa-edit" title="Edit Route"></i>
-                    </a>
-                </div>
-            </div>
-        }
-        }
-
-    </div>
-</div>
-
-<script>
-    var animated = 0;
-    function animateFilters() {
-        if (animated == false) {
-            //Animate Filter div in
-            document.getElementById('filter').classList.add("animateIn");
-            document.getElementById('filter').classList.remove("disappear");
-
-            //Animate chevron down
-            document.getElementById('chevron').classList.remove("rotateUp");
-            document.getElementById('chevron').classList.add("rotateDown");
-            animated = 1;
-        }
-        else if (animated = true) {
-            //animate Filter div out
-            document.getElementById('filter').classList.remove("animateIn");
-            document.getElementById('filter').classList.add("disappear");
-
-            //Animate chevron up
-            document.getElementById('chevron').classList.remove("rotateDown");
-            document.getElementById('chevron').classList.add("rotateUp");
-            animated = 0;
-        }
-
+                    }
+                </tr>
+            }
+            </tbody>
+        </table>
     }
-</script>
+    else
+    {
+        <p>You can't be found!</p>
+    }
+</div>
