@@ -21,13 +21,21 @@ namespace OurCarZ.Pages
         public string StartPoint { get; set; }
         [BindProperty]
         public string FinishPoint { get; set; }
+        [BindProperty]
+        public List<User> UserList { get; set; }
+        [BindProperty]
+        public Car YourCar { get; set; }
         public void OnGet(int userId, int routeId)
         {
+            UserList = DB.Users.ToList();
             CurrentUser = DB.Users.Find(userId);
             currentAddress = DB.Addresses.ToList();
             myRoute = DB.Routes.Find(routeId);
             EndAddress = DB.Addresses.ToList();
+            UserList = DB.Users.ToList();
+            YourCar = DB.Cars.Find(CurrentUser.LicensePlate);
 
+            PassengerList = DB.UserRoutes.ToList();
 
             StartPoint = DB.Addresses.Find(myRoute.StartPoint).RoadName;
             FinishPoint = DB.Addresses.Find(myRoute.FinishPoint).RoadName;
