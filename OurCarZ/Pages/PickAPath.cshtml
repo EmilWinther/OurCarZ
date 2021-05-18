@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{id:int}"
 @using OurCarZ.Model
 @model OurCarZ.Pages.PickAPathModel
 @{
@@ -34,15 +34,27 @@
             directionsManager.clearAll();
             directionsManager.clearDisplay();
 
-            //Create waypoints to route between.
-            var start = new Microsoft.Maps.Directions.Waypoint({ address: document.getElementById('fromTbx').value });
-            directionsManager.addWaypoint(start);
-
-            var middle = new Microsoft.Maps.Directions.Waypoint({ address: document.getElementById('pather').value });
-            directionsManager.addWaypoint(middle);
-
-            var end = new Microsoft.Maps.Directions.Waypoint({ address: document.getElementById('toTbx').value });
-            directionsManager.addWaypoint(end);
+            @if (Model.Route != null)
+            {
+                @: directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: '@Html.Raw(@Model.CombineZipAndRoad(Model.Route.StartPoint))' }));
+                @if (Model.XtraStopsDupe != null)
+                {
+                    foreach (int? numb in Model.XtraStopsDupe)
+                    {
+                        @: directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: '@Html.Raw(@Model.CombineZipAndRoad(numb))' }));
+                    }
+                }
+                @if (Model.PhotopathAdr != null)
+                {
+                    @: directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: '@Html.Raw(@Model.PhotopathAdr.RoadName)' }));
+                }
+                @: directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: '@Html.Raw(@Model.CombineZipAndRoad(Model.Route.FinishPoint))' }));
+            }
+            else
+            {
+                @: directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: 'Roskilde, Dk' }));
+                @: directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: 'København, Dk' }));
+            }
 
             //Calculate directions.
             directionsManager.calculateDirections();
@@ -54,7 +66,7 @@
 <body onload="GetDirections()">
     @if (Model.Route != null)
     {
-    <form method="post">
+    <form asp-route-id="@Model.Route.RouteId" method="post">
         <div id="myMap" style="position: relative; width: 800px; height: 600px;"></div>
 
         <div style="margin-top: 10px;">
@@ -62,9 +74,13 @@
 
             <input asp-for="@Model.EndAddress.RoadName" id="toTbx" type="hidden" />
 
-            <label asp-for="@Model.Lookatthisphotopath" class="custom-control-label"></label>
-            <input asp-for="@Model.Lookatthisphotopath" id="pather" type="text" />
-            <span asp-validation-for="Lookatthisphotopath"></span>
+            <label asp-for="@Model.PhotopathAdr.RoadName" class="custom-control-label"></label>
+            <input asp-for="@Model.PhotopathAdr.RoadName" type="text" />
+            <span asp-validation-for="PhotopathAdr.RoadName"></span>
+
+            <label asp-for="@Model.PhotopathAdr.ZipCode" class="custom-control-label"></label>
+            <input asp-for="@Model.PhotopathAdr.ZipCode" type="text" />
+            <span asp-validation-for="PhotopathAdr.ZipCode"></span>
 
             <input type="submit" value="Calculate" />
         </div>
@@ -74,16 +90,15 @@
         </fieldset>
         <br />
         </form>
-        <form method="post">
-
+        <form asp-page-handler="request" method="post">
             <div style="margin-top: 10px;">
                 <input asp-for="@Model.StartAddress.RoadName" id="fromTbx" type="hidden" />
 
                 <input asp-for="@Model.EndAddress.RoadName" id="toTbx" type="hidden" />
 
-                <input asp-for="@Model.Lookatthisphotopath" id="pather" type="hidden" />
+                <input asp-for="@Model.PhotopathAdr" id="pather" type="hidden" />
 
-                <input type="submit" value="DEBUG FOR LATER" />
+                <input type="submit" value="Request Pickup" />
             </div>
         </form>
     }
