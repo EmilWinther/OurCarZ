@@ -34,8 +34,13 @@ namespace OurCarZ.Pages
             EndAddress = DB.Addresses.ToList();
             UserList = DB.Users.ToList();
             YourCar = DB.Cars.Find(CurrentUser.LicensePlate);
+            IQueryable<UserRoute> userRouteList = from s in DB.UserRoutes
+                select s;
 
-            PassengerList = DB.UserRoutes.ToList();
+            userRouteList = userRouteList.Where(s => s.RouteId == routeId);
+
+
+            PassengerList = userRouteList.ToList();
 
             StartPoint = DB.Addresses.Find(myRoute.StartPoint).RoadName;
             FinishPoint = DB.Addresses.Find(myRoute.FinishPoint).RoadName;

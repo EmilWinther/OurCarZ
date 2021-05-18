@@ -112,28 +112,15 @@
     }
 }
 <p>Driver: @Model.Driver.FirstName @Model.Driver.LastName</p>
-}
 
-@*  *@
     @foreach (var passenger in Model.PassengerList.Take(int.Parse(@Model.YourCar.Seats)))
     {
-        <tr>
-            <td>
-                @foreach (var user in Model.UserList)
-                {
-                    if (user.UserId.Equals(passenger.UserId))
-                    {
-                        <a asp-route-page="/Your Profile" asp-route-id="@passenger.UserId"
-                           class="btn btn-success btn-group-lg pull-right">
-                            <p>@user.FirstName @user.LastName</p>
-                        </a>
-                    }
-                }
-            </td>
-        </tr>
+        @foreach (var user in Model.UserList)
+        {
+
+        }
     }
 
-@*  *@
 
 
 <a asp-route-page="/SendMessage" asp-route-id="@Model.CurrentUser.UserId" asp-route-id2="@Model.myRoute.UserId" asp-route-id3="@Model.CurrentUser.UserId"

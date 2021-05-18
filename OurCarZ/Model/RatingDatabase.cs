@@ -23,15 +23,5 @@ namespace OurCarZ.Model
         public virtual User UserRated { get; set; }
         [ForeignKey(nameof(UserRatingId))]
         public virtual User UserRating { get; set; }
-        public RatingDatabase()
-        {
-
-        }
-        public RatingDatabase(int Rater, int rating, int Rated)
-        {
-            UserRatedId = Rated;
-            Rating = rating;
-            UserRatingId = Rater;
-        }
     }
 }
