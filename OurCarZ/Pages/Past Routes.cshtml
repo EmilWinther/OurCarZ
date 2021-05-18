@@ -6,7 +6,6 @@
 
 <div class="item-container">
     <br/>
-
     @if (Model.CurrentUser != null)
     {
         <h3>Past Routes</h3><br/>
@@ -17,7 +16,7 @@
                 <th>Route start</th>
                 <th>Route end</th>
                 <th>Map</th>
-                <th>Like</th>
+                @*<th>Like</th>*@
             </tr>
             </thead>
             <tbody>
@@ -46,11 +45,11 @@
                                         <i class="fas fa-map-marked-alt" title="View Route"></i>
                                     </a>
                                 </td>
-                                <td>
+                                @*<td>
                                     <a class="btn" type="button" asp-page="FavRoute" asp-route-id="@id" asp-route-routeId="@routes.RouteId">
                                         <i class="fas fa-heart" title="Like"></i>
                                     </a>
-                                </td>
+                                </td>*@
                             }
                         }
                     }
@@ -74,11 +73,11 @@
                                     <i class="fas fa-map-marked-alt" title="View Route"></i>
                                 </a>
                             </td>
-                            <td>
+                            @*<td>
                                 <a class="btn" type="button" asp-page="FavRoute" asp-route-id="@id" asp-route-routeId="@routes.RouteId">
                                     <i class="fas fa-heart" title="Like"></i>
                                 </a>
-                            </td>
+                            </td>*@
                         }
                     }
                 </tr>
