@@ -17,6 +17,8 @@ namespace OurCarZ.Pages
             _edb = edb;
         }
         [BindProperty]
+        public User CurrentUser { get; set; }
+        [BindProperty]
         public Route Route { get; set; }
         [BindProperty]
         public Address StartAddress { get; set; }
@@ -27,8 +29,9 @@ namespace OurCarZ.Pages
         {
         }
 
-        public IActionResult OnPost()
+        public IActionResult OnPost(int id)
         {
+            CurrentUser = _edb.Users.Find(id);
             if (ModelState.IsValid)
             {
 

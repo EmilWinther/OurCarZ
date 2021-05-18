@@ -49,24 +49,25 @@
     </script>
 </head>
 <body onload="GetDirections()">
-    <form method="post">
-        <div id="myMap" style="position: relative; width: 800px; height: 600px;"></div>
+<form method="post">
+    <div id="myMap" style="position: relative; width: 800px; height: 600px;"></div>
 
-        <div style="margin-top: 10px;">
-            <label asp-for="@Model.StartAddress.RoadName" class="custom-control-label"></label>
-            From: <input asp-for="@Model.StartAddress.RoadName" id="fromTbx" type="text" />
-            <span asp-validation-for="StartAddress.RoadName"></span>
+    <div style="margin-top: 10px;">
+        <label asp-for="@Model.StartAddress.RoadName" class="custom-control-label"></label>
+        From: <input asp-for="@Model.StartAddress.RoadName" id="fromTbx" type="text" />
+        <span asp-validation-for="StartAddress.RoadName"></span>
 
-            <label asp-for="@Model.EndAddress.RoadName" class="custom-control-label"></label>
-            To: <input asp-for="@Model.EndAddress.RoadName" id="toTbx" type="text" />
-            <span asp-validation-for="EndAddress.RoadName"></span>
-            <input type="submit" value="Calculate" />
-        </div>
+        <label asp-for="@Model.EndAddress.RoadName" class="custom-control-label"></label>
+        To: <input asp-for="@Model.EndAddress.RoadName" id="toTbx" type="text" />
+        <span asp-validation-for="EndAddress.RoadName"></span>
+        <input type="submit" value="Calculate" />
+    </div>
+    <div><b>Remember to write the name or zipcode of the city</b></div>
+</form>
+<form method="post">
+    <input hidden="hidden" asp-for="@Model.CurrentUser.UserId" />
+    <button type="submit" asp-route-id="@Model.CurrentUser.UserId" asp-route-routeId="" onclick="return confirm('Are you sure you want to continue?')">On to Drive Page</button>
+</form>
 
-        <fieldset style="width: 800px; margin-top: 10px;">
-            <legend>Simple Custom Directions Input Panel Sample</legend>
-            This sample shows how to create a simple custom input panel for direction calculations.
-        </fieldset>
-    </form>
 </body>
 </html>

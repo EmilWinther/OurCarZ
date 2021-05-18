@@ -62,7 +62,7 @@ namespace OurCarZ.Pages.UserPages
             currentUser.Email = Email;
             currentUser.LicensePlate = LicensePlate;
             currentUser.Password = passwordHasher.HashPassword(null, Password);
-            currentUser.ConfirmPassword = passwordHasher.HashPassword(null, ConfirmPassword);
+            currentUser.ConfirmPassword = currentUser.Password;
 
             if (currentUser.Password == currentUser.ConfirmPassword)
             {
