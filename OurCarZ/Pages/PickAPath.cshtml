@@ -2,6 +2,7 @@
 @using OurCarZ.Model
 @model OurCarZ.Pages.PickAPathModel
 @{
+    ViewData["Title"] = "Pickup Point for Route";
 }
 <html>
 <head>
@@ -70,33 +71,26 @@
         <div id="myMap" style="position: relative; width: 800px; height: 600px;"></div>
 
         <div style="margin-top: 10px;">
-            <input asp-for="@Model.StartAddress.RoadName" id="fromTbx" type="hidden" />
-
-            <input asp-for="@Model.EndAddress.RoadName" id="toTbx" type="hidden" />
-
             <label asp-for="@Model.PhotopathAdr.RoadName" class="custom-control-label"></label>
-            <input asp-for="@Model.PhotopathAdr.RoadName" type="text" />
-            <span asp-validation-for="PhotopathAdr.RoadName"></span>
+            <input asp-for="@Model.PhotopathAdr.RoadName" type="text" /><br>
+            <span asp-validation-for="PhotopathAdr.RoadName"></span> <br>
 
-            <label asp-for="@Model.PhotopathAdr.ZipCode" class="custom-control-label"></label>
-            <input asp-for="@Model.PhotopathAdr.ZipCode" type="text" />
-            <span asp-validation-for="PhotopathAdr.ZipCode"></span>
+            <label asp-for="@Model.ZipCode" class="custom-control-label"></label>
+            <input asp-for="@Model.ZipCode" type="text" /><br>
+            <span asp-validation-for="ZipCode"></span><br>
 
             <input type="submit" value="Calculate" />
         </div>
-        <fieldset style="width: 800px; margin-top: 10px;">
-            <legend>Simple Custom Directions Input Panel Sample</legend>
-            This sample shows how to create a simple custom input panel for direction calculations.
-        </fieldset>
+        <p>Input the Pick-up point's RoadName and Zipcode up above and click calculate to see the new route. <br>
+        If the point was added unto the map, click below to save the results and request the driver pick you up at the specified location.</p>
         <br />
         </form>
         <form asp-page-handler="request" method="post">
             <div style="margin-top: 10px;">
-                <input asp-for="@Model.StartAddress.RoadName" id="fromTbx" type="hidden" />
 
-                <input asp-for="@Model.EndAddress.RoadName" id="toTbx" type="hidden" />
-
-                <input asp-for="@Model.PhotopathAdr" id="pather" type="hidden" />
+                <input asp-for="@Model.ZipCode" type="hidden" />
+                <input asp-for="@Model.Route.RouteId" type="hidden" />
+                <input asp-for="@Model.PhotopathAdr.RoadName" type="hidden" />
 
                 <input type="submit" value="Request Pickup" />
             </div>
