@@ -5,48 +5,53 @@
 }
 <div class="routes-container">
     <h1>Routes</h1>
-    <br />
+    <br/>
     <h3 onclick="animateFilters()" style="cursor: pointer; user-select: none;">Filters <i class="fas fa-chevron-right" id="chevron"></i></h3>
     <form method="post" id="filter" class="filter" style="margin-bottom: 30px;">
         @* Form for filter *@
         <input type="text" class="form-control" id="inlineFormInput" name="ZipCodeSearch" placeholder="Zip Code">
-        <input type="date" class="form-control" name="dateOfRoute" id="dateOfRoute" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+        <input type="date" class="form-control" name="dateOfRoute" id="dateOfRoute" value="@DateTime.Today.ToString("yyyy-MM-dd")"/>
         <button type="submit" class="btn btn-primary">Filter</button>
     </form>
     <div class="routes">
-        @foreach (var route in Model.UsedRoutes)
+        @foreach (var route in Model.UsedRoutes.Where(r => r.StartTime > DateTime.Now))
         {
-<div class="card mb-3" style="height: 20rem">
-    <div class="card-header p-2">
-        <h5 class="card-title">
-            @Model.addresses.Where(a => a.AddressId == route.StartPoint).FirstOrDefault().RoadName,
-            @Model.addresses.Where(a => a.AddressId == route.StartPoint).FirstOrDefault().ZipCode,
-            @Model.addresses.Where(a => a.AddressId == route.StartPoint).FirstOrDefault().Country til
-            @Model.addresses.Where(a => a.AddressId == route.FinishPoint).FirstOrDefault().RoadName,
-            @Model.addresses.Where(a => a.AddressId == route.FinishPoint).FirstOrDefault().ZipCode,
-            @Model.addresses.Where(a => a.AddressId == route.FinishPoint).FirstOrDefault().Country
-        </h5>
-    </div>
-    <div class="card-body">
-        <p class="card-text">Kører: @Model.users.Where(u => u.UserId == route.UserId).Select(u => u.FirstName).DefaultIfEmpty("--Option unknown--").First()</p>
-        <p class="card-text">Tidspunkt: @route.StartTime </p>
-        <p class="card-text">
-            Antal Pladser: @Model.UsedRoutes.Count(s => s.RouteId == route.RouteId) / @Model.cars.Where(c => c.LicensePlate ==
-            Model.users.Where(u => u.UserId == route.UserId)
-            .Select(u => u.LicensePlate).DefaultIfEmpty("--Option unknown--")
-            .First()).Select(c => c.Seats).DefaultIfEmpty("--Option unknown--").First()
-        </p>
-    </div>
-    <div class="card-footer">
-        @* Shows the choose route page *@
-        <a class="btn" type="button" asp-page="/ChosenRoute" asp-route-routeId="@route.RouteId"><i class="fas fa-map-marked-alt" title="View Route"></i></a>
-    </div>
-</div>            }
+            <div class="card mb-3" style="height: 20rem">
+                <div class="card-header p-2">
+                    <h5 class="card-title">
+                        @Model.addresses.Where(a => a.AddressId == route.StartPoint).FirstOrDefault().RoadName,
+                        @Model.addresses.Where(a => a.AddressId == route.StartPoint).FirstOrDefault().ZipCode,
+                        @Model.addresses.Where(a => a.AddressId == route.StartPoint).FirstOrDefault().Country to
+                        @Model.addresses.Where(a => a.AddressId == route.FinishPoint).FirstOrDefault().RoadName,
+                        @Model.addresses.Where(a => a.AddressId == route.FinishPoint).FirstOrDefault().ZipCode,
+                        @Model.addresses.Where(a => a.AddressId == route.FinishPoint).FirstOrDefault().Country
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Driver: @Model.users.Where(u => u.UserId == route.UserId).Select(u => u.FirstName).DefaultIfEmpty("--Option unknown--").First() @Model.users.Where(u => u.UserId == route.UserId).Select(u => u.LastName).DefaultIfEmpty("--Option unknown--").First()</p>
+                    <p class="card-text">Start time: @route.StartTime </p>
+                    <p class="card-text">Arrival time: @route.ArrivalTime </p>
+                    <p class="card-text">
+                        Seats occupied: @Model.UsedRoutes.Count(s => s.RouteId == route.RouteId) / @Model.cars.Where(c => c.LicensePlate ==
+                                                                                                                         Model.users.Where(u => u.UserId == route.UserId)
+                                                                                                                             .Select(u => u.LicensePlate).DefaultIfEmpty("--Option unknown--")
+                                                                                                                             .First()).Select(c => c.Seats).DefaultIfEmpty("--Option unknown--").First()
+                    </p>
+                </div>
+                <div class="card-footer">
+                    @* Shows the choose route page *@
+                    <a class="btn" type="button" asp-page="/ChosenRoute" asp-route-routeId="@route.RouteId">
+                        <i class="fas fa-map-marked-alt" title="View Route"></i>
+                    </a>
+                </div>
+            </div>
+        }
     </div>
 </div>
 
 <script>
     var animated = 0;
+
     function animateFilters() {
         if (animated == false) {
             //Animate Filter div in
@@ -57,8 +62,7 @@
             document.getElementById('chevron').classList.remove("rotateUp");
             document.getElementById('chevron').classList.add("rotateDown");
             animated = 1;
-        }
-        else if (animated = true) {
+        } else if (animated = true) {
             //animate Filter div out
             document.getElementById('filter').classList.remove("animateIn");
             document.getElementById('filter').classList.add("disappear");
@@ -68,7 +72,5 @@
             document.getElementById('chevron').classList.add("rotateUp");
             animated = 0;
         }
-
     }
 </script>
-
