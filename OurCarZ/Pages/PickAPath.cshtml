@@ -34,7 +34,11 @@
             //Clear any previously calculated directions.
             directionsManager.clearAll();
             directionsManager.clearDisplay();
-
+            //Huge chunk of code, basically adds waypoints for 
+            //1: the base Route
+            //2: any extra stops as per UserRoute
+            //3: the extra point added from this page
+            //if Route is empty, it just makes a route between Roskilde and København. *Shouldn't* come up under regular circumstances, though.
             @if (Model.Route != null)
             {
                 @: directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: '@Html.Raw(@Model.CombineZipAndRoad(Model.Route.StartPoint))' }));
