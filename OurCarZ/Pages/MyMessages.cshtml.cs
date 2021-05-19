@@ -1,12 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using OurCarZ.Model;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace OurCarZ.Pages
 {
@@ -38,10 +37,10 @@ namespace OurCarZ.Pages
             CurrentSort = sortOrder;
 
             IQueryable<Message> messageList = from s in DB.Messages
-                                             select s;
+                                              select s;
 
             IQueryable<User> userList = from u in DB.Users
-                select u;
+                                        select u;
 
             switch (sortOrder)
             {

@@ -1,12 +1,9 @@
 ﻿using OurCarZ.Model;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace OurCarZ.Services
 {
-   public interface IRoutePersistence
+    public interface IRoutePersistence
     {
         List<Route> GetAll();
         public Route GetOne(int id);

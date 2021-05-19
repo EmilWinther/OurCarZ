@@ -1,10 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OurCarZ.Model;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace OurCarZ.Pages
 {
@@ -27,7 +25,7 @@ namespace OurCarZ.Pages
             AllAddresses = DB.Addresses.ToList();
         }
 
-        public IActionResult OnPost(int DeleteRid, int DeleteAid, int userId)
+        public IActionResult OnPost(int DeleteRid, int userId)
         {
             CurrentUser = DB.Users.Find(userId);
             myRoutes = DB.Routes.ToList();
@@ -41,7 +39,7 @@ namespace OurCarZ.Pages
             }
 
             DB.SaveChanges();
-            return RedirectToPage("/MyRoutes", new {userId = CurrentUser.UserId});
+            return RedirectToPage("/MyRoutes", new { userId = CurrentUser.UserId });
         }
     }
 }

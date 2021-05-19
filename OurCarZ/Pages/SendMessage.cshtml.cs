@@ -1,11 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using OurCarZ.Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace OurCarZ.Pages
 {
@@ -19,7 +18,7 @@ namespace OurCarZ.Pages
         [BindProperty]
         public User FoundUser { get; set; }
         public List<User> UserList { get; set; }
-        public Message  message { get; set; }
+        public Message message { get; set; }
 
         [BindProperty]
         public int MessageFrom { get; set; }
@@ -48,7 +47,7 @@ namespace OurCarZ.Pages
             {
                 FoundUser = DB.Users.Find(id2);
             }
-            
+
             UserList = DB.Users.ToList();
         }
 
@@ -67,7 +66,7 @@ namespace OurCarZ.Pages
 
             Message msg = new Message();
             msg.MessageFrom = CurrentUser.UserId;
-    
+
             if (MessageText == null)
             {
                 msg.MessageText = "This is an empty message";

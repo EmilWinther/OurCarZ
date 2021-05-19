@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,9 +18,8 @@ namespace OurCarZ.Pages
         public EmilDbContext _edb = new EmilDbContext();
         public DrivePageModel(EmilDbContext edb)
         {
-            _edb = edb; 
+            _edb = edb;
         }
-
         [BindProperty]
         public UserRoute CancelUser { get; set; }
         [BindProperty]
@@ -41,7 +41,6 @@ namespace OurCarZ.Pages
         [BindProperty]
         public Address EndAddress { get; set; }
         public string RouteDate { get; set; }
-  
         public List<string> MessageList { get; set; }
         
 
