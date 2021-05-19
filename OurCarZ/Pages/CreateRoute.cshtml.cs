@@ -25,7 +25,13 @@ namespace OurCarZ.Pages
         [BindProperty]
         public DateTime StartTime { get; set; }
         public List<Institution> Zealand { get; set; }
+        public DateTime Time { get; set; }
 
+        public void OnGet()
+        {
+            var today = DateTime.Today;
+            Time = today.AddDays(1);
+        }
 
         public IActionResult OnPost()
         {

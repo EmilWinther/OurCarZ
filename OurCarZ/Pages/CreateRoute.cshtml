@@ -71,12 +71,12 @@
         <span asp-validation-for="EndAddress.ZipCode"></span>
 
         <label asp-for="@Model.StartTime" class="custom-control-label"></label>
-        <input asp-for="@Model.StartTime" id="toTbx" type="text" />
+        <input asp-for="@Model.StartTime" id="toTbx" type="text" name="dateOfRoute" id="dateOfRoute" value="@Model.Time" />
         <span asp-validation-for="StartTime"></span>
 
         <input type="submit" value="Calculate" />
     </div>
-    <div><b>Remember to write the zipcode of the city and the start address or the arrival address have to be a Zealand institution</b></div>
+    <div><b>Remember to write the zipcode of the city and the start address or the arrival address have to be a Zealand institu</b></div>
 </form>
 
 <a  type="submit" asp-route-routeId="" asp-page="/DrivePage" onclick="return confirm('Are you sure you want to continue?')">On to Drive Page</a>
