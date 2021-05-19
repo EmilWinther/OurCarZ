@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using OurCarZ.Model;
-using System.ComponentModel.DataAnnotations;
 
 namespace OurCarZ.Pages
 {

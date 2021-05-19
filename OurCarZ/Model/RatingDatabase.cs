@@ -15,7 +15,7 @@ namespace OurCarZ.Model
     {
         public RatingDatabase()
         {
-            
+
         }
 
         public RatingDatabase(int? userRatedId, int? rating, int? userRatingId)
@@ -24,7 +24,6 @@ namespace OurCarZ.Model
             Rating = rating;
             UserRatingId = userRatingId;
         }
-
         [Column("UserRatedID")]
         public int? UserRatedId { get; set; }
         public int? Rating { get; set; }
