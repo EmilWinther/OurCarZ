@@ -6,55 +6,54 @@
 
 @if (Model.currentUser != null)
 {
-
+<div class="HeroGrid">
     <div class="ProfileGrid">
-        <div class="PG1"> <i class="fas fa-user-alt bubble float-left mr-2"></i> <h6 class="mb-0 pb-0 float-left position-relative font-weak">Full Name: </h6><h3 class="position-relative anim-Load" style="margin-top: 1.20rem; --i:1;"> @Model.currentUser.FirstName @Model.currentUser.LastName</h3> </div>
-        <div class="PG2"> <i class="fas fa-at bubble float-left mr-2"></i><h6 class="mb-0 pb-0 float-left position-relative font-weak">Email: </h6> <h3 class="position-relative anim-Load" style="margin-top: 1.20rem; --i:2;"> @Model.currentUser.Email </h3></div>
-        <div class="PG3"> <i class="fas fa-phone bubble float-left mr-2"></i><h6 class="mb-0 pb-0 float-left position-relative font-weak">Phone Number: </h6> <h3 class="position-relative anim-Load" style="margin-top: 1.20rem; --i:3;">@Model.currentUser.PhoneNumber</h3></div>
-        <div class="PG4"> <i class="fas fa-car bubble float-left mr-2"></i><h6 class="mb-0 pb-0 float-left position-relative font-weak">License Plate:</h6><h3 class="position-relative anim-Load" style="margin-top: 1.20rem; --i:4;">@Model.currentUser.LicensePlate</h3></div>
-        @*<form method="post">*@
-            <div class="PG5"> 
-                <form method="post">
-                    <div class="form-group">
-                        <h2>Change the users details: </h2>
-                        <label for="firstname">First name:</label><br />
-                        <input type="text" class="default-form" id="@Model.FirstName" name="firstname" placeholder="Enter First Name"><br>
-                        <label for="lastname">Last name:</label><br />
-                        <input type="text" class="default-form" id="@Model.LastName" name="lastname" placeholder="Enter Last Name"><br>
-                        <label for="email">Email:</label><br />
-                        <input type="text" class="default-form" id="@Model.Email" name="email" placeholder="Enter email"><br>
-                        <label for="phonenumber">Phone Number:</label><br />
-                        <input type="text" class="default-form" id="@Model.PhoneNumber" name="phonenumber" placeholder="Enter Phone Number"><br>
-                        <label for="licenseplate">License Plate:</label><br />
-                        <input type="text" class="default-form" id="@Model.LicensePlate" name="licenseplate" placeholder="Enter License Plate"><br><br />
+        <div class="PG1"><h1>Current User Details</h1></div>
+        <div class="PG2"> <i class="fas fa-user-alt bubble float-left mr-2"></i> <h6 class="mb-0 pb-0 float-left position-relative font-weak">Full Name: </h6><h3 class="position-relative anim-Load" style="margin-top: 1.20rem; --i:1;"> @Model.currentUser.FirstName @Model.currentUser.LastName</h3> </div>
+        <div class="PG3"> <i class="fas fa-at bubble float-left mr-2"></i><h6 class="mb-0 pb-0 float-left position-relative font-weak">Email: </h6> <h3 class="position-relative anim-Load" style="margin-top: 1.20rem; --i:2;"> @Model.currentUser.Email </h3></div>
+        <div class="PG4"> <i class="fas fa-phone bubble float-left mr-2"></i><h6 class="mb-0 pb-0 float-left position-relative font-weak">Phone Number: </h6> <h3 class="position-relative anim-Load" style="margin-top: 1.20rem; --i:3;">@Model.currentUser.PhoneNumber</h3></div>
+        <div class="PG5"> <i class="fas fa-car bubble float-left mr-2"></i><h6 class="mb-0 pb-0 float-left position-relative font-weak">License Plate:</h6><h3 class="position-relative anim-Load" style="margin-top: 1.20rem; --i:4;">@Model.currentUser.LicensePlate</h3></div>
+    </div>
+    <div class="ProfileGrid2">
+        <div class="UserDetailsForm">
+            <form method="post">
+                <div class="form-group">
+                    <h2>Change the users details: </h2>
+                    <label for="firstname">First name:</label><br />
+                    <input type="text" class="default-form" id="@Model.FirstName" name="firstname" placeholder="Enter First Name"><br>
+                    <label for="lastname">Last name:</label><br />
+                    <input type="text" class="default-form" id="@Model.LastName" name="lastname" placeholder="Enter Last Name"><br>
+                    <label for="email">Email:</label><br />
+                    <input type="text" class="default-form" id="@Model.Email" name="email" placeholder="Enter email"><br>
+                    <label for="phonenumber">Phone Number:</label><br />
+                    <input type="text" class="default-form" id="@Model.PhoneNumber" name="phonenumber" placeholder="Enter Phone Number"><br>
+                    <label for="licenseplate">License Plate:</label><br />
+                    <input type="text" class="default-form" id="@Model.LicensePlate" name="licenseplate" placeholder="Enter License Plate"><br><br />
 
-                        <!-- Hidden input field is used, for storing the UserId needed to find the user, since there is no persistence between OnGet() and OnPost() -->
-                        <input hidden="hidden" asp-for="@Model.currentUser.UserId" />
-                        <input type="submit" class="ubutton" value="Submit">
-                    </div>
-                </form>
-            </div>
-            <div class="PG6"></div>
-            <div class="PG7"></div>
-            <div class="PG8"></div>
-            <div class="PG9"></div>
-            <div class="PG10"></div>
-            <div class="PG11">
-                <h2>Change Password: </h2>
-                <p>Password: @Model.currentUser.Password</p>
-                <form method="post">
-                    <label for="oldpassword">Old Password:</label><br />
-                    <input type="text" class="default-form" id="@Model.OldPassword" name="oldpassword" placeholder="Enter Old Password"><br>
-
-                    <label for="password">New Password:</label><br />
-                    <input type="text" class="default-form" id="@Model.Password" name="password" placeholder="Enter New Password"><br>
-
-                    <label for="confirmpassword">Confirm Password:</label><br />
-                    <input type="text" class="default-form" id="@Model.ConfirmPassword" name="confirmpassword" placeholder="Reenter New Password"><br><br />
                     <!-- Hidden input field is used, for storing the UserId needed to find the user, since there is no persistence between OnGet() and OnPost() -->
                     <input hidden="hidden" asp-for="@Model.currentUser.UserId" />
                     <input type="submit" class="ubutton" value="Submit">
-                </form>
-            </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="ChangePasswordForm">
+            <h2>Change Password: </h2>
+            <p>Password: @Model.currentUser.Password</p>
+            <form method="post">
+                <label for="oldpassword">Old Password:</label><br />
+                <input type="text" class="default-form" id="@Model.OldPassword" name="oldpassword" placeholder="Enter Old Password"><br>
+
+                <label for="password">New Password:</label><br />
+                <input type="text" class="default-form" id="@Model.Password" name="password" placeholder="Enter New Password"><br>
+
+                <label for="confirmpassword">Confirm Password:</label><br />
+                <input type="text" class="default-form" id="@Model.ConfirmPassword" name="confirmpassword" placeholder="Reenter New Password"><br><br />
+                <!-- Hidden input field is used, for storing the UserId needed to find the user, since there is no persistence between OnGet() and OnPost() -->
+                <input hidden="hidden" asp-for="@Model.currentUser.UserId" />
+                <input type="submit" class="ubutton" value="Submit">
+            </form>
+        </div>
+    </div>
 </div>
 }

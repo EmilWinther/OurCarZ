@@ -11,32 +11,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm box-shadow mb-3 color-prim">
-            <div class="container color-prim">
-                <a class="navbar-brand" asp-area="" asp-page="/Index"><h2>OurCarZ</h2></a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link font-primary" asp-area="" asp-page="/Routes">Routes</a>
-                        </li>
-                        <li class="nav-item">
+        <nav class="mb-3 color-prim sticky nav-size">
+            
+                <a style="left: 1em;"class="navbar-brand vertical-center-abs" asp-area="" asp-page="/Index"><h2>OurCarZ</h2></a>
+                    <a style="left:10em;"class="font-primary d-inline-block vertical-center-abs" asp-area="" asp-page="/Routes">Routes</a>                 
+                    <h3 style="right: 210px; cursor: pointer; user-select: none;" class="font-primary round vertical-center-abs" onclick="openProfileBox()"><i class="fas fa-user round roundborder" style="margin-right: 20px;" title="Your Profile"></i></h3>
+                    <a style="right: 10px;"class="font-primary ubutton round float-right vertical-center-abs" asp-area="" asp-page="/UserPages/RegisterPage">Sign up</a>
+                    <a style="right: 110px;"class="font-primary ubutton round float-right vertical-center-abs" asp-area="" asp-page="/UserPages/LogIn">Log In</a>
 
-                        </li>
-
-                    </ul>
-                    
-                    <h3 style="cursor: pointer; user-select: none;" class="font-primary" onclick="openProfileBox()"><i class="fas fa-user" style="font-size: 2rem; margin-right: 20px;" title="Your Profile"></i></h3>
-                    <a class="nav-link font-primary" asp-area="" asp-page="/UserPages/RegisterPage"><div class="ubutton">Sign up</div></a>
-                    <a class="nav-link font-primary" asp-area="" asp-page="/UserPages/LogIn"><div class="ubutton">Log In</div></a>
-
-
-                </div>
-            </div>
         </nav>
         <div class="profile-popup" id="myForm">
             <a class="nav-link font-primary" asp-area="" asp-page="/Routes"><i class="fas fa-map-marked-alt"></i>Your Routes</a>
@@ -53,7 +35,6 @@
                 </div>
             </section>
         </div>
-    </header>
     <div class="container">
         <div class="loadingWrapper"><img src="~/Pictures/Logo.png" alt="logo" style="width:20vw;"></div>
         <main role="main" class="pb-3">

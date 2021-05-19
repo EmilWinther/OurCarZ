@@ -20,7 +20,7 @@
             {
                 
                 <div class="card mb-3 var-harsh anim-Load" style="height: 20rem; --i:@Model.increaseCount()">
-                    <div class="card-header p-2">
+                    <div class="card-header p-2 gradient-pattern-one">
                         <h5 class="card-title">
                             @Model.addresses.Where(a => a.AddressId == route.StartPoint).FirstOrDefault().RoadName,
                             @Model.addresses.Where(a => a.AddressId == route.StartPoint).FirstOrDefault().ZipCode,
