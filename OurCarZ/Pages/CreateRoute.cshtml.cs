@@ -1,7 +1,10 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OurCarZ.Model;
+using OurCarZ.Pages.UserPages;
 
 namespace OurCarZ.Pages
 {
@@ -14,54 +17,71 @@ namespace OurCarZ.Pages
             _edb = edb;
         }
         [BindProperty]
-        public User CurrentUser { get; set; }
-        [BindProperty]
         public Route Route { get; set; }
         [BindProperty]
         public Address StartAddress { get; set; }
         [BindProperty]
         public Address EndAddress { get; set; }
+        [BindProperty]
+        public DateTime StartTime { get; set; }
+        public List<Institution> Zealand { get; set; }
 
-        public void OnGet(int id)
-        {
-            CurrentUser = _edb.Users.Find(id);
-        }
 
         public IActionResult OnPost()
         {
             if (ModelState.IsValid)
             {
 
-                if (!_edb.Addresses.Any(x => x.RoadName == StartAddress.RoadName))
+                if (!_edb.Addresses.Any(x => x.RoadName == StartAddress.RoadName && x.ZipCode == StartAddress.ZipCode))
                 {
                     _edb.Addresses.Add(StartAddress);
                 }
                 else
                 {
-                    StartAddress = _edb.Addresses.FirstOrDefault(x => x.RoadName == StartAddress.RoadName);
+                    StartAddress = _edb.Addresses.FirstOrDefault(x => x.RoadName == StartAddress.RoadName && x.ZipCode == StartAddress.ZipCode);
                 }
 
-                if (!_edb.Addresses.Any(x => x.RoadName == EndAddress.RoadName))
+
+                if (!_edb.Addresses.Any(x => x.RoadName == EndAddress.RoadName && x.ZipCode == EndAddress.ZipCode))
                 {
                     _edb.Addresses.Add(EndAddress);
                 }
                 else
                 {
-                    EndAddress = _edb.Addresses.FirstOrDefault(x => x.RoadName == EndAddress.RoadName);
+                    EndAddress = _edb.Addresses.FirstOrDefault(x => x.RoadName == EndAddress.RoadName && x.ZipCode == EndAddress.ZipCode);
                 }
 
                 _edb.SaveChanges();
 
+                Route.StartTime = StartTime;
                 Route.StartPoint = StartAddress.AddressId;
                 Route.FinishPoint = EndAddress.AddressId;
+                Zealand = _edb.Institutions.ToList();
 
                 //Implement Login Functionality here:
-                Route.UserId = 6;
+                Route.UserId = @LogInPageModel.LoggedInUser.UserId;
 
-                _edb.Routes.Add(Route);
-                _edb.SaveChanges();
+                List<Institution> InstitutionList = new List<Institution>();
+                foreach (var institution in Zealand)
+                {
+                    if (StartAddress.RoadName == _edb.Addresses.Find(institution.Address).RoadName || EndAddress.RoadName == _edb.Addresses.Find(institution.Address).RoadName)
+                    {
+                        InstitutionList.Add(institution);
+                    }
+                }
 
-                return Page();
+                if (InstitutionList == null || InstitutionList.Count == 0 || Route.StartTime < DateTime.Now)
+                {
+                    throw new Exception();
+                }
+                else
+                {
+                    _edb.Routes.Add(Route);
+                    _edb.SaveChanges();
+
+                    return Page();
+                }
+
             }
             return null;
         }

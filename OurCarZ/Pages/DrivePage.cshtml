@@ -13,7 +13,7 @@
         <h3>Hello @Model.CurrentUser.FirstName @Model.CurrentUser.LastName Thank you for making this route.</h3><br/>
         <p>From: @Model.StartAddress.RoadName</p>
         <p> via:
-            @foreach (var passenger in Model.PassengerList.Take(int.Parse(Model.YourCar.Seats)))
+            @foreach (var passenger in Model.PassengerList.Take(Model.YourCar.Seats))
             {
                 @foreach (var address in Model.AddressList)
                 {
@@ -62,7 +62,7 @@
             </tr>
             </thead>
             <tbody>
-            @foreach (var passenger in Model.PassengerList.Take(int.Parse(@Model.YourCar.Seats)))
+            @foreach (var passenger in Model.PassengerList.Take(@Model.YourCar.Seats))
             {
                 <tr>
                     <td>

@@ -32,10 +32,7 @@
                     <p class="card-text">Start time: @route.StartTime </p>
                     <p class="card-text">Arrival time: @route.ArrivalTime </p>
                     <p class="card-text">
-                        Seats occupied: @Model.UsedRoutes.Count(s => s.RouteId == route.RouteId) / @Model.cars.Where(c => c.LicensePlate ==
-                                                                                                                         Model.users.Where(u => u.UserId == route.UserId)
-                                                                                                                             .Select(u => u.LicensePlate).DefaultIfEmpty("--Option unknown--")
-                                                                                                                             .First()).Select(c => c.Seats).DefaultIfEmpty("--Option unknown--").First()
+                        Seats occupied: @Model.UsedRoutes.Count(s => s.RouteId == route.RouteId) / @Model.DB.Cars.Find(Model.DB.Users.Find(route.UserId).LicensePlate).Seats
                     </p>
                 </div>
                 <div class="card-footer">

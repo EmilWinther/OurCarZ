@@ -58,16 +58,28 @@
         From: <input asp-for="@Model.StartAddress.RoadName" id="fromTbx" type="text" />
         <span asp-validation-for="StartAddress.RoadName"></span>
 
+        <label asp-for="@Model.StartAddress.ZipCode" class="custom-control-label"></label>
+        <input asp-for="@Model.StartAddress.ZipCode" id="fromTbx" type="text" />
+        <span asp-validation-for="StartAddress.ZipCode"></span>
+
         <label asp-for="@Model.EndAddress.RoadName" class="custom-control-label"></label>
         To: <input asp-for="@Model.EndAddress.RoadName" id="toTbx" type="text" />
         <span asp-validation-for="EndAddress.RoadName"></span>
+
+        <label asp-for="@Model.EndAddress.ZipCode" class="custom-control-label"></label>
+        <input asp-for="@Model.EndAddress.ZipCode" id="toTbx" type="text" />
+        <span asp-validation-for="EndAddress.ZipCode"></span>
+
+        <label asp-for="@Model.StartTime" class="custom-control-label"></label>
+        <input asp-for="@Model.StartTime" id="toTbx" type="text" />
+        <span asp-validation-for="StartTime"></span>
+
         <input type="submit" value="Calculate" />
     </div>
-    <div><b>Remember to write the name or zipcode of the city</b></div>
+    <div><b>Remember to write the zipcode of the city and the start address or the arrival address have to be a Zealand institution</b></div>
 </form>
-<form method="post">
-    <button type="submit" asp-route-routeId="" asp-page="/DrivePage" onclick="return confirm('Are you sure you want to continue?')">On to Drive Page</button>
-</form>
+
+<a  type="submit" asp-route-routeId="" asp-page="/DrivePage" onclick="return confirm('Are you sure you want to continue?')">On to Drive Page</a>
 
 </body>
 </html>

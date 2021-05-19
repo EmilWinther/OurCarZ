@@ -21,8 +21,7 @@ namespace OurCarZ.Model
         public string Model { get; set; }
         [StringLength(50)]
         public string Year { get; set; }
-        [StringLength(50)]
-        public string Seats { get; set; }
+        public int Seats { get; set; }
         [Key]
         [StringLength(7)]
         public string LicensePlate { get; set; }

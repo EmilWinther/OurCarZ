@@ -14,6 +14,7 @@ namespace OurCarZ.Model
     {
         public Address()
         {
+            Institutions = new HashSet<Institution>();
             RouteFinishPointNavigations = new HashSet<Route>();
             RouteStartPointNavigations = new HashSet<Route>();
             UserRoutes = new HashSet<UserRoute>();
@@ -29,6 +30,8 @@ namespace OurCarZ.Model
         [StringLength(30)]
         public string Country { get; set; }
 
+        [InverseProperty(nameof(Institution.AddressNavigation))]
+        public virtual ICollection<Institution> Institutions { get; set; }
         [InverseProperty(nameof(Route.FinishPointNavigation))]
         public virtual ICollection<Route> RouteFinishPointNavigations { get; set; }
         [InverseProperty(nameof(Route.StartPointNavigation))]

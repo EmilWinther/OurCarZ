@@ -42,7 +42,7 @@ namespace OurCarZ.Pages
         [BindProperty]
         public string End { get; set; }
         [BindProperty]
-        public string Seats { get; set; }
+        public int Seats { get; set; }
         public string RouteDate { get; set; }
         public List<Address> AddressList { get; set; }
         public List<UserRoute> PassengerList { get; set; }
