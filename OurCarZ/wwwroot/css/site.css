@@ -27,6 +27,8 @@ for details on configuring this project to bundle and minify static web assets. 
     border: 1px solid #292d31 !important;
 }
 
+
+
 .color-prim{
     background-color: var(--color-primary);
 }
