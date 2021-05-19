@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Routing;
 using OurCarZ.Model;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace OurCarZ.Pages
 {
