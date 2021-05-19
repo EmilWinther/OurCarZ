@@ -31,7 +31,9 @@
                             foreach (var routes in Model.UsedRoutes.Where(s => s.RouteId == id && s.ArrivalTime < DateTime.Now))
                             {
                                 <td>
-                                    <p>@Model.users.Where(u => u.UserId == routes.UserId).Select(u => u.FirstName).DefaultIfEmpty("--Option unknown--").First() @Model.users.Where(u => u.UserId == routes.UserId).Select(u => u.LastName).DefaultIfEmpty("--Option unknown--").First()</p>
+                                    <a asp-page="/Your Profile" asp-route-Id="@Model.DB.Users.Find(Model.DB.Routes.Find(routes.RouteId).UserId).UserId">
+                                    <p> @Model.DB.Users.Find(routes.UserId).FirstName @Model.DB.Users.Find(routes.UserId).LastName</p>
+                                </a>
                                 </td>
                                 <td>
                                     <p>address: @Model.addresses.Where(a => a.AddressId == routes.StartPoint).Select(a => a.RoadName).First() time: @routes.StartTime </p>
@@ -59,7 +61,9 @@
                         if (Model.DB.Routes.Find(routes.RouteId).ArrivalTime < DateTime.Now)
                         {
                             <td>
-                                <p>@Model.DB.Users.Find(Model.DB.Routes.Find(routes.RouteId).UserId).FirstName @Model.DB.Users.Find(Model.DB.Routes.Find(routes.RouteId).UserId).LastName</p>
+                                <a asp-page="/Your Profile" asp-route-Id="@Model.DB.Users.Find(Model.DB.Routes.Find(routes.RouteId).UserId).UserId">
+                                    @Model.DB.Users.Find(Model.DB.Routes.Find(routes.RouteId).UserId).FirstName @Model.DB.Users.Find(Model.DB.Routes.Find(routes.RouteId).UserId).LastName
+                                </a>
                             </td>
                             <td>
                                 <p>address: @Model.addresses.Where(a => a.AddressId == Model.DB.Routes.Find(routes.RouteId).StartPoint).Select(a => a.RoadName).First() time: @Model.DB.Routes.Find(routes.RouteId).StartTime </p>
