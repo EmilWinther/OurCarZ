@@ -25,6 +25,12 @@ namespace OurCarZ.Pages
         public List<User> UserList { get; set; }
         [BindProperty]
         public Car YourCar { get; set; }
+        [BindProperty]
+        public List<Route> TheRoute { get; set; }
+        [BindProperty]
+        public List<Car> Cars { get; set; }
+        [BindProperty]
+        public List<User> Users { get; set; }
         public void OnGet(int userId, int routeId)
         {
             UserList = DB.Users.ToList();
@@ -34,6 +40,9 @@ namespace OurCarZ.Pages
             EndAddress = DB.Addresses.ToList();
             UserList = DB.Users.ToList();
             YourCar = DB.Cars.Find(CurrentUser.LicensePlate);
+            Cars = DB.Cars.ToList();
+            Users = DB.Users.ToList();
+            TheRoute = DB.Routes.ToList();
             IQueryable<UserRoute> userRouteList = from s in DB.UserRoutes
                 select s;
 

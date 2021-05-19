@@ -113,22 +113,11 @@
 }
 <p>Driver: @Model.Driver.FirstName @Model.Driver.LastName</p>
 
-    @foreach (var passenger in Model.PassengerList.Take(int.Parse(@Model.YourCar.Seats)))
-    {
-        @foreach (var user in Model.UserList)
-        {
-
-        }
-    }
-
-
-
 <a asp-route-page="/SendMessage" asp-route-id="@Model.CurrentUser.UserId" asp-route-id2="@Model.myRoute.UserId" asp-route-id3="@Model.CurrentUser.UserId"
    class="btn btn-success btn-group-lg pull-right">
     Message driver
 </a>
 
-@* Make this work at some point? *@
 <a asp-route-page="/SendMessage" asp-route-id="@Model.CurrentUser.UserId"
    class="btn btn-success btn-group-lg pull-right">
     Make pickup point
