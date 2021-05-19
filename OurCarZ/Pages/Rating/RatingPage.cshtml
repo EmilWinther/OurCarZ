@@ -12,7 +12,6 @@
         <h2>Rate a user by entering the following information </h2>
         <label for="usertoberated">Who's getting rated? Input by ID: </label>
         <input type="text" id="@Model.UserToBeRated" name="usertoberated"><br><br>
-        SHOOTING
         <span class="starRating">
             <input id="rating5" type="radio" name="rating" value="5" asp-for="@Model.Rating">
             <label for="rating5">5</label>
@@ -25,11 +24,12 @@
             <input id="rating1" type="radio" name="rating" value="1" asp-for="@Model.Rating">
             <label for="rating1">1</label>
         </span>
-        STARS
         <br><br>
-        <label for="userrating">Which user is rating? Input by ID: </label>
-        <input type="text" id="@Model.UserRating" name="userrating"><br><br>
-        <input type="submit" value="Submit">
+        @if (Model.CurrentUser != null) 
+        {
+    <input type="submit" value="Submit">
+        }
+        
     </form>
 
 </body>

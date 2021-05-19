@@ -52,3 +52,8 @@ a{
 .starRating:not(:hover) > :checked ~ label:before{
   opacity : 1;
 }
+
+/*
+    Code lovingly borrowed from: 
+    https://code.iamkate.com/html-and-css/star-rating-widget/
+*/

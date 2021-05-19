@@ -92,12 +92,14 @@ namespace OurCarZ.Pages
             {
                 currentUser.LicensePlate = LicensePlate;
             }
-            
-            if (passwordHasher.VerifyHashedPassword(null, currentUser.Password, OldPassword) ==
-                PasswordVerificationResult.Success)
-            {
-                currentUser.Password = passwordHasher.HashPassword(null, Password);
-                currentUser.ConfirmPassword = passwordHasher.HashPassword(null, ConfirmPassword); ;
+            if (Password != null)
+            { 
+                if (passwordHasher.VerifyHashedPassword(null, currentUser.Password, OldPassword) ==
+                    PasswordVerificationResult.Success)
+                {
+                    currentUser.Password = passwordHasher.HashPassword(null, Password);
+                    currentUser.ConfirmPassword = passwordHasher.HashPassword(null, ConfirmPassword); ;
+                }
             }
 
             //Update the user. Finds the user based on the primary key (UserId). If a new primary key is somehow inserted, it makes a new user instead.

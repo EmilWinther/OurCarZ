@@ -8,22 +8,27 @@ namespace OurCarZ.Pages.Rating
     public class RatingPageModel : PageModel
     {
         public EmilDbContext DB = new EmilDbContext();
-        [BindProperty]
-        public int UserToBeRated { get; set; }
-        [BindProperty]
+        public User CurrentUser { get; set; }
         public int UserRating { get; set; }
         [BindProperty]
         public int Rating { get; set; }
+        [BindProperty]
+        public int UserToBeRated { get; set; }
         public RatingPageModel(EmilDbContext db)
         {
             DB = db;
         }
         public void OnGet()
         {
+            if (UserPages.LogInPageModel.LoggedInUser != null)
+            {
+                CurrentUser = DB.Users.Find(UserPages.LogInPageModel.LoggedInUser.UserId);
+                UserRating = CurrentUser.UserId;
+            }
         }
         public IActionResult OnPost()
         {
-            //Making sure nothing is zero, because it will break the program if true. Luckily, the integers will also return 0
+            //Making sure nothing is zero, because it will break the program if so. Luckily, the integers will also return 0
             //if an illegal character is input on the page (such as letters)
             if (UserToBeRated != 0 && UserRating != 0 && Rating != 0)
             {

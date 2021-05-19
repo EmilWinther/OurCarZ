@@ -36,10 +36,12 @@
             directionsManager.clearDisplay();
 
             //Create waypoints to route between.
-            var start = new Microsoft.Maps.Directions.Waypoint({ address: document.getElementById('fromTbx').value });
+            var start = new Microsoft.Maps.Directions.Waypoint({ address: document.getElementById('fromTbx').value + '\xa0' + document.getElementById('fromZIP').value });
+            
             directionsManager.addWaypoint(start);
 
-            var end = new Microsoft.Maps.Directions.Waypoint({ address: document.getElementById('toTbx').value });
+            var end = new Microsoft.Maps.Directions.Waypoint({ address: document.getElementById('toTbx').value + '\xa0' + document.getElementById('toZIP').value });
+
             directionsManager.addWaypoint(end);
 
             //Calculate directions.
@@ -49,25 +51,45 @@
     <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap' async defer>
     </script>
 </head>
+
 <body onload="GetDirections()">
-<form method="post">
-    <div id="myMap" style="position: relative; width: 800px; height: 600px;"></div>
+    @if (Model.CurrentUser != null && Model.CurrentUser.LicensePlate != null)
+    {
+        <form method="post">
+            <div id="myMap" style="position: relative; width: 800px; height: 600px;"></div>
 
-    <div style="margin-top: 10px;">
-        <label asp-for="@Model.StartAddress.RoadName" class="custom-control-label"></label>
-        From: <input asp-for="@Model.StartAddress.RoadName" id="fromTbx" type="text" />
-        <span asp-validation-for="StartAddress.RoadName"></span>
+            <div style="margin-top: 10px;">
+                <label asp-for="@Model.StartAddress.RoadName" class="custom-control-label"></label>
+                From: <input asp-for="@Model.StartAddress.RoadName" id="fromTbx" type="text" />
+                <span asp-validation-for="StartAddress.RoadName"></span> <br>
 
-        <label asp-for="@Model.EndAddress.RoadName" class="custom-control-label"></label>
-        To: <input asp-for="@Model.EndAddress.RoadName" id="toTbx" type="text" />
-        <span asp-validation-for="EndAddress.RoadName"></span>
-        <input type="submit" value="Calculate" />
-    </div>
-    <div><b>Remember to write the name or zipcode of the city</b></div>
-</form>
-<form method="post">
-    <button type="submit" asp-route-routeId="" asp-page="/DrivePage" onclick="return confirm('Are you sure you want to continue?')">On to Drive Page</button>
-</form>
+                <label asp-for="@Model.StartAddress.ZipCode" class="custom-control-label"></label>
+                From Zipcode: <input asp-for="@Model.StartAddress.ZipCode" id="fromZIP" type="text" />
+                <span asp-validation-for="StartAddress.ZipCode"></span> <br>
 
+                <label asp-for="@Model.EndAddress.RoadName" class="custom-control-label"></label>
+                To: <input asp-for="@Model.EndAddress.RoadName" id="toTbx" type="text" />
+                <span asp-validation-for="EndAddress.RoadName"></span> <br>
+
+                <label asp-for="@Model.EndAddress.ZipCode" class="custom-control-label"></label>
+                To Zipcode: <input asp-for="@Model.EndAddress.ZipCode" id="toZIP" type="text" />
+                <span asp-validation-for="EndAddress.ZipCode"></span> <br>
+
+                <input type="submit" value="Calculate" />
+            </div>
+            <div><b>Remember to write the name or zipcode of the city</b></div>
+        </form>
+        <form method="post">
+            <button type="submit" asp-route-routeId="" asp-page="/DrivePage" onclick="return confirm('Are you sure you want to continue?')">On to Drive Page</button>
+        </form>
+    }
+    else if (Model.CurrentUser == null)
+    {
+        <p>You appear to not be logged in. To access this feature, please login first.</p>
+    }
+    else if (Model.CurrentUser.LicensePlate == null) 
+    {
+        <p>You appear to not have a license plate connected to your account. To add a route, please first add a your car's license plate in your profile.</p>
+    }
 </body>
 </html>

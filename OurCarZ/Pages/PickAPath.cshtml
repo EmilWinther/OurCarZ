@@ -51,7 +51,7 @@
                 }
                 @if (Model.PhotopathAdr != null)
                 {
-                    @: directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: '@Html.Raw(@Model.PhotopathAdr.RoadName)' }));
+                    @: directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: '@Html.Raw(@Model.PhotopathAdr.RoadName + " " + Model.PhotopathAdr.ZipCode)' }));
                 }
                 @: directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: '@Html.Raw(@Model.CombineZipAndRoad(Model.Route.FinishPoint))' }));
             }
@@ -100,7 +100,12 @@
             </div>
         </form>
     }
-    else
+    else if (Model.currentUser == null)
+    {
+        <p>This pages functionality requires a logged in user. <br>
+        Please consider logging in to utilize this page.</p>
+    }
+    else 
     {
         <p> something went wrong, try again? </p>
     }

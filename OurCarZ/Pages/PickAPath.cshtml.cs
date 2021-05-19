@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OurCarZ.Model;
-using OurCarZ.Pages.UserPages;
 
 namespace OurCarZ.Pages
 {
@@ -57,7 +56,7 @@ namespace OurCarZ.Pages
         public IActionResult OnGet(int id)
         {
             //Check, if the user is logged.
-            if (LogInPageModel.LoggedInUser != null)
+            if (UserPages.LogInPageModel.LoggedInUser != null)
             {
                 //Sets the currentUser as the loggedin user, used later for adding UserId unto the chosen Route, along with the extra pick-up point.
                 currentUser = _edb.Users.Find(UserPages.LogInPageModel.LoggedInUser.UserId);

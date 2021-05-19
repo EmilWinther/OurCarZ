@@ -22,9 +22,12 @@ namespace OurCarZ.Pages
         [BindProperty]
         public Address EndAddress { get; set; }
 
-        public void OnGet(int id)
+        public void OnGet()
         {
-            CurrentUser = _edb.Users.Find(id);
+            if (UserPages.LogInPageModel.LoggedInUser != null) 
+            { 
+                CurrentUser = _edb.Users.Find(UserPages.LogInPageModel.LoggedInUser.UserId);
+            }
         }
 
         public IActionResult OnPost()
@@ -32,22 +35,22 @@ namespace OurCarZ.Pages
             if (ModelState.IsValid)
             {
 
-                if (!_edb.Addresses.Any(x => x.RoadName == StartAddress.RoadName))
+                if (!_edb.Addresses.Any(x => x.RoadName == StartAddress.RoadName && x.ZipCode == StartAddress.ZipCode))
                 {
                     _edb.Addresses.Add(StartAddress);
                 }
                 else
                 {
-                    StartAddress = _edb.Addresses.FirstOrDefault(x => x.RoadName == StartAddress.RoadName);
+                    StartAddress = _edb.Addresses.FirstOrDefault(x => x.RoadName == StartAddress.RoadName && x.ZipCode == StartAddress.ZipCode);
                 }
 
-                if (!_edb.Addresses.Any(x => x.RoadName == EndAddress.RoadName))
+                if (!_edb.Addresses.Any(x => x.RoadName == EndAddress.RoadName && x.ZipCode == EndAddress.ZipCode))
                 {
                     _edb.Addresses.Add(EndAddress);
                 }
                 else
                 {
-                    EndAddress = _edb.Addresses.FirstOrDefault(x => x.RoadName == EndAddress.RoadName);
+                    EndAddress = _edb.Addresses.FirstOrDefault(x => x.RoadName == EndAddress.RoadName && x.ZipCode == EndAddress.ZipCode);
                 }
 
                 _edb.SaveChanges();
@@ -55,12 +58,11 @@ namespace OurCarZ.Pages
                 Route.StartPoint = StartAddress.AddressId;
                 Route.FinishPoint = EndAddress.AddressId;
 
-                //Implement Login Functionality here:
-                Route.UserId = 6;
+                Route.UserId = UserPages.LogInPageModel.LoggedInUser.UserId;
 
                 _edb.Routes.Add(Route);
                 _edb.SaveChanges();
-
+                OnGet();
                 return Page();
             }
             return null;
