@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using OurCarZ.Model;
 using System.Collections.Generic;
 using System.Linq;
+using OurCarZ.Pages.UserPages;
 
 namespace OurCarZ.Pages
 {
@@ -31,10 +32,10 @@ namespace OurCarZ.Pages
         public List<Car> Cars { get; set; }
         [BindProperty]
         public List<User> Users { get; set; }
-        public void OnGet(int userId, int routeId)
+        public void OnGet(int routeId)
         {
             UserList = DB.Users.ToList();
-            CurrentUser = DB.Users.Find(userId);
+            CurrentUser = DB.Users.Find(LogInPageModel.LoggedInUser.UserId);
             currentAddress = DB.Addresses.ToList();
             myRoute = DB.Routes.Find(routeId);
             EndAddress = DB.Addresses.ToList();
