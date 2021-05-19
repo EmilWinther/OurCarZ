@@ -1,19 +1,13 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OurCarZ.Model;
 using OurCarZ.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using OurCarZ.Model;
 
 namespace OurCarZ
 {
@@ -34,14 +28,17 @@ namespace OurCarZ
             services.AddSingleton<IUserPersistence, UserPersistence>();
             services.AddSingleton<IRoutePersistence, RoutePersistence>();
             services.AddSingleton<EmilDbContext>();
-            services.Configure<CookiePolicyOptions>(options => {
+            services.Configure<CookiePolicyOptions>(options =>
+            {
 
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
-            }); services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(cookieOptions => {
+            }); services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(cookieOptions =>
+            {
                 cookieOptions.LoginPath = "/Login/LoginPage";
-            }); services.AddMvc().AddRazorPagesOptions(options => {
+            }); services.AddMvc().AddRazorPagesOptions(options =>
+            {
                 options.Conventions.AuthorizeFolder("/Item");
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

@@ -1,10 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OurCarZ.Model;
+using System.Linq;
 
 namespace OurCarZ.Pages.Rating
 {
@@ -17,14 +14,14 @@ namespace OurCarZ.Pages.Rating
         public int UserRating { get; set; }
         [BindProperty]
         public int Rating { get; set; }
-        public RatingPageModel(EmilDbContext db) 
+        public RatingPageModel(EmilDbContext db)
         {
             DB = db;
         }
         public void OnGet()
         {
         }
-        public IActionResult OnPost() 
+        public IActionResult OnPost()
         {
             //Making sure nothing is zero, because it will break the program if true. Luckily, the integers will also return 0
             //if an illegal character is input on the page (such as letters)
@@ -49,7 +46,7 @@ namespace OurCarZ.Pages.Rating
                 {
                     DB.SaveChanges();
                 }
-                catch 
+                catch
                 {
                     return RedirectToPage("../Index");
                 }
