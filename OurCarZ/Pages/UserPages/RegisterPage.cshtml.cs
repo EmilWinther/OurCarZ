@@ -2,12 +2,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OurCarZ.Model;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNetCore.Identity;
 
 namespace OurCarZ.Pages.UserPages
 {
     public class RegisterPageModel : PageModel
     {
         private EmilDbContext DB = new EmilDbContext();
+        private PasswordHasher<string> passwordHasher = new PasswordHasher<string>();
 
         public RegisterPageModel(EmilDbContext userDb)
         {
@@ -46,19 +49,26 @@ namespace OurCarZ.Pages.UserPages
             {
                 return Page();
             }
+           
             currentUser = new User();
             currentUser.FirstName = FirstName;
             currentUser.LastName = LastName;
             currentUser.PhoneNumber = PhoneNumber;
             currentUser.Email = Email;
             currentUser.LicensePlate = LicensePlate;
-            currentUser.Password = Password;
-            currentUser.ConfirmPassword = ConfirmPassword;
+            currentUser.Password = passwordHasher.HashPassword(null, Password);
+            currentUser.ConfirmPassword = currentUser.Password;
 
-            DB.Users.Add(currentUser);
-            DB.SaveChanges();
+            if (currentUser.Password == currentUser.ConfirmPassword)
+            {
+                DB.Users.Add(currentUser);
+                DB.SaveChanges();
 
-            return RedirectToPage("/Index");
+                return RedirectToPage("/Index");
+            }
+
+            return Page();
+
         }
     }
 }

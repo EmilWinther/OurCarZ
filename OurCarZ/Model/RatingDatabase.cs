@@ -13,6 +13,18 @@ namespace OurCarZ.Model
     [Table("RatingDatabase")]
     public partial class RatingDatabase
     {
+        public RatingDatabase()
+        {
+            
+        }
+
+        public RatingDatabase(int? userRatedId, int? rating, int? userRatingId)
+        {
+            UserRatedId = userRatedId;
+            Rating = rating;
+            UserRatingId = userRatingId;
+        }
+
         [Column("UserRatedID")]
         public int? UserRatedId { get; set; }
         public int? Rating { get; set; }
