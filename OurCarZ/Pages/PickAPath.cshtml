@@ -38,9 +38,9 @@
             @if (Model.Route != null)
             {
                 @: directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: '@Html.Raw(@Model.CombineZipAndRoad(Model.Route.StartPoint))' }));
-                @if (Model.XtraStopsDupe != null)
+                @if (Model.XtraStops != null)
                 {
-                    foreach (int? numb in Model.XtraStopsDupe)
+                    foreach (int? numb in Model.XtraStops)
                     {
                         @: directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: '@Html.Raw(@Model.CombineZipAndRoad(numb))' }));
                     }
