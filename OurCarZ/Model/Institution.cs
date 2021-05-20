@@ -15,9 +15,10 @@ namespace OurCarZ.Model
         [Key]
         [Column("InstitutionID")]
         public int InstitutionId { get; set; }
-        [StringLength(50)]
-        public string Address { get; set; }
-        [StringLength(50)]
-        public string Zipcode { get; set; }
+        public int Address { get; set; }
+
+        [ForeignKey(nameof(Address))]
+        [InverseProperty("Institutions")]
+        public virtual Address AddressNavigation { get; set; }
     }
 }
