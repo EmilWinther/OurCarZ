@@ -124,7 +124,7 @@ form {
 }
 
 .form-container {
-    width: clamp(80%, 60vw, 90%);
+    width: clamp(40%, 50vw, 90%);
     margin: 60px auto;
     background: var(--color-secondary);
     padding: 60px 7% 80px 7%;
