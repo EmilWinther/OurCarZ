@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - OurCarZ</title>
+    <title> @ViewData["Title"] - OurCarZ</title>
     @RenderSection("Styles", false)
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
@@ -22,8 +22,8 @@
                     @{
                             if (LogInPageModel.LoggedInUser == null)
                             {
-                              <a style="right: 10px;"class="font-primary ubutton round float-right vertical-center-abs" asp-area="" asp-page="/UserPages/RegisterPage">Sign up</a>
-                              <a style="right: 110px;"class="font-primary ubutton round float-right vertical-center-abs" asp-area="" asp-page="/UserPages/LogIn">Log In</a>
+                              <a style="right: 10px;"class="font-primary ubutton round float-right vertical-center-abs" asp-area="" asp-page="/UserPages/RegisterPage">Sign up </a>
+                              <a style="right: 110px;"class="font-primary ubutton round float-right vertical-center-abs" asp-area="" asp-page="/UserPages/LogInPage">Log In </a>
                             } else {
                             <h3 style="right: 210px; cursor: pointer; user-select: none;" class="font-primary round vertical-center-abs" onclick="openProfileBox()"><i class="fas fa-user round roundborder" style="margin-right: 20px;" title="Your Profile"></i></h3>
                             }
