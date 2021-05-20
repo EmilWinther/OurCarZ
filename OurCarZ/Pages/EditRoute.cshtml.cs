@@ -110,7 +110,7 @@ namespace OurCarZ.Pages
                 YourRoute.ArrivalTime = ArrivalTime;
             }
 
-            if (Seats != null)
+            if (Seats != 0)
             {
                 YourCar.Seats = Seats;
             }
