@@ -4,6 +4,7 @@ using OurCarZ.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using OurCarZ.Pages.UserPages;
 
 namespace OurCarZ.Pages
 {
@@ -15,6 +16,8 @@ namespace OurCarZ.Pages
         public EmilDbContext DB = new EmilDbContext();
 
         public List<Route> UsedRoutes = new List<Route>();
+
+        public List<UserRoute> PassengerRoutes = new List<UserRoute>();
 
         public List<Address> addresses;
 
@@ -30,10 +33,13 @@ namespace OurCarZ.Pages
         public void OnGet()
         {
             UsedRoutes = DB.Routes.ToList();
+            PassengerRoutes = DB.UserRoutes.ToList();
             addresses = DB.Addresses.ToList();
             users = DB.Users.ToList();
             cars = DB.Cars.ToList();
         }
+
+        
 
         public void OnPost()
         {

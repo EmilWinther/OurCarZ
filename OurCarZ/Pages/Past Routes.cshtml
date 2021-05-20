@@ -11,13 +11,13 @@
         <h3>Past Routes</h3><br/>
         <table class="table">
             <thead>
-            <tr>
-                <th>Driver</th>
-                <th>Route start</th>
-                <th>Route end</th>
-                <th>Map</th>
-                @*<th>Like</th>*@
-            </tr>
+                <tr>
+                    <th>Driver</th>
+                    <th>Route start</th>
+                    <th>Route end</th>
+                    <th>Passengers</th>
+                    <th>Map</th>
+                </tr>
             </thead>
             <tbody>
             @foreach (var id in Model.RouteList)
@@ -32,8 +32,8 @@
                             {
                                 <td>
                                     <a asp-page="/Your Profile" asp-route-Id="@Model.DB.Users.Find(Model.DB.Routes.Find(routes.RouteId).UserId).UserId">
-                                    <p> @Model.DB.Users.Find(routes.UserId).FirstName @Model.DB.Users.Find(routes.UserId).LastName</p>
-                                </a>
+                                        <p> @Model.DB.Users.Find(routes.UserId).FirstName @Model.DB.Users.Find(routes.UserId).LastName</p>
+                                    </a>
                                 </td>
                                 <td>
                                     <p>address: @Model.addresses.Where(a => a.AddressId == routes.StartPoint).Select(a => a.RoadName).First() time: @routes.StartTime </p>
@@ -43,15 +43,21 @@
 
                                 </td>
                                 <td>
+                                    @foreach (var routePassenger in Model.DB.UserRoutes)
+                                    {
+                                        if (routePassenger.RouteId == routes.RouteId)
+                                        {
+                                            <a asp-page="/Your Profile" asp-route-id="@routePassenger.UserId">
+                                                <p>@Model.DB.Users.Find(routePassenger.UserId).FirstName @Model.DB.Users.Find(routePassenger.UserId).LastName</p>
+                                            </a>
+                                        }
+                                    }
+                                </td>
+                                <td>
                                     <a class="btn" type="button" asp-page="Route" asp-route-id="@id">
                                         <i class="fas fa-map-marked-alt" title="View Route"></i>
                                     </a>
                                 </td>
-                                @*<td>
-                                    <a class="btn" type="button" asp-page="FavRoute" asp-route-id="@id" asp-route-routeId="@routes.RouteId">
-                                        <i class="fas fa-heart" title="Like"></i>
-                                    </a>
-                                </td>*@
                             }
                         }
                     }
@@ -73,15 +79,21 @@
 
                             </td>
                             <td>
+                                @foreach (var routePassenger in Model.DB.UserRoutes)
+                                {
+                                    if (routePassenger.RouteId == routes.RouteId)
+                                    {
+                                        <a asp-page="/Your Profile" asp-route-id="@routePassenger.UserId">
+                                            <p>@Model.DB.Users.Find(routePassenger.UserId).FirstName @Model.DB.Users.Find(routePassenger.UserId).LastName</p>
+                                        </a>
+                                    }
+                                }
+                            </td>
+                            <td>
                                 <a class="btn" type="button" asp-page="Route" asp-route-id="@id">
                                     <i class="fas fa-map-marked-alt" title="View Route"></i>
                                 </a>
                             </td>
-                            @*<td>
-                                <a class="btn" type="button" asp-page="FavRoute" asp-route-id="@id" asp-route-routeId="@routes.RouteId">
-                                    <i class="fas fa-heart" title="Like"></i>
-                                </a>
-                            </td>*@
                         }
                     }
                 </tr>
