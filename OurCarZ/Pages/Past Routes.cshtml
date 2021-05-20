@@ -1,0 +1,108 @@
+﻿@page
+@using OurCarZ.Model
+@model OurCarZ.Pages.Past_RoutesModel
+@{
+}
+
+<div class="item-container">
+    <br/>
+    @if (Model.CurrentUser != null)
+    {
+        <h3>Past Routes</h3><br/>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Driver</th>
+                    <th>Route start</th>
+                    <th>Route end</th>
+                    <th>Passengers</th>
+                    <th>Map</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var id in Model.RouteList)
+            {
+                <tr>
+                    @*Denne her foreach er for at finde de ruter hvor useren er Driver*@
+                    @foreach (var userRoutes in Model.UsedRoutes)
+                    {
+                        if (id == userRoutes.RouteId)
+                        {
+                            foreach (var routes in Model.UsedRoutes.Where(s => s.RouteId == id && s.ArrivalTime < DateTime.Now))
+                            {
+                                <td>
+                                    <a asp-page="/Your Profile" asp-route-Id="@Model.DB.Users.Find(Model.DB.Routes.Find(routes.RouteId).UserId).UserId">
+                                        <p> @Model.DB.Users.Find(routes.UserId).FirstName @Model.DB.Users.Find(routes.UserId).LastName</p>
+                                    </a>
+                                </td>
+                                <td>
+                                    <p>address: @Model.addresses.Where(a => a.AddressId == routes.StartPoint).Select(a => a.RoadName).First() time: @routes.StartTime </p>
+                                </td>
+                                <td>
+                                    <p>address: @Model.addresses.Where(a => a.AddressId == routes.FinishPoint).Select(a => a.RoadName).First() time: @routes.ArrivalTime </p>
+
+                                </td>
+                                <td>
+                                    @foreach (var routePassenger in Model.DB.UserRoutes)
+                                    {
+                                        if (routePassenger.RouteId == routes.RouteId)
+                                        {
+                                            <a asp-page="/Your Profile" asp-route-id="@routePassenger.UserId">
+                                                <p>@Model.DB.Users.Find(routePassenger.UserId).FirstName @Model.DB.Users.Find(routePassenger.UserId).LastName</p>
+                                            </a>
+                                        }
+                                    }
+                                </td>
+                                <td>
+                                    <a class="btn" type="button" asp-page="Route" asp-route-id="@id">
+                                        <i class="fas fa-map-marked-alt" title="View Route"></i>
+                                    </a>
+                                </td>
+                            }
+                        }
+                    }
+                    @*Denne her foreach er for at finde de ruter hvor useren er passager*@
+                    @foreach (var routes in Model.PassengerRoutes.Where(p => p.RouteId == id))
+                    {
+                        if (Model.DB.Routes.Find(routes.RouteId).ArrivalTime < DateTime.Now)
+                        {
+                            <td>
+                                <a asp-page="/Your Profile" asp-route-Id="@Model.DB.Users.Find(Model.DB.Routes.Find(routes.RouteId).UserId).UserId">
+                                    @Model.DB.Users.Find(Model.DB.Routes.Find(routes.RouteId).UserId).FirstName @Model.DB.Users.Find(Model.DB.Routes.Find(routes.RouteId).UserId).LastName
+                                </a>
+                            </td>
+                            <td>
+                                <p>address: @Model.addresses.Where(a => a.AddressId == Model.DB.Routes.Find(routes.RouteId).StartPoint).Select(a => a.RoadName).First() time: @Model.DB.Routes.Find(routes.RouteId).StartTime </p>
+                            </td>
+                            <td>
+                                address: @Model.addresses.Where(a => a.AddressId == Model.DB.Routes.Find(routes.RouteId).FinishPoint).Select(a => a.RoadName).First() time: @Model.DB.Routes.Find(routes.RouteId).ArrivalTime
+
+                            </td>
+                            <td>
+                                @foreach (var routePassenger in Model.DB.UserRoutes)
+                                {
+                                    if (routePassenger.RouteId == routes.RouteId)
+                                    {
+                                        <a asp-page="/Your Profile" asp-route-id="@routePassenger.UserId">
+                                            <p>@Model.DB.Users.Find(routePassenger.UserId).FirstName @Model.DB.Users.Find(routePassenger.UserId).LastName</p>
+                                        </a>
+                                    }
+                                }
+                            </td>
+                            <td>
+                                <a class="btn" type="button" asp-page="Route" asp-route-id="@id">
+                                    <i class="fas fa-map-marked-alt" title="View Route"></i>
+                                </a>
+                            </td>
+                        }
+                    }
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>You can't be found!</p>
+    }
+</div>

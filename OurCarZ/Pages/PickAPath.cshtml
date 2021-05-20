@@ -1,0 +1,113 @@
+﻿@page "{id:int}"
+@using OurCarZ.Model
+@model OurCarZ.Pages.PickAPathModel
+@{
+    ViewData["Title"] = "Pickup Point for Route";
+}
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <script type='text/javascript'>
+        var map, directionsManager;
+
+        function GetMap() {
+            map = new Microsoft.Maps.Map('#myMap', {
+                credentials: 'AlLVvMQ7ncFUH_ZyTOTAmH0sSZvoejNtcn9OmuOtPXjsvfiRkwCDM0GFX2wNU0R0',
+                /*customMapStyle: MapStyle*/
+            });
+
+            //Load the directions module.
+            Microsoft.Maps.loadModule('Microsoft.Maps.Directions', function () {
+                //Create an instance of the directions manager.
+                directionsManager = new Microsoft.Maps.Directions.DirectionsManager(map);
+
+                //Specify where to display the route instructions.
+                directionsManager.setRenderOptions({ itineraryContainer: '#directionsItinerary' });
+
+                //Specify the where to display the input panel
+                directionsManager.showInputPanel('directionsPanel');
+            });
+        }
+
+        function GetDirections() {
+            //Clear any previously calculated directions.
+            directionsManager.clearAll();
+            directionsManager.clearDisplay();
+            //Huge chunk of code, basically adds waypoints for 
+            //1: the base Route
+            //2: any extra stops as per UserRoute
+            //3: the extra point added from this page
+            //if Route is empty, it just makes a route between Roskilde and København. *Shouldn't* come up under regular circumstances, though.
+            @if (Model.Route != null)
+            {
+                @: directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: '@Html.Raw(@Model.CombineZipAndRoad(Model.Route.StartPoint))' }));
+                @if (Model.XtraStops != null)
+                {
+                    foreach (int? numb in Model.XtraStops)
+                    {
+                        @: directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: '@Html.Raw(@Model.CombineZipAndRoad(numb))' }));
+                    }
+                }
+                @if (Model.PhotopathAdr != null)
+                {
+                    @: directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: '@Html.Raw(@Model.PhotopathAdr.RoadName + " " + Model.PhotopathAdr.ZipCode)' }));
+                }
+                @: directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: '@Html.Raw(@Model.CombineZipAndRoad(Model.Route.FinishPoint))' }));
+            }
+            else
+            {
+                @: directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: 'Roskilde, Dk' }));
+                @: directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: 'København, Dk' }));
+            }
+
+            //Calculate directions.
+            directionsManager.calculateDirections();
+        }
+    </script>
+    <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap' async defer>
+    </script>
+</head>
+<body onload="GetDirections()">
+    @if (Model.Route != null)
+    {
+    <form asp-route-id="@Model.Route.RouteId" method="post">
+        <div id="myMap" style="position: relative; width: 800px; height: 600px;"></div>
+
+        <div style="margin-top: 10px;">
+            <label asp-for="@Model.PhotopathAdr.RoadName" class="custom-control-label"></label>
+            <input asp-for="@Model.PhotopathAdr.RoadName" type="text" /><br>
+            <span asp-validation-for="PhotopathAdr.RoadName"></span> <br>
+
+            <label asp-for="@Model.ZipCode" class="custom-control-label"></label>
+            <input asp-for="@Model.ZipCode" type="text" /><br>
+            <span asp-validation-for="ZipCode"></span><br>
+
+            <input type="submit" value="Calculate" />
+        </div>
+        <p>Input the Pick-up point's RoadName and Zipcode up above and click calculate to see the new route. <br>
+        If the point was added unto the map, click below to save the results and request the driver pick you up at the specified location.</p>
+        <br />
+        </form>
+        <form asp-page-handler="request" method="post">
+            <div style="margin-top: 10px;">
+
+                <input asp-for="@Model.ZipCode" type="hidden" />
+                <input asp-for="@Model.Route.RouteId" type="hidden" />
+                <input asp-for="@Model.PhotopathAdr.RoadName" type="hidden" />
+
+                <input type="submit" value="Request Pickup" />
+            </div>
+        </form>
+    }
+    else if (Model.currentUser == null)
+    {
+        <p>This pages functionality requires a logged in user. <br>
+        Please consider logging in to utilize this page.</p>
+    }
+    else 
+    {
+        <p> something went wrong, try again? </p>
+    }
+</body>
+</html>

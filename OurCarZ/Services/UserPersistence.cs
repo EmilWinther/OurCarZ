@@ -1,8 +1,6 @@
 ﻿using OurCarZ.Model;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace OurCarZ.Services
 {
@@ -41,6 +39,7 @@ namespace OurCarZ.Services
             user.FirstName = updatedUser.FirstName;
             user.LastName = updatedUser.LastName;
             user.PhoneNumber = updatedUser.PhoneNumber;
+            edb.SaveChanges();
             user.Email = updatedUser.Email;
             user.Password = updatedUser.Password;
         }

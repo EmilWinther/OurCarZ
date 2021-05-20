@@ -1,0 +1,91 @@
+﻿@page
+@using OurCarZ.Pages.UserPages
+@model OurCarZ.Pages.MyRoutesModel
+@{
+}
+<div class="item-container">
+    <h1>Hello @LogInPageModel.LoggedInUser.FirstName @LogInPageModel.LoggedInUser.LastName. This is all your routes.</h1><br />
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Role</th>
+                <th>Start Address</th>
+                <th>End Address</th>
+                <th>Start Time</th>
+                <th>Arrival Time</th>
+                <th>Choose</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var routes in Model.myRoutes)
+        {
+            if (@LogInPageModel.LoggedInUser.UserId.Equals(routes.UserId))
+            {
+                <tr>
+                    <td>Driver</td>
+                    @foreach (var add in Model.AllAddresses)
+                    {
+                        if (add.AddressId.Equals(routes.StartPoint))
+                        {
+                            <td>@add.RoadName</td>
+                        }
+                    }
+                    @foreach (var add in Model.AllAddresses)
+                    {
+                        if (add.AddressId.Equals(routes.FinishPoint))
+                        {
+                            <td>@add.RoadName</td>
+                            <td>@routes.StartTime</td>
+                            <td>@routes.ArrivalTime</td>
+                            <td>
+                                <a asp-page="/DrivePage" asp-route-RouteId="@routes.RouteId" asp-route-StartAddressId="@routes.StartPoint" asp-route-EndAddressId="@routes.FinishPoint">Choose</a>
+                            </td>
+                            <td>
+                                <form method="post">
+                                    <input hidden="hidden" asp-for="@LogInPageModel.LoggedInUser.UserId"/>
+
+                                    <button type="submit" asp-route-userId="@routes.UserId" asp-route-DeleteRid="@routes.RouteId" asp-route-DeleteAid="@add.AddressId" onclick="return confirm('Are you sure you want to change your information?')">Delete</button>
+                                </form>
+                            </td>
+                        }
+                    }
+                </tr>
+            }
+        }
+        @foreach (var route in Model.PassengerRoutes)
+        {
+            if (@LogInPageModel.LoggedInUser.UserId.Equals(route.UserId))
+            {
+        <tr>
+            <td>Passenger</td>
+            @foreach (var add in Model.AllAddresses)
+            {
+                if (add.AddressId.Equals(@Model.DB.Routes.Find(route.RouteId).StartPoint))
+                {
+                    <td>@add.RoadName</td>
+                }
+            }
+            @foreach (var add in Model.AllAddresses)
+            {
+                if (add.AddressId.Equals(@Model.DB.Routes.Find(route.RouteId).FinishPoint))
+                {
+                    <td>@add.RoadName</td>
+                    <td>@Model.DB.Routes.Find(route.RouteId).StartTime</td>
+                    <td>@Model.DB.Routes.Find(route.RouteId).ArrivalTime</td>
+                    <td>
+                    </td>
+                <td>
+                    <form method="post">
+                        <input hidden="hidden" asp-for="@LogInPageModel.LoggedInUser.UserId" />
+                        <button type="submit" asp-page-handler="remove" asp-route-removeId="@LogInPageModel.LoggedInUser.UserId" asp-route-removeRid="@route.RouteId" onclick="return confirm('Are you sure you want to remove yourself from the route?')">Quit Route</button>
+                    </form>
+                </td>
+                }
+            }
+        </tr>
+            }
+        }
+        </tbody>
+    </table>
+</div>

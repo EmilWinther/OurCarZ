@@ -1,11 +1,12 @@
-﻿@page
+@page
+@using OurCarZ.Pages.UserPages
 @model OurCarZ.Pages.RoutesModel
 @{
     ViewData["zipCode"] = "ZipCodeSearch";
 }
 <div class="routes-container">
     <h1>Routes</h1>
-    <br />
+    <br/>
     <h3 onclick="animateFilters()" style="cursor: pointer; user-select: none;">Filters <i class="fas fa-chevron-right" id="chevron"></i></h3>
     <form method="post" id="filter" class="filter" style="margin-bottom: 30px;">
         @* Form for filter *@
@@ -15,16 +16,17 @@
 
 
     </form>
-        <div class="routes">
-            @foreach (var route in Model.UsedRoutes)
+    <div class="routes">
+        @foreach (var route in Model.UsedRoutes.Where(r => r.StartTime > DateTime.Now && Model.PassengerRoutes.Count(c => c.RouteId == r.RouteId) < @Model.DB.Cars.Find(Model.DB.Users.Find(r.UserId).LicensePlate).Seats))
+        {
+            if (route.UserId != LogInPageModel.LoggedInUser.UserId)
             {
-                
                 <div class="card mb-3 var-harsh anim-Load" style="height: auto; --i:@Model.increaseCount()">
                     <div class="card-header p-2 gradient-pattern-one">
                         <h5 class="card-title">
                             @Model.addresses.Where(a => a.AddressId == route.StartPoint).FirstOrDefault().RoadName,
                             @Model.addresses.Where(a => a.AddressId == route.StartPoint).FirstOrDefault().ZipCode,
-                            @Model.addresses.Where(a => a.AddressId == route.StartPoint).FirstOrDefault().Country til
+                            @Model.addresses.Where(a => a.AddressId == route.StartPoint).FirstOrDefault().Country to
                             @Model.addresses.Where(a => a.AddressId == route.FinishPoint).FirstOrDefault().RoadName,
                             @Model.addresses.Where(a => a.AddressId == route.FinishPoint).FirstOrDefault().ZipCode,
                             @Model.addresses.Where(a => a.AddressId == route.FinishPoint).FirstOrDefault().Country
@@ -58,21 +60,21 @@
                             </h3>
                         </div>
                     </div>
-                    <div class="card-footer var-harsh">
-                        @* Shows the map *@
-                        <a class="btn" type="button" asp-page="Route" asp-route-id="@route.RouteId"><i class="fas fa-map-marked-alt" title="View Route"></i></a>
-                        @* Shows the details of the route *@
-                        <a class="btn" type="button" asp-page="RouteDetails" asp-route-id="@route.RouteId"><i class="fas fa-info-circle" title="View Details"></i></a>
-                        @* If you are the creater of the route the button to edit it will appear. (To be implemented. *@
-                        <a class="btn" type="button" asp-page="EditRoute" asp-route-id="@route.RouteId"><i class="fas fas fa-edit" title="Edit Route"></i></a>
+                    <div class="card-footer">
+                        @* Shows the choose route page *@
+                        <a class="btn" type="button" asp-page="/ChosenRoute" asp-route-routeId="@route.RouteId">
+                            <i class="fas fa-map-marked-alt" title="View Route"></i>
+                        </a>
                     </div>
                 </div>
             }
-        </div>
+        }
     </div>
+</div>
 
 <script>
     var animated = 0;
+
     function animateFilters() {
         if (animated == false) {
             //Animate Filter div in
@@ -83,8 +85,7 @@
             document.getElementById('chevron').classList.remove("rotateUp");
             document.getElementById('chevron').classList.add("rotateDown");
             animated = 1;
-        }
-        else if (animated = true) {
+        } else if (animated = true) {
             //animate Filter div out
             document.getElementById('filter').classList.remove("animateIn");
             document.getElementById('filter').classList.add("disappear");
@@ -94,11 +95,4 @@
             document.getElementById('chevron').classList.add("rotateUp");
             animated = 0;
         }
-        
     }
-
-    $('.date').datepicker({
-        multidate: true,
-        format: 'dd-mm-yyyy'
-    });
-</script>

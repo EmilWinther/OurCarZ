@@ -1,18 +1,23 @@
 ﻿@page
-@model OurCarZ.Pages.RouteModel
+@model OurCarZ.Pages.ChosenRouteModel
 @{
 }
+<center>
+    <h1>Choose route</h1>
+    <h2>Are you sure you want to join this route?</h2>
+</center>
+
+@* Map Section *@
 <div class="text-center">
 
     <h1 id="demo" class="display-4"></h1>
     <div id="myMap" style="
         position: center;
         margin: auto;
-        width: calc(100% - 360px);
-        height: 900px;
-        float: left;">
+        width: 400px;
+        height: 400px;
+        ">
     </div>
-    <div id='directionsItinerary' style="height: 900px; width: 360px; overflow-y: scroll; overflow-x: hidden;"></div>
 </div>
 
 <script type='text/javascript'>
@@ -46,17 +51,10 @@
 
 
             //Create waypoints to route between.
-            @if (Model.route != null)
+            @if (Model.myRoute != null)
             {
-                @: directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: '@Html.Raw(@Model.CombineZipAndRoad(Model.route.StartPoint))' }));
-                @if (Model.XtraStopsDupe != null)
-                {
-                    foreach (int? numb in Model.XtraStopsDupe)
-                    {
-                        @: directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: '@Html.Raw(@Model.CombineZipAndRoad(numb))' }));
-                    }
-                }
-                @: directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: '@Html.Raw(@Model.CombineZipAndRoad(Model.route.FinishPoint))' }));
+                @: directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: '@Html.Raw(Model.StartPoint)' }));
+                @: directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: '@Html.Raw(Model.FinishPoint)' }));
             }
             else
             {
@@ -87,11 +85,41 @@
     }
 </script>
 <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap' async defer></script>
-@if (Model.ExtraStops != null)
-{ 
-    <p>Extraordinary Stopping Points for this Route is: </p>
-    foreach (string stopch in Model.ExtraStops)
+@* Map Section *@
+<br/>
+<center>
+<a asp-route-page="/Rating/RatingPage"
+   class="btn btn-success btn-group-lg pull-right">
+    Yes
+</a>
+<a asp-route-page="/Routes"
+   class="btn btn-success btn-group-lg pull-left">
+    No
+</a>
+@foreach (var add in Model.currentAddress)
+{
+    if (add.AddressId.Equals(Model.myRoute.StartPoint))
     {
-        <p>RoadName: @stopch</p>
+
+        <p>From: @add.RoadName at @Model.myRoute.StartTime</p>
     }
 }
+@foreach (var add in Model.EndAddress)
+{
+    if (add.AddressId.Equals((Model.myRoute.FinishPoint)))
+    {
+        <p>To: @add.RoadName arrival at @Model.myRoute.ArrivalTime</p>
+    }
+}
+<p>Driver: @Model.Driver.FirstName @Model.Driver.LastName</p>
+
+<a asp-route-page="/SendMessage" asp-route-id="@Model.CurrentUser.UserId" asp-route-id2="@Model.myRoute.UserId" asp-route-id3="@Model.CurrentUser.UserId"
+   class="btn btn-success btn-group-lg pull-right">
+    Message driver
+</a>
+
+<a asp-route-page="/SendMessage" asp-route-id="@Model.CurrentUser.UserId"
+   class="btn btn-success btn-group-lg pull-right">
+    Make pickup point
+</a>
+</center>

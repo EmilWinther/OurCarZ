@@ -1,9 +1,12 @@
-﻿<!DOCTYPE html>
+﻿﻿@using OurCarZ.Pages.UserPages
+<!DOCTYPE html>
 <html lang="en" class="theme-light">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - OurCarZ</title>
+    @RenderSection("Styles", false)
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <script src="https://kit.fontawesome.com/95875560d8.js" crossorigin="anonymous"></script>
@@ -11,18 +14,28 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 </head>
 <body>
+
         <nav class="mb-3 color-prim sticky nav-size">
             
                 <a style="left: 1em;"class="navbar-brand vertical-center-abs" asp-area="" asp-page="/Index"><h2>OurCarZ</h2></a>
                     <a style="left:10em;"class="font-primary d-inline-block vertical-center-abs" asp-area="" asp-page="/Routes">Routes</a>                 
-                    <h3 style="right: 210px; cursor: pointer; user-select: none;" class="font-primary round vertical-center-abs" onclick="openProfileBox()"><i class="fas fa-user round roundborder" style="margin-right: 20px;" title="Your Profile"></i></h3>
-                    <a style="right: 10px;"class="font-primary ubutton round float-right vertical-center-abs" asp-area="" asp-page="/UserPages/RegisterPage">Sign up</a>
-                    <a style="right: 110px;"class="font-primary ubutton round float-right vertical-center-abs" asp-area="" asp-page="/UserPages/LogIn">Log In</a>
+                    @{
+                            if (LogInPageModel.LoggedInUser == null)
+                            {
+                              <a style="right: 10px;"class="font-primary ubutton round float-right vertical-center-abs" asp-area="" asp-page="/UserPages/RegisterPage">Sign up</a>
+                              <a style="right: 110px;"class="font-primary ubutton round float-right vertical-center-abs" asp-area="" asp-page="/UserPages/LogIn">Log In</a>
+                            } else {
+                            <h3 style="right: 210px; cursor: pointer; user-select: none;" class="font-primary round vertical-center-abs" onclick="openProfileBox()"><i class="fas fa-user round roundborder" style="margin-right: 20px;" title="Your Profile"></i></h3>
+                            }
+                    }
+  
 
         </nav>
         <div class="profile-popup" id="myForm">
             <a class="nav-link font-primary" asp-area="" asp-page="/Routes"><i class="fas fa-map-marked-alt"></i>Your Routes</a>
             <a class="nav-link font-primary" asp-area="" asp-page="/Profile" asp-route-id="6"><i class="fas fa-user-alt"></i>Your Profile</a>
+            <a class="nav-link text-dark" asp-area="" asp-page="/EditProfile" asp-route-id="7">Edit Profile</a>
+            <a class="nav-link text-dark" asp-area="" asp-page="/MyMessages" asp-route-id="7">My messages</a>
             <hr />
             <section>
                 <p><i class="fas fa-moon"></i>Dark Theme</p>
@@ -34,7 +47,17 @@
                     </label>
                 </div>
             </section>
-        </div>
+            <hr />
+            @{if (LogInPageModel.LoggedInUser != null && LogInPageModel.LoggedInUser.UserId == 35)
+                                {
+                                        <hr />
+                                        <a class="nav-link" asp-area="" asp-page="">Statistics</a>
+                                }
+            }
+            <hr />
+            <a class="nav-link" asp-area="" asp-page="/UserPages/LogOutPage">Logout</a>
+  </div>
+
     <div class="container">
         <div class="loadingWrapper"><img src="~/Pictures/Logo.png" alt="logo" style="width:20vw;"></div>
         <main role="main" class="pb-3">

@@ -1,23 +1,23 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OurCarZ.Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using OurCarZ.Pages.UserPages;
 
 namespace OurCarZ.Pages
 {
     public class RoutesModel : PageModel
     {
-        [BindProperty]
-        public string ZipCode { get; set; }
-        [BindProperty]
-        public DateTime date { get; set; }
+        [BindProperty] public string ZipCode { get; set; }
+        [BindProperty] public DateTime date { get; set; }
 
         public EmilDbContext DB = new EmilDbContext();
 
         public List<Route> UsedRoutes = new List<Route>();
+
+        public List<UserRoute> PassengerRoutes = new List<UserRoute>();
 
         public List<Address> addresses;
 
@@ -33,15 +33,17 @@ namespace OurCarZ.Pages
             DB = db;
         }
 
-
         public void OnGet()
         {
             UsedRoutes = DB.Routes.ToList();
+            PassengerRoutes = DB.UserRoutes.ToList();
             addresses = DB.Addresses.ToList();
             users = DB.Users.ToList();
             cars = DB.Cars.ToList();
             count = 0;
         }
+
+        
 
         public void OnPost()
         {
@@ -59,20 +61,19 @@ namespace OurCarZ.Pages
             users = DB.Users.ToList();
             cars = DB.Cars.ToList();
 
-
             if (!string.IsNullOrEmpty(ZipCode))
             {
-                              
                 UsedRoutes = new List<Route>();
 
                 foreach (var route in allRoutes)
                 {
-                    if(addresses.Where(a => (a.AddressId == route.StartPoint || a.AddressId == route.FinishPoint) && a.ZipCode.ToString().Contains(ZipCode)).FirstOrDefault() != null) {
+                    if (addresses.Where(a => (a.AddressId == route.StartPoint || a.AddressId == route.FinishPoint) && a.ZipCode.ToString().Contains(ZipCode)).FirstOrDefault() != null)
+                    {
                         UsedRoutes.Add(route);
                     }
                 }
-
-            } else { UsedRoutes = allRoutes; }
+            }
+            else { UsedRoutes = allRoutes; }
 
             if (datebool)
             {
@@ -93,7 +94,5 @@ namespace OurCarZ.Pages
             count++;
             return count;
         }
-
-
     }
 }
