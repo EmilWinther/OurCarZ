@@ -6,30 +6,33 @@ namespace OurCarZ.Services
 {
     public class UserPersistence : IUserPersistence
     {
-        private EmilDbContext edb = new EmilDbContext();
-
+        private EmilDbContext _edb;
+        public UserPersistence(EmilDbContext edb)
+        {
+            _edb = edb;
+        }
 
         public void Create(User user)
         {
-            edb.Users.Add(user);
-            edb.SaveChanges();
+            _edb.Users.Add(user);
+            _edb.SaveChanges();
         }
 
         public void Delete(int id)
         {
             User user = GetOne(id);
-            edb.Users.Remove(user);
-            edb.SaveChanges();
+            _edb.Users.Remove(user);
+            _edb.SaveChanges();
         }
 
         public List<User> GetAll()
         {
-            return edb.Users.ToList();
+            return _edb.Users.ToList();
         }
 
         public User GetOne(int id)
         {
-            return edb.Users.Find(id);
+            return _edb.Users.Find(id);
         }
 
         public void Update(int id, User updatedUser)
@@ -39,7 +42,7 @@ namespace OurCarZ.Services
             user.FirstName = updatedUser.FirstName;
             user.LastName = updatedUser.LastName;
             user.PhoneNumber = updatedUser.PhoneNumber;
-            edb.SaveChanges();
+            _edb.SaveChanges();
             user.Email = updatedUser.Email;
             user.Password = updatedUser.Password;
         }

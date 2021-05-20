@@ -34,7 +34,7 @@ namespace OurCarZ.Pages
         ErrorMessage = "Password must contain one uppercase, one lowercase, one number, and be atleast 8 characters long")]
         public string? Password { get; set; }
         [BindProperty]
-        [StringLength(28), MinLength(8, ErrorMessage = "Your password is too short"), MaxLength(28, ErrorMessage = "Your password is too long"), Compare(nameof(Password), ErrorMessage = "The passwords does not match")]
+        [StringLength(28), MinLength(8, ErrorMessage = "Your password is too short"), MaxLength(28, ErrorMessage = "Your password is too long"), Compare(nameof(Password), ErrorMessage = "The passwords do not match")]
         public string? ConfirmPassword { get; set; }
         [BindProperty]
         [Required(ErrorMessage = "Please re-enter your current password here to update values."), StringLength(28), MinLength(8, ErrorMessage = "Your password is too short"), MaxLength(28, ErrorMessage = "Your password is too long")]
@@ -98,7 +98,7 @@ namespace OurCarZ.Pages
                     PasswordVerificationResult.Success)
                 {
                     currentUser.Password = passwordHasher.HashPassword(null, Password);
-                    currentUser.ConfirmPassword = passwordHasher.HashPassword(null, ConfirmPassword); ;
+                    currentUser.ConfirmPassword = passwordHasher.HashPassword(null, ConfirmPassword);
                 }
             }
             
