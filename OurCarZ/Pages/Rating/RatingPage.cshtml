@@ -5,8 +5,10 @@
 @section Styles {
     <link href="@Url.Content("~/css/starrating.css")" rel="stylesheet" type="text/css" />
 }
-<body>
-    <h2>This is a page for rating.</h2>
+@if (Model.CurrentUser != null)
+{
+    <body>
+    <h2>Remember to go to you fellow users profiles and rate them.</h2>
     <form method="post">
         <h2>Rate a user by entering the following information </h2>
         <label for="usertoberated">Who's getting rated? Input by ID: </label>
@@ -24,13 +26,10 @@
             <label for="rating1">1</label>
         </span>
         <br><br>
-        @if (Model.CurrentUser != null)
-        {
-            <input type="submit" value="Submit">
-        }
+    </form>
+    </body>
+      }
         else 
         {
             <p>Sorry, but you can't rate a person without being logged in.</p>
         }
-    </form>
-</body>

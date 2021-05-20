@@ -27,6 +27,7 @@ namespace OurCarZ.Pages
         public List<Institution> Zealand { get; set; }
         public DateTime Time { get; set; }
         public User CurrentUser { get; set; }
+        public DateTime Tomorrow { get; set; }
         public void OnGet()
         {
             if (UserPages.LogInPageModel.LoggedInUser != null)
@@ -67,6 +68,9 @@ namespace OurCarZ.Pages
                 Route.StartPoint = StartAddress.AddressId;
                 Route.FinishPoint = EndAddress.AddressId;
                 Zealand = _edb.Institutions.ToList();
+
+                var today = DateTime.Now;
+                Tomorrow = today.AddDays(1);
 
                 //Implement Login Functionality here:
                 Route.UserId = @LogInPageModel.LoggedInUser.UserId;

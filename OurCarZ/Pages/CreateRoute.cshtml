@@ -74,6 +74,10 @@
                 To Zipcode: <input asp-for="@Model.EndAddress.ZipCode" id="toZIP" type="text" />
                 <span asp-validation-for="EndAddress.ZipCode"></span> <br>
 
+                <label asp-for="@Model.StartTime" class="custom-control-label"></label>
+                Start time: <input asp-for="@Model.StartTime"  type="text" value="@Model.Tomorrow.ToString()"/>
+                <span asp-validation-for="StartTime"></span> <br>
+
                 <input type="submit" value="Calculate" />
             </div>
             <div><b>Remember to write the name or zipcode of the city</b></div>
