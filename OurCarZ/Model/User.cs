@@ -29,11 +29,9 @@ namespace OurCarZ.Model
         public string LastName { get; set; }
         [StringLength(7)]
         public string LicensePlate { get; set; }
-        [StringLength(50)]
         public string Password { get; set; }
         [StringLength(50)]
         public string Email { get; set; }
-        [StringLength(50)]
         public string ConfirmPassword { get; set; }
 
         [ForeignKey(nameof(LicensePlate))]

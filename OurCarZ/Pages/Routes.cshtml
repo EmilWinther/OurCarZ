@@ -10,7 +10,7 @@
     <form method="post" id="filter" class="filter" style="margin-bottom: 30px;">
         @* Form for filter *@
         <input class="default-form" id="inlineFormInput" type="text" name="ZipCodeSearch" placeholder="Zip Code"/>
-        <input type="date" class="default-form" name="dateOfRoute" id="dateOfRoute" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+        <input type="date" class="default-form" name="dateOfRoute" id="dateOfRoute" />
         <button type="submit" class="ubutton">Filter</button>
 
 
@@ -19,7 +19,7 @@
             @foreach (var route in Model.UsedRoutes)
             {
                 
-                <div class="card mb-3 var-harsh anim-Load" style="height: 20rem; --i:@Model.increaseCount()">
+                <div class="card mb-3 var-harsh anim-Load" style="height: auto; --i:@Model.increaseCount()">
                     <div class="card-header p-2 gradient-pattern-one">
                         <h5 class="card-title">
                             @Model.addresses.Where(a => a.AddressId == route.StartPoint).FirstOrDefault().RoadName,
@@ -31,12 +31,32 @@
                         </h5>
                     </div>
                     <div class="card-body var-sec">
-                        <p class="card-text">Kører: @Model.users.Where(u => u.UserId == route.UserId).Select(u => u.FirstName).DefaultIfEmpty("--Option unknown--").First()</p>
-                        <p class="card-text">Tidspunkt: @route.StartTime </p>
-                        <p class="card-text">Antal Pladser: 0 / @Model.cars.Where(c => c.LicensePlate ==
-                                                                Model.users.Where(u => u.UserId == route.UserId)
-                                                                .Select(u => u.LicensePlate).DefaultIfEmpty("--Option unknown--")
-                                                                .First()).Select(c => c.Seats).DefaultIfEmpty("--Option unknown--").First()</p>
+                        <div class="card-text cardE1 mw-100 position-relative" style="display:flex; transform: scale(0.7); transform-origin: left;">
+                            <i class="fas fa-id-card-alt"></i>
+                            <h6 class="m-0 p-0 float-left position-absolute font-weak abs-left">Name: </h6>
+                            <h3 class="m-0 position-absolute anim-Load abs-left" style="top: 1.20rem; width: 300px;"> @Model.users.Where(u => u.UserId == route.UserId).Select(u => u.FirstName).DefaultIfEmpty("--Option unknown--").First()</h3>
+                        </div>
+                        <div class="card-text cardE2 mw-100 position-relative" style="display:flex; transform: scale(0.7); transform-origin: left;">
+                            <i class="fas fa-clock"></i>
+                            <h6 class="m-0 p-0 float-left position-absolute font-weak abs-left">Start Time:</h6>
+                            <h3 class="m-0 position-absolute anim-Load abs-left" style="top: 1.20rem; width: 300px;">@route.StartTime</h3>
+                        </div>
+                        <div class="card-text cardE3 mw-100 position-relative" style="display:flex; transform: scale(0.7); transform-origin: left;">
+                            <i class="fas fa-hourglass-end"></i>
+                            <h6 class="m-0 p-0 float-left position-absolute font-weak abs-left">Arrival Time:</h6>
+                            <h3 class="m-0 position-absolute anim-Load abs-left" style="top: 1.20rem; width: 300px;">@route.ArrivalTime</h3>
+                        </div>
+                        <div class="card-text cardE4 mw-100 position-relative" style="display:flex; transform: scale(0.7); transform-origin: left;">
+                            <i class="fas fa-users"></i>
+                            <h6 class="m-0 p-0 float-left position-absolute font-weak abs-left">Spots: </h6>
+                            <h3 class="m-0 position-absolute anim-Load abs-left" style="top: 1.20rem; width: 300px;">
+
+                                @Model.cars.Where(c => c.LicensePlate ==
+                                Model.users.Where(u => u.UserId == route.UserId)
+                                .Select(u => u.LicensePlate).DefaultIfEmpty("--Option unknown--")
+                                .First()).First().Seats
+                            </h3>
+                        </div>
                     </div>
                     <div class="card-footer var-harsh">
                         @* Shows the map *@

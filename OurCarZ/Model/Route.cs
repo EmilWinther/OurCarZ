@@ -22,10 +22,12 @@ namespace OurCarZ.Model
         public int RouteId { get; set; }
         public int StartPoint { get; set; }
         public int FinishPoint { get; set; }
-        [Column(TypeName = "date")]
+        [Column(TypeName = "datetime")]
         public DateTime StartTime { get; set; }
         [Column("UserID")]
         public int? UserId { get; set; }
+        [Column(TypeName = "datetime")]
+        public DateTime? ArrivalTime { get; set; }
 
         [ForeignKey(nameof(FinishPoint))]
         [InverseProperty(nameof(Address.RouteFinishPointNavigations))]

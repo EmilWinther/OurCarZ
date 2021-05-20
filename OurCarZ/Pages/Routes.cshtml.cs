@@ -46,7 +46,13 @@ namespace OurCarZ.Pages
         public void OnPost()
         {
             ZipCode = Request.Form["ZipCodeSearch"];
-            if (Request.Form["dateOfRoute"].Count > 0) { date = Convert.ToDateTime(Request.Form["dateOfRoute"]); }
+
+            DateTime dateValue;
+            var datebool = DateTime.TryParse(Request.Form["dateOfRoute"], out dateValue);
+            if (datebool)
+            {
+                date = Convert.ToDateTime(Request.Form["dateOfRoute"]);
+            }
 
             var allRoutes = DB.Routes.ToList();
             addresses = DB.Addresses.ToList();
@@ -68,11 +74,11 @@ namespace OurCarZ.Pages
 
             } else { UsedRoutes = allRoutes; }
 
-            if (date != null)
+            if (datebool)
             {
                 foreach (var route in UsedRoutes.ToList())
                 {
-                    if (DateTime.Compare(route.StartTime, date) != 0)
+                    if (DateTime.Compare(route.StartTime.Date, date.Date) != 0)
                     {
                         UsedRoutes.Remove(route);
                     }

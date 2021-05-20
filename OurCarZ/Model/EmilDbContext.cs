@@ -54,20 +54,22 @@ namespace OurCarZ.Model
 
                 entity.Property(e => e.Model).IsUnicode(false);
 
-                entity.Property(e => e.Seats).IsUnicode(false);
-
                 entity.Property(e => e.Year).IsUnicode(false);
             });
 
             modelBuilder.Entity<Institution>(entity =>
             {
-                entity.Property(e => e.Address).IsUnicode(false);
-
-                entity.Property(e => e.Zipcode).IsUnicode(false);
+                entity.HasOne(d => d.AddressNavigation)
+                    .WithMany(p => p.Institutions)
+                    .HasForeignKey(d => d.Address)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Institution_ToAdress");
             });
 
             modelBuilder.Entity<Route>(entity =>
             {
+                entity.Property(e => e.ArrivalTime).HasDefaultValueSql("(getdate())");
+
                 entity.Property(e => e.StartTime).HasDefaultValueSql("(getdate())");
 
                 entity.HasOne(d => d.FinishPointNavigation)
@@ -112,8 +114,6 @@ namespace OurCarZ.Model
 
             modelBuilder.Entity<UserRoute>(entity =>
             {
-                entity.Property(e => e.UserRouteId).ValueGeneratedNever();
-
                 entity.HasOne(d => d.Route)
                     .WithMany(p => p.UserRoutes)
                     .HasForeignKey(d => d.RouteId)
@@ -123,6 +123,11 @@ namespace OurCarZ.Model
                     .WithMany(p => p.UserRoutes)
                     .HasForeignKey(d => d.UserId)
                     .HasConstraintName("FK_UserRoute_ToUser");
+
+                entity.HasOne(d => d.ViaNavigation)
+                    .WithMany(p => p.UserRoutes)
+                    .HasForeignKey(d => d.Via)
+                    .HasConstraintName("FK_UserRoute_ViaPickupPoint");
             });
 
             OnModelCreatingPartial(modelBuilder);
