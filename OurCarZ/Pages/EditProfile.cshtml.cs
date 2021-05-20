@@ -54,9 +54,9 @@ namespace OurCarZ.Pages
             _logger = logger;
             DB = db;
         }
-        public void OnGet(int id)
+        public void OnGet()
         {
-            currentUser = DB.Users.Find(id);
+            currentUser = UserPages.LogInPageModel.LoggedInUser;
         }
         public IActionResult OnPost()
         {
@@ -101,13 +101,13 @@ namespace OurCarZ.Pages
                     currentUser.ConfirmPassword = passwordHasher.HashPassword(null, ConfirmPassword); ;
                 }
             }
-
+            
             //Update the user. Finds the user based on the primary key (UserId). If a new primary key is somehow inserted, it makes a new user instead.
             DB.Users.Update(currentUser);
             DB.SaveChanges();
 
             //Go to profile for the specified user.
-            return RedirectToPage("/Profile", new { id = currentUser.UserId });
+            return RedirectToPage("/Profile");
         }
     }
 }

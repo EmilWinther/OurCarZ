@@ -53,7 +53,7 @@
 </head>
 
 <body onload="GetDirections()">
-    @if (Model.CurrentUser != null && Model.CurrentUser.LicensePlate != null)
+    @if (UserPages.LogInPageModel.LoggedInUser != null && UserPages.LogInPageModel.LoggedInUser.LicensePlate != null)
     {
         <form method="post">
             <div id="myMap" style="position: relative; width: 800px; height: 600px;"></div>
@@ -83,11 +83,11 @@
             <button type="submit" asp-route-routeId="" asp-page="/DrivePage" onclick="return confirm('Are you sure you want to continue?')">On to Drive Page</button>
         </form>
     }
-    else if (Model.CurrentUser == null)
+    else if (UserPages.LogInPageModel.LoggedInUser == null)
     {
         <p>You appear to not be logged in. To access this feature, please login first.</p>
     }
-    else if (Model.CurrentUser.LicensePlate == null) 
+    else if (UserPages.LogInPageModel.LoggedInUser.LicensePlate == null) 
     {
         <p>You appear to not have a license plate connected to your account. To add a route, please first add a your car's license plate in your profile.</p>
     }

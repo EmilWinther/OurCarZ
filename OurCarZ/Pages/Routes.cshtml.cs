@@ -61,12 +61,12 @@ namespace OurCarZ.Pages
                 }
             }
             else { UsedRoutes = allRoutes; }
-            
+
             if (date != null)
             {
                 foreach (var route in UsedRoutes.ToList())
                 {
-                    if (DateTime.Compare(route.StartTime, date) != 0)
+                    if (DateTime.Compare(route.StartTime.Date, date.Date) != 0)
                     {
                         UsedRoutes.Remove(route);
                     }

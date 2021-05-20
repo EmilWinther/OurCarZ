@@ -49,7 +49,6 @@
             <span asp-validation-for="ConfirmPassword" class="text-danger"></span><br><br>
         </div>
         <div class="form-group">
-            <p>Password: @Model.currentUser.Password <br></p>
             <p class="text-danger">Please input your old password here to update user-information: </p>
             
             <label for="oldpassword">Old Password:</label>
@@ -63,7 +62,7 @@
 }
 else
 {
-    <p>You can't be found!</p>
+    <p>You don't appear to be logged in. Try logging in before accessing this page!</p>
 }
 <br>
 <br>
