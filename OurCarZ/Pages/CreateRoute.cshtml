@@ -53,11 +53,10 @@
 </head>
 
 <body onload="GetDirections()">
-    @if (UserPages.LogInPageModel.LoggedInUser != null && UserPages.LogInPageModel.LoggedInUser.LicensePlate != null)
+    @if (UserPages.LogInPageModel.LoggedInUser != null || UserPages.LogInPageModel.LoggedInUser.LicensePlate != null)
     {
         <form method="post">
             <div id="myMap" style="position: relative; width: 800px; height: 600px;"></div>
-
             <div style="margin-top: 10px;">
                 <label asp-for="@Model.StartAddress.RoadName" class="custom-control-label"></label>
                 From: <input asp-for="@Model.StartAddress.RoadName" id="fromTbx" type="text" />

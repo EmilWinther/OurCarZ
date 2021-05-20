@@ -3,7 +3,6 @@
 @{
 }
 @section Styles {
-    <link href="@Url.Content("~/css/site.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/css/starrating.css")" rel="stylesheet" type="text/css" />
 }
 <body>
@@ -28,6 +27,10 @@
         @if (Model.CurrentUser != null)
         {
             <input type="submit" value="Submit">
+        }
+        else 
+        {
+            <p>Sorry, but you can't rate a person without being logged in.</p>
         }
     </form>
 </body>

@@ -8,7 +8,7 @@
 {
     <h2>Current Route Details: </h2>
     <p>From: @Model.StartAddress.RoadName</p>
-    <p> via:
+    <p> via: </p>
         @foreach (var passenger in Model.PassengerList.Take(Model.YourCar.Seats))
         {
             @foreach (var address in Model.AddressList)
@@ -19,7 +19,6 @@
                 }
             }
         }
-    </p>
     <p>To: @Model.EndAddress.RoadName </p>
     <p>Departure Time: @Model.YourRoute.StartTime.TimeOfDay </p>
     <p>Arrival Time: @Model.YourRoute.ArrivalTime.Value.TimeOfDay </p>
