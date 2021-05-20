@@ -98,7 +98,6 @@ namespace OurCarZ.Pages
                     PasswordVerificationResult.Success)
                 {
                     currentUser.Password = passwordHasher.HashPassword(null, Password);
-                    currentUser.ConfirmPassword = passwordHasher.HashPassword(null, ConfirmPassword);
                 }
             }
             

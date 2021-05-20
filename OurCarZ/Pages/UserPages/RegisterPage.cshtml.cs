@@ -49,7 +49,6 @@ namespace OurCarZ.Pages.UserPages
             {
                 return Page();
             }
-           
             currentUser = new User();
             currentUser.FirstName = FirstName;
             currentUser.LastName = LastName;
@@ -57,17 +56,11 @@ namespace OurCarZ.Pages.UserPages
             currentUser.Email = Email;
             currentUser.LicensePlate = LicensePlate;
             currentUser.Password = passwordHasher.HashPassword(null, Password);
-            currentUser.ConfirmPassword = currentUser.Password;
 
-            if (currentUser.Password == currentUser.ConfirmPassword)
-            {
-                DB.Users.Add(currentUser);
-                DB.SaveChanges();
+            DB.Users.Add(currentUser);
+            DB.SaveChanges();
 
-                return RedirectToPage("/Index");
-            }
-
-            return Page();
+            return RedirectToPage("/Index");
 
         }
     }
