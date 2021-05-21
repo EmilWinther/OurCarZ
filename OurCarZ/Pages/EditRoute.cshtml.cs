@@ -92,33 +92,39 @@ namespace OurCarZ.Pages
             //finds AddressId 2
             EndAddress = _edb.Addresses.Find(YourRoute.FinishPoint);
 
+            if (Start != null && StartZip != 0)
+            {
+                if (!_edb.Addresses.Any(x => x.RoadName == Start && x.ZipCode == StartZip))
+                {
+                    Address newStartAddress = new Address();
+                    newStartAddress.RoadName = Start;
+                    newStartAddress.ZipCode = StartZip;
+                    newStartAddress.Country = "DK";
+                    _edb.Addresses.Add(newStartAddress);
+                }
+                else
+                {
+                    StartAddress = _edb.Addresses.FirstOrDefault(x => x.RoadName == Start && x.ZipCode == StartZip);
+                }
+            }
+           
 
-            if (!_edb.Addresses.Any(x => x.RoadName == Start && x.ZipCode == StartZip))
+            if (End != null && EndZip != 0)
             {
-                Address newStartAddress = new Address();
-                newStartAddress.RoadName = Start;
-                newStartAddress.ZipCode = StartZip;
-                newStartAddress.Country = "DK";
-                _edb.Addresses.Add(newStartAddress);
+                if (!_edb.Addresses.Any(x => x.RoadName == End && x.ZipCode == EndZip))
+                {
+                    Address newEndAddress = new Address();
+                    newEndAddress.RoadName = End;
+                    newEndAddress.ZipCode = EndZip;
+                    newEndAddress.Country = "DK";
+                    _edb.Addresses.Add(newEndAddress);
+                }
+                else
+                {
+                    EndAddress = _edb.Addresses.FirstOrDefault(x => x.RoadName == End && x.ZipCode == EndZip);
+                }
             }
-            else
-            {
-                StartAddress = _edb.Addresses.FirstOrDefault(x => x.RoadName == Start && x.ZipCode == StartZip);
-            }
-
-
-            if (!_edb.Addresses.Any(x => x.RoadName == End && x.ZipCode == EndZip))
-            {
-                Address newEndAddress = new Address();
-                newEndAddress.RoadName = End;
-                newEndAddress.ZipCode = EndZip;
-                newEndAddress.Country = "DK";
-                _edb.Addresses.Add(newEndAddress);
-            }
-            else
-            {
-                EndAddress = _edb.Addresses.FirstOrDefault(x => x.RoadName == End && x.ZipCode == EndZip);
-            }
+         
 
             YourRoute.StartPoint = StartAddress.AddressId;
             YourRoute.FinishPoint = EndAddress.AddressId;
