@@ -19,7 +19,7 @@
             <div class="PG5"> <i class="fas fa-car bubble float-left mr-2"></i><h6 class="mb-0 pb-0 float-left position-relative font-weak">License Plate:</h6><h3 class="position-relative anim-Load" style="margin-top: 1.20rem; --i:4;">@Model.FoundUser.LicensePlate</h3></div>
         </div>
             <div class="ProfileGrid2">
-                <div class="PG7"> <a asp-page="/Index" class="ubutton neon">Send Message To @Model.FoundUser.FirstName</a></div>
+                <div class="PG7"> <a asp-page="/SendMessage" asp-route-id="@LogInPageModel.LoggedInUser.UserId" asp-route-id2="@Model.FoundUser.UserId" class="ubutton neon">Send Message To @Model.FoundUser.FirstName</a></div>
                 <div class="PG8">
                     <form method="post" asp-page-handler="rate" style="text-align: center;">
                         <input type="hidden" asp-for="@Model.FoundUser.UserId">
