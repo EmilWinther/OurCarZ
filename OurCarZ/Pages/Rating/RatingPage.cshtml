@@ -2,34 +2,18 @@
 @model OurCarZ.Pages.Rating.RatingPageModel
 @{
 }
+
 @section Styles {
-    <link href="@Url.Content("~/css/starrating.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/css/starrating.css")" rel="stylesheet" type="text/css"/>
 }
+
 @if (Model.CurrentUser != null)
 {
     <body>
-    <h2>Remember to go to you fellow users profiles and rate them.</h2>
-    <form method="post">
-        <h2>Rate a user by entering the following information </h2>
-        <label for="usertoberated">Who's getting rated? Input by ID: </label>
-        <input type="text" id="@Model.UserToBeRated" name="usertoberated"><br><br>
-        <span class="starRating">
-            <input id="rating5" type="radio" name="rating" value="5" asp-for="@Model.Rating">
-            <label for="rating5">5</label>
-            <input id="rating4" type="radio" name="rating" value="4" asp-for="@Model.Rating">
-            <label for="rating4">4</label>
-            <input id="rating3" type="radio" name="rating" value="3" checked asp-for="@Model.Rating">
-            <label for="rating3">3</label>
-            <input id="rating2" type="radio" name="rating" value="2" asp-for="@Model.Rating">
-            <label for="rating2">2</label>
-            <input id="rating1" type="radio" name="rating" value="1" asp-for="@Model.Rating">
-            <label for="rating1">1</label>
-        </span>
-        <br><br>
-    </form>
+    <h3 text align="center">Remember to go to you fellow users profiles and rate them, you can find those you have driven with in your Past Routes</h3>
     </body>
-      }
-        else 
-        {
-            <p>Sorry, but you can't rate a person without being logged in.</p>
-        }
+}
+else
+{
+    <p>Sorry, but you can't rate a person without being logged in.</p>
+}
