@@ -46,21 +46,24 @@ namespace OurCarZ.Pages
         public string RouteDate { get; set; }
         public List<Address> AddressList { get; set; }
         public List<UserRoute> PassengerList { get; set; }
+        [BindProperty]
+        public int StartZip { get; set; }
+        
+        [BindProperty]
+        public int EndZip { get; set; }
+        public List<Institution> Zealand { get; set; }
 
 
 
         public void OnGet(int userId, int routeId, int startAddressId, int endAddressId)
         {
-            //I guess we dont need to find all these ids when we implement login
-            //Finds the current user (7)
+           
             CurrentUser = _edb.Users.Find(userId);
-            //finds route 9
             YourRoute = _edb.Routes.Find(routeId);
-            //finds AddressId 1
             StartAddress = _edb.Addresses.Find(startAddressId);
-            //finds AddressId 2
             EndAddress = _edb.Addresses.Find(endAddressId);
-            //Checks if the FK in Route is == PK 
+          
+
             YourCar = _edb.Cars.Find(CurrentUser.LicensePlate);
             if (YourRoute.StartTime.Date == YourRoute.ArrivalTime.Value.Date)
             {
@@ -89,15 +92,28 @@ namespace OurCarZ.Pages
             //finds AddressId 2
             EndAddress = _edb.Addresses.Find(YourRoute.FinishPoint);
 
-            //Change the desired values, we grab from the page:
-            if (Start != null)
+
+            if (!_edb.Addresses.Any(x => x.RoadName == Start && x.ZipCode == StartZip))
             {
-                StartAddress.RoadName = Start;
+                _edb.Addresses.Add(StartAddress);
             }
-            if (End != null)
+            else
             {
-                EndAddress.RoadName = End;
+                StartAddress = _edb.Addresses.FirstOrDefault(x => x.RoadName == Start && x.ZipCode == StartZip);
             }
+
+
+            if (!_edb.Addresses.Any(x => x.RoadName == End && x.ZipCode == EndZip))
+            {
+                _edb.Addresses.Add(EndAddress);
+            }
+            else
+            {
+                EndAddress = _edb.Addresses.FirstOrDefault(x => x.RoadName == End && x.ZipCode == EndZip);
+            }
+
+            _edb.SaveChanges();
+
 
             if (StartTime.Date != DateTime.MinValue)
             {
@@ -114,16 +130,30 @@ namespace OurCarZ.Pages
             {
                 YourCar.Seats = Seats;
             }
-
-
-
-            //Update the user. Finds the user based on the primary key (UserId). If a new primary key is somehow inserted, it makes a new user instead.
-            _edb.Routes.Update(YourRoute);
             _edb.Cars.Update(YourCar);
-            _edb.SaveChanges();
 
-            //Go to profile for the specified user.
-            return RedirectToPage("/DrivePage", new { UserId = CurrentUser.UserId, routeId = YourRoute.RouteId, startAddressId = StartAddress.AddressId, endAddressId = EndAddress.AddressId });
+            Zealand = _edb.Institutions.ToList();
+            List<Institution> InstitutionList = new List<Institution>();
+            foreach (var institution in Zealand)
+            {
+                if (_edb.Addresses.Find(YourRoute.StartPoint).RoadName == _edb.Addresses.Find(institution.Address).RoadName || _edb.Addresses.Find(YourRoute.FinishPoint).RoadName == _edb.Addresses.Find(institution.Address).RoadName)
+                {
+                    InstitutionList.Add(institution);
+                }
+            }
+
+            if (InstitutionList.Count == 0 || YourRoute.StartTime < DateTime.Now || YourRoute.StartTime > YourRoute.ArrivalTime)
+            {
+                throw new Exception();
+            }
+            else
+            {
+                _edb.Routes.Update(YourRoute);
+                _edb.SaveChanges();
+
+                return RedirectToPage("/DrivePage", new { UserId = CurrentUser.UserId, routeId = YourRoute.RouteId, startAddressId = StartAddress.AddressId, endAddressId = EndAddress.AddressId });
+            }
+
         }
     }
 }
