@@ -28,8 +28,7 @@ namespace OurCarZ.Pages
         public DateTime Time { get; set; }
         public User CurrentUser { get; set; }
         public DateTime Tomorrow { get; set; }
-        [BindProperty]
-        public string Message { get; private set; }
+
 
         public void OnGet()
         {

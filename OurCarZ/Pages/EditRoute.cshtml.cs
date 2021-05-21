@@ -17,7 +17,7 @@ namespace OurCarZ.Pages
 {
     public class EditRouteModel : PageModel
     {
-        public EmilDbContext _edb = new EmilDbContext();
+        private EmilDbContext _edb;
         public EditRouteModel(EmilDbContext edb)
         {
             _edb = edb;
@@ -95,7 +95,11 @@ namespace OurCarZ.Pages
 
             if (!_edb.Addresses.Any(x => x.RoadName == Start && x.ZipCode == StartZip))
             {
-                _edb.Addresses.Add(StartAddress);
+                Address newStartAddress = new Address();
+                newStartAddress.RoadName = Start;
+                newStartAddress.ZipCode = StartZip;
+                newStartAddress.Country = "DK";
+                _edb.Addresses.Add(newStartAddress);
             }
             else
             {
@@ -105,14 +109,19 @@ namespace OurCarZ.Pages
 
             if (!_edb.Addresses.Any(x => x.RoadName == End && x.ZipCode == EndZip))
             {
-                _edb.Addresses.Add(EndAddress);
+                Address newEndAddress = new Address();
+                newEndAddress.RoadName = End;
+                newEndAddress.ZipCode = EndZip;
+                newEndAddress.Country = "DK";
+                _edb.Addresses.Add(newEndAddress);
             }
             else
             {
                 EndAddress = _edb.Addresses.FirstOrDefault(x => x.RoadName == End && x.ZipCode == EndZip);
             }
 
-            _edb.SaveChanges();
+            YourRoute.StartPoint = StartAddress.AddressId;
+            YourRoute.FinishPoint = EndAddress.AddressId;
 
 
             if (StartTime.Date != DateTime.MinValue)
@@ -136,7 +145,7 @@ namespace OurCarZ.Pages
             List<Institution> InstitutionList = new List<Institution>();
             foreach (var institution in Zealand)
             {
-                if (_edb.Addresses.Find(YourRoute.StartPoint).RoadName == _edb.Addresses.Find(institution.Address).RoadName || _edb.Addresses.Find(YourRoute.FinishPoint).RoadName == _edb.Addresses.Find(institution.Address).RoadName)
+                if (StartAddress.RoadName == _edb.Addresses.Find(institution.Address).RoadName || EndAddress.RoadName == _edb.Addresses.Find(institution.Address).RoadName)
                 {
                     InstitutionList.Add(institution);
                 }
@@ -144,7 +153,7 @@ namespace OurCarZ.Pages
 
             if (InstitutionList.Count == 0 || YourRoute.StartTime < DateTime.Now || YourRoute.StartTime > YourRoute.ArrivalTime)
             {
-                throw new Exception();
+                return RedirectToPage("/DrivePage", new { routeId = 0 });
             }
             else
             {
