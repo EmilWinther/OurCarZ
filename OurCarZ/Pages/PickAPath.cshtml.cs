@@ -106,7 +106,7 @@ namespace OurCarZ.Pages
                     _edb.SaveChanges();
 
                     //Boots to index. Could be a little nicer...
-                    return RedirectToPage("Index");
+                    return RedirectToPage("/Rating/RatingPage");
                 }
             }
             //OnGet is called to ensure OnGet is run, when Page is reloaded. Otherwise, it doesn't!

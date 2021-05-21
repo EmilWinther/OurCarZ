@@ -17,9 +17,7 @@
     <a class="button" asp-area="" asp-page="/EditProfile" asp-route-id="@LogInPageModel.LoggedInUser.UserId">Edit User</a><br>
     <a class="button" asp-area="" asp-page="/Routes" asp-route-id="@LogInPageModel.LoggedInUser.UserId">Select new route</a><br>
     <a class="button" asp-area="" asp-page="/PastRoutes" asp-route-id="@LogInPageModel.LoggedInUser.UserId">Your past routes</a><br>
-    @*<a class="button" asp-area="" asp-page="/" asp-route-id="@Model.currentUser.UserId">Favorites</a><br>*@
     <a class="button" asp-area="" asp-page="/CreateRoute" asp-route-id="@LogInPageModel.LoggedInUser.UserId">Create new route</a><br>
-    <a class="button" asp-area="" asp-page="/" asp-route-id="@Model.currentUser.UserId">Your next route as driver</a><br>
     <a class="button" asp-area="" asp-page="/MyRoutes" asp-route-id="@LogInPageModel.LoggedInUser.UserId">My routes</a><br>
     <a class="button" asp-area="" asp-page="/MyMessages" asp-route-id="@LogInPageModel.LoggedInUser.UserId">My messages</a>
 

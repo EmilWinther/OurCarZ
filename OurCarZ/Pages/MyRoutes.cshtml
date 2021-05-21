@@ -8,7 +8,8 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Role</th>
+                <th>Driver</th>
+                <th>Your Role</th>
                 <th>Start Address</th>
                 <th>End Address</th>
                 <th>Start Time</th>
@@ -23,6 +24,11 @@
             if (@LogInPageModel.LoggedInUser.UserId.Equals(routes.UserId))
             {
                 <tr>
+                    <td>
+                        <a asp-page="/Your Profile" asp-route-Id="@Model.DB.Users.Find(Model.DB.Routes.Find(routes.RouteId).UserId).UserId">
+                            <p> @Model.DB.Users.Find(routes.UserId).FirstName @Model.DB.Users.Find(routes.UserId).LastName</p>
+                        </a>
+                    </td>
                     <td>Driver</td>
                     @foreach (var add in Model.AllAddresses)
                     {
@@ -58,6 +64,11 @@
             if (@LogInPageModel.LoggedInUser.UserId.Equals(route.UserId))
             {
         <tr>
+            <td>
+                <a asp-page="/Your Profile" asp-route-Id="@Model.DB.Users.Find(Model.DB.Routes.Find(route.RouteId).UserId).UserId">
+                    <p>@Model.DB.Users.Find(Model.DB.Routes.Find(route.RouteId).UserId).FirstName @Model.DB.Users.Find(Model.DB.Routes.Find(route.RouteId).UserId).LastName</p>
+                </a>
+            </td>
             <td>Passenger</td>
             @foreach (var add in Model.AllAddresses)
             {
@@ -75,12 +86,12 @@
                     <td>@Model.DB.Routes.Find(route.RouteId).ArrivalTime</td>
                     <td>
                     </td>
-                <td>
-                    <form method="post">
-                        <input hidden="hidden" asp-for="@LogInPageModel.LoggedInUser.UserId" />
-                        <button type="submit" asp-page-handler="remove" asp-route-removeId="@LogInPageModel.LoggedInUser.UserId" asp-route-removeRid="@route.RouteId" onclick="return confirm('Are you sure you want to remove yourself from the route?')">Quit Route</button>
-                    </form>
-                </td>
+                    <td>
+                        <form method="post">
+                            <input hidden="hidden" asp-for="@LogInPageModel.LoggedInUser.UserId" />
+                            <button type="submit" asp-page-handler="remove" asp-route-removeId="@LogInPageModel.LoggedInUser.UserId" asp-route-removeRid="@route.RouteId" onclick="return confirm('Are you sure you want to remove yourself from the route?')">Quit Route</button>
+                        </form>
+                    </td>
                 }
             }
         </tr>
