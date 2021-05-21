@@ -34,8 +34,8 @@
                     <div class="card-body var-sec">
                         <div class="card-text cardE1 mw-100 position-relative" style="display:flex; transform: scale(0.7); transform-origin: left;">
                             <i class="fas fa-id-card-alt"></i>
-                            <h6 class="m-0 p-0 float-left position-absolute font-weak abs-left">Name: </h6>
-                            <h3 class="m-0 position-absolute anim-Load abs-left" style="top: 1.20rem; width: 300px;"> @Model.users.Where(u => u.UserId == route.UserId).Select(u => u.FirstName).DefaultIfEmpty("--Option unknown--").First()</h3>
+                            <h6 class="m-0 p-0 float-left position-absolute font-weak abs-left">Driver name: </h6>
+                            <h3 class="m-0 position-absolute anim-Load abs-left" style="top: 1.20rem; width: 300px;"><a asp-page="/Your Profile" asp-route-id="@route.UserId"> @Model.users.Where(u => u.UserId == route.UserId).Select(u => u.FirstName).DefaultIfEmpty("--Option unknown--").First()</a></h3>
                         </div>
                         <div class="card-text cardE2 mw-100 position-relative" style="display:flex; transform: scale(0.7); transform-origin: left;">
                             <i class="fas fa-clock"></i>

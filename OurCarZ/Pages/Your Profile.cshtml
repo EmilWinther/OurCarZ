@@ -9,48 +9,75 @@
 }
 @if (Model.FoundUser != null)
 {
-    <div class="ProfileGrid">
-        <div class="PG1"> <i class="fas fa-user-alt bubble float-left mr-2"></i> <h6 class="mb-0 pb-0 float-left position-relative font-weak">Full Name: </h6><h3 class="position-relative anim-Load" style="margin-top: 1.20rem; --i:1;"> @Model.FoundUser.FirstName @Model.FoundUser.LastName</h3> </div>
-        <div class="PG2"> <i class="fas fa-at bubble float-left mr-2"></i><h6 class="mb-0 pb-0 float-left position-relative font-weak">Email: </h6> <h3 class="position-relative anim-Load" style="margin-top: 1.20rem; --i:2;"> @Model.FoundUser.Email </h3></div>
-        <div class="PG3"> <i class="fas fa-phone bubble float-left mr-2"></i><h6 class="mb-0 pb-0 float-left position-relative font-weak">Phone Number: </h6> <h3 class="position-relative anim-Load" style="margin-top: 1.20rem; --i:3;">@Model.FoundUser.PhoneNumber</h3></div>
-        <div class="PG4"> <i class="fas fa-car bubble float-left mr-2"></i><h6 class="mb-0 pb-0 float-left position-relative font-weak">License Plate:</h6><h3 class="position-relative anim-Load" style="margin-top: 1.20rem; --i:4;">@Model.FoundUser.LicensePlate</h3></div>
-        <div class="PG5"> <a asp-page="/Index" class="ubutton neon" >Send Message To @Model.FoundUser.FirstName</a></div>
-    </div>
-}
-    <h2>found User: </h2>
-    <p>Full Name: @Model.FoundUser.FirstName @Model.FoundUser.LastName</p>
-    <p>Email: @Model.FoundUser.Email</p>
-    <p>Phone Number: @Model.FoundUser.PhoneNumber</p>
-    <p>License Plate: @Model.FoundUser.LicensePlate</p>
-    <p>Rating: @Model.avg</p>
-    <br>
-    <a class="button" asp-area="" asp-page="/SendMessage" asp-route-id="@LogInPageModel.LoggedInUser.UserId" asp-route-id2="@Model.FoundUser.UserId">Send messages</a>
+    <div class="HeroGrid">
 
-    <form method="post" asp-page-handler="rate">
-        <input type="hidden" asp-for="@Model.FoundUser.UserId">
-        <input type="hidden" asp-for="@Model.CurrentUser.UserId">
-        <br>
-        <span class="starRating">
-            <input id="rating5" type="radio" name="usersrating" value="5" asp-for="@Model.UsersRating">
-            <label for="rating5">5</label>
-            <input id="rating4" type="radio" name="usersrating" value="4" asp-for="@Model.UsersRating">
-            <label for="rating4">4</label>
-            <input id="rating3" type="radio" name="usersrating" value="3" checked asp-for="@Model.UsersRating">
-            <label for="rating3">3</label>
-            <input id="rating2" type="radio" name="usersrating" value="2" asp-for="@Model.UsersRating">
-            <label for="rating2">2</label>
-            <input id="rating1" type="radio" name="usersrating" value="1" asp-for="@Model.UsersRating">
-            <label for="rating1">1</label>
-        </span>
-        <br><br>
-        <input type="submit" value="Submit">
-    </form>
-}
-else if (Model.CurrentUser == null)
-{
-    <p>You appear to not be logged in. Please login before accessing this page.</p>
-}
-else
-{
-    <p>Couldn't find the specified user. Try again?</p>
-}
+        <div class="ProfileGrid">
+            <div class="PG1"> <h1>@Model.FoundUser.FirstName's Profile</h1> </div>
+            <div class="PG2"> <i class="fas fa-user-alt bubble float-left mr-2"></i> <h6 class="mb-0 pb-0 float-left position-relative font-weak">Full Name: </h6><h3 class="position-relative anim-Load" style="margin-top: 1.20rem; --i:1;"> @Model.FoundUser.FirstName @Model.FoundUser.LastName</h3> </div>
+            <div class="PG3"> <i class="fas fa-at bubble float-left mr-2"></i><h6 class="mb-0 pb-0 float-left position-relative font-weak">Email: </h6> <h3 class="position-relative anim-Load" style="margin-top: 1.20rem; --i:2;"> @Model.FoundUser.Email </h3></div>
+            <div class="PG4"> <i class="fas fa-phone bubble float-left mr-2"></i><h6 class="mb-0 pb-0 float-left position-relative font-weak">Phone Number: </h6> <h3 class="position-relative anim-Load" style="margin-top: 1.20rem; --i:3;">@Model.FoundUser.PhoneNumber</h3></div>
+            <div class="PG5"> <i class="fas fa-car bubble float-left mr-2"></i><h6 class="mb-0 pb-0 float-left position-relative font-weak">License Plate:</h6><h3 class="position-relative anim-Load" style="margin-top: 1.20rem; --i:4;">@Model.FoundUser.LicensePlate</h3></div>
+        </div>
+            <div class="ProfileGrid2">
+                <div class="PG7"> <a asp-page="/Index" class="ubutton neon">Send Message To @Model.FoundUser.FirstName</a></div>
+                <div class="PG8">
+                    <form method="post" asp-page-handler="rate" style="text-align: center;">
+                        <input type="hidden" asp-for="@Model.FoundUser.UserId">
+                        <input type="hidden" asp-for="@Model.CurrentUser.UserId">
+                        <h2>Rate @Model.FoundUser.FirstName</h2>
+                        <span class="starRating">
+                            <input id="rating5" type="radio" name="usersrating" value="5" asp-for="@Model.UsersRating">
+                            <label for="rating5">5</label>
+                            <input id="rating4" type="radio" name="usersrating" value="4" asp-for="@Model.UsersRating">
+                            <label for="rating4">4</label>
+                            <input id="rating3" type="radio" name="usersrating" value="3" checked asp-for="@Model.UsersRating">
+                            <label for="rating3">3</label>
+                            <input id="rating2" type="radio" name="usersrating" value="2" asp-for="@Model.UsersRating">
+                            <label for="rating2">2</label>
+                            <input id="rating1" type="radio" name="usersrating" value="1" asp-for="@Model.UsersRating">
+                            <label for="rating1">1</label>
+                        </span>
+                        <br /><br />
+                        <input type="submit" class="ubutton" value="Submit Rating">
+                    </form>
+                </div>
+            </div>
+        </div>
+            }
+            @*<h2>found User: </h2>
+                    <p>Full Name: @Model.FoundUser.FirstName @Model.FoundUser.LastName</p>
+                    <p>Email: @Model.FoundUser.Email</p>
+                    <p>Phone Number: @Model.FoundUser.PhoneNumber</p>
+                    <p>License Plate: @Model.FoundUser.LicensePlate</p>
+                    <p>Rating: @Model.avg</p>
+                    <br>
+                    <a class="button" asp-area="" asp-page="/SendMessage" asp-route-id="@LogInPageModel.LoggedInUser.UserId" asp-route-id2="@Model.FoundUser.UserId">Send messages</a>
+
+                    <form method="post" asp-page-handler="rate">
+                        <input type="hidden" asp-for="@Model.FoundUser.UserId">
+                        <input type="hidden" asp-for="@Model.CurrentUser.UserId">
+                        <br>
+                        <span class="starRating">
+                            <input id="rating5" type="radio" name="usersrating" value="5" asp-for="@Model.UsersRating">
+                            <label for="rating5">5</label>
+                            <input id="rating4" type="radio" name="usersrating" value="4" asp-for="@Model.UsersRating">
+                            <label for="rating4">4</label>
+                            <input id="rating3" type="radio" name="usersrating" value="3" checked asp-for="@Model.UsersRating">
+                            <label for="rating3">3</label>
+                            <input id="rating2" type="radio" name="usersrating" value="2" asp-for="@Model.UsersRating">
+                            <label for="rating2">2</label>
+                            <input id="rating1" type="radio" name="usersrating" value="1" asp-for="@Model.UsersRating">
+                            <label for="rating1">1</label>
+                        </span>
+                        <br><br>
+                        <input type="submit" value="Submit">
+                    </form>
+                }
+                else if (Model.CurrentUser == null)
+                {
+                    <p>You appear to not be logged in. Please login before accessing this page.</p>
+                }
+                else
+                {
+                    <p>Couldn't find the specified user. Try again?</p>
+                }*@
