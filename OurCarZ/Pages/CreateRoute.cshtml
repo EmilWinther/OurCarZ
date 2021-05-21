@@ -75,16 +75,19 @@
                 <span asp-validation-for="EndAddress.ZipCode"></span> <br>
 
                 <label asp-for="@Model.StartTime" class="custom-control-label"></label>
-                Start time: <input asp-for="@Model.StartTime"  type="text" value="@Model.Tomorrow.ToString()"/>
+                Start time: <input asp-for="@Model.StartTime"  type="text" value="@Model.Tomorrow"/>
                 <span asp-validation-for="StartTime"></span> <br>
 
                 <input type="submit" value="Calculate" />
             </div>
-            <div><b>Remember to write the name or zipcode of the city</b></div>
+            <div><b>Remember to write the name or zipcode of the city</b><b>one of the addresses need to be a Zealand institution</b></div>
         </form>
-        <form method="post">
-            <button type="submit" asp-route-routeId="" asp-page="/DrivePage" onclick="return confirm('Are you sure you want to continue?')">On to Drive Page</button>
-        </form>
+
+        @if(Model.Route != null)
+        {  <a asp-route-routeId="@Model.Route.RouteId" asp-route-startAddressId="@Model.StartAddress.AddressId" asp-route-endAddressId="@Model.EndAddress.AddressId" asp-page="/DrivePage">
+               <button type="submit"  onclick="return confirm('Are you sure you want to continue?')">On to Drive Page</button>
+           </a>}
+       
     }
     else if (UserPages.LogInPageModel.LoggedInUser == null)
     {

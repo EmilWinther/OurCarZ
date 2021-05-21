@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using OurCarZ.Pages.UserPages;
+using UserRoute = OurCarZ.Model.UserRoute;
 
 namespace OurCarZ.Pages
 {
@@ -24,6 +25,7 @@ namespace OurCarZ.Pages
         public List<User> users;
 
         public List<Car> cars;
+        public List<UserRoute> NewPassengerList { get; set; }
 
         public RoutesModel(EmilDbContext db)
         {
@@ -37,9 +39,20 @@ namespace OurCarZ.Pages
             addresses = DB.Addresses.ToList();
             users = DB.Users.ToList();
             cars = DB.Cars.ToList();
+
+            List<UserRoute> hejsa = new List<UserRoute>();
+            foreach (var passenger in DB.UserRoutes)
+            {
+                if (passenger.UserId == LogInPageModel.LoggedInUser.UserId)
+                {
+                    hejsa.Add(passenger);
+                }
+            }
+
+            NewPassengerList = hejsa;
         }
 
-        
+
 
         public void OnPost()
         {
