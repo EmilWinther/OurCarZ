@@ -2,23 +2,8 @@
 @model OurCarZ.Pages.ChosenRouteModel
 @{
 }
-<center>
-    <h1>Choose route</h1>
-    <h2>Are you sure you want to join this route?</h2>
-</center>
 
 @* Map Section *@
-<div class="text-center">
-
-    <h1 id="demo" class="display-4"></h1>
-    <div id="myMap" style="
-        position: center;
-        margin: auto;
-        width: 400px;
-        height: 400px;
-        ">
-    </div>
-</div>
 
 <script type='text/javascript'>
     var map, directionsManager;
@@ -88,38 +73,51 @@
 @* Map Section *@
 <br/>
 <center>
-<a asp-route-page="/Rating/RatingPage"
-   class="btn btn-success btn-group-lg pull-right">
-    Yes
-</a>
-<a asp-route-page="/Routes"
-   class="btn btn-success btn-group-lg pull-left">
-    No
-</a>
-@foreach (var add in Model.currentAddress)
-{
-    if (add.AddressId.Equals(Model.myRoute.StartPoint))
-    {
+    <div class="form-container" style="text-align: center">
+        <center>
+            <h1>Choose route</h1>
+            <h2>Are you sure you want to join this route?</h2>
+        </center>
+        <div class="text-center">
 
-        <p>From: @add.RoadName at @Model.myRoute.StartTime</p>
-    }
-}
-@foreach (var add in Model.EndAddress)
-{
-    if (add.AddressId.Equals((Model.myRoute.FinishPoint)))
-    {
-        <p>To: @add.RoadName arrival at @Model.myRoute.ArrivalTime</p>
-    }
-}
-<p>Driver: @Model.Driver.FirstName @Model.Driver.LastName</p>
+            <h1 id="demo" class="display-4"></h1>
+            <div id="myMap" style="
+        position: center;
+        margin: auto;
+        width: 100%;
+        height: 50vh;
+        ">
+            </div>
+        </div>
+        <br />
+        <a asp-route-page="/Rating/RatingPage" class="ubutton" style="width:100px;">Yes</a>
+        <a asp-route-page="/Routes" class="ubutton" style="width:100px;">No</a><br />
+        <br />
+        @foreach (var add in Model.currentAddress)
+        {
+            if (add.AddressId.Equals(Model.myRoute.StartPoint))
+            {
 
-<a asp-route-page="/SendMessage" asp-route-id="@Model.CurrentUser.UserId" asp-route-id2="@Model.myRoute.UserId" asp-route-id3="@Model.CurrentUser.UserId"
-   class="btn btn-success btn-group-lg pull-right">
-    Message driver
-</a>
+                <p>From: @add.RoadName at @Model.myRoute.StartTime</p>
+            }
+        }
+        @foreach (var add in Model.EndAddress)
+        {
+            if (add.AddressId.Equals((Model.myRoute.FinishPoint)))
+            {
+                <p>To: @add.RoadName arrival at @Model.myRoute.ArrivalTime</p>
+            }
+        }
+        <p>Driver: @Model.Driver.FirstName @Model.Driver.LastName</p>
+        <br /><br /><br />
+        <a asp-route-page="/SendMessage" asp-route-id="@Model.CurrentUser.UserId" asp-route-id2="@Model.myRoute.UserId" asp-route-id3="@Model.CurrentUser.UserId"
+           class="ubutton" style="width:300px;">
+            Message driver
+        </a>
 
-<a asp-route-page="/SendMessage" asp-route-id="@Model.CurrentUser.UserId"
-   class="btn btn-success btn-group-lg pull-right">
-    Make pickup point
-</a>
+        <a asp-route-page="/SendMessage" asp-route-id="@Model.CurrentUser.UserId"
+           class="ubutton" style="width:300px;">
+            Make pickup point
+        </a>
+    </div>
 </center>
