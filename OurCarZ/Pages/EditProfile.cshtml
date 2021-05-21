@@ -34,11 +34,6 @@
             <span asp-validation-for="PhoneNumber" class="text-danger"></span><br><br>
         </div>
         <div class="form-group">
-            <label for="licenseplate">License Plate:</label>
-            <input type="text" id="@Model.LicensePlate" name="licenseplate">
-            <span asp-validation-for="LicensePlate" class="text-danger"></span><br><br>
-        </div>
-        <div class="form-group">
             <label for="password">New Password:</label>
             <input type="password" id="@Model.Password" name="password">
             <span asp-validation-for="Password" class="text-danger"></span><br><br>
@@ -48,9 +43,31 @@
             <input type="password" id="@Model.ConfirmPassword" name="confirmpassword">
             <span asp-validation-for="ConfirmPassword" class="text-danger"></span><br><br>
         </div>
+
+        <div class="form-group">
+            <label asp-for="@Model.LicensePlate" class="custom-control-label">Car License Plate</label><br>
+            <input type="text" asp-for="@Model.LicensePlate" />
+            <span asp-validation-for="LicensePlate" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Model" class="custom-control-label">Car Make (as in brand)</label><br>
+            <input type="text" asp-for="@Model.Model" />
+            <span asp-validation-for="Model" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Year" class="custom-control-label">Car Model Year</label><br>
+            <input type="text" asp-for="@Model.Year" />
+            <span asp-validation-for="Year" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Seats" class="custom-control-label">Number of seats in car (excluding driverseat)</label><br>
+            <input type="text" asp-for="@Model.Seats" />
+            <span asp-validation-for="Seats" class="text-danger"></span>
+        </div>
+
         <div class="form-group">
             <p class="text-danger">Please input your old password here to update user-information: </p>
-            
+
             <label for="oldpassword">Old Password:</label>
             <input type="password" id="@Model.OldPassword" name="oldpassword" required>
             <span asp-validation-for="OldPassword" class="text-danger"></span><br><br>

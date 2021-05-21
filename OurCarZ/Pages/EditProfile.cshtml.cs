@@ -48,7 +48,20 @@ namespace OurCarZ.Pages
         [BindProperty]
         [StringLength(7)]
         public string? LicensePlate { get; set; }
+        [BindProperty]
+        [RegularExpression(@"[1-9]")]
+        public int? Seats { get; set; }
+
+        [BindProperty]
+        [RegularExpression(@"[0-2]+[0-9]+[0-9]+[0-9]")]
+        public string? Year { get; set; }
+        [BindProperty]
+        [MinLength(1), MaxLength(30)]
+        public string? Model { get; set; }
 #nullable disable
+        [BindProperty]
+        public bool IsChecked { get; set; }
+        Car newcar { get; set; }
         public EditProfileModel(ILogger<EditProfileModel> logger, EmilDbContext db)
         {
             _logger = logger;
@@ -62,10 +75,12 @@ namespace OurCarZ.Pages
         {
             if (!ModelState.IsValid)
             {
+                OnGet();
                 return Page();
             }
-            if (FirstName == null && LastName == null && PhoneNumber == null && Email == null && LicensePlate == null && Password == null)
+            if (FirstName == null && LastName == null && PhoneNumber == null && Email == null && LicensePlate == null && Password == null && Model == null && Year == null && Seats == null)
             {
+                OnGet();
                 return Page();
             }
             //No persistence between OnGet and OnPost, load the currentUser to update:
@@ -88,9 +103,49 @@ namespace OurCarZ.Pages
             {
                 currentUser.Email = Email;
             }
-            if (LicensePlate != null)
+            if (LicensePlate != null || Model != null || Year != null || Seats != null)
             {
-                currentUser.LicensePlate = LicensePlate;
+                if (currentUser.LicensePlate != null)
+                {
+                    newcar = DB.Cars.Find(currentUser.LicensePlate);
+                }
+                else 
+                {
+                    newcar = new Car();
+                }
+                if (LicensePlate != null)
+                {
+                    newcar.LicensePlate = LicensePlate;
+                }
+                if (Model != null)
+                {
+                    newcar.Model = Model;
+                }
+                if (Year != null)
+                {
+                    newcar.Year = Year;
+                }
+                if (Seats != null)
+                {
+                    newcar.Seats = Convert.ToInt32(Seats);
+                }
+                string shh = currentUser.LicensePlate;
+                if (DB.Cars.Find(newcar.LicensePlate) == null) 
+                {
+                    DB.Cars.Add(newcar);
+                }
+                else if (DB.Cars.Find(newcar.LicensePlate) != null) 
+                {
+                    DB.Remove(DB.Cars.Find(newcar.LicensePlate));
+                    DB.Cars.Add(newcar);
+                }
+                DB.SaveChanges();
+                if (DB.Cars.Find(currentUser.LicensePlate) != null) 
+                {
+                    DB.Cars.Remove(DB.Cars.Find(shh));
+                }
+                DB.SaveChanges();
+                currentUser.LicensePlate = newcar.LicensePlate;
             }
             if (Password != null)
             { 
