@@ -19,7 +19,7 @@
             </tr>
         </thead>
         <tbody>
-        @foreach (var routes in Model.myRoutes)
+        @foreach (var routes in Model.myRoutes.Where(r => r.StartTime > DateTime.Now))
         {
             if (@LogInPageModel.LoggedInUser.UserId.Equals(routes.UserId))
             {
@@ -59,7 +59,7 @@
                 </tr>
             }
         }
-        @foreach (var route in Model.PassengerRoutes)
+        @foreach (var route in Model.PassengerRoutes.Where(r => Model.DB.Routes.Find(r.RouteId).StartTime > DateTime.Now))
         {
             if (@LogInPageModel.LoggedInUser.UserId.Equals(route.UserId))
             {
