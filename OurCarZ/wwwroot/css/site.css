@@ -295,6 +295,7 @@ form .ubutton {
     grid-template-rows: repeat(5, 5rem);
     grid-column-gap: 0px;
     grid-row-gap: 0px;
+    overflow: hidden;
 }
 
 .ProfileGrid2 {

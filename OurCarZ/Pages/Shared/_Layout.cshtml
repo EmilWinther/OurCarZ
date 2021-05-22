@@ -19,8 +19,8 @@
 
         <a style="left: 1em;" class="navbar-brand vertical-center-abs" asp-area="" asp-page="/Index"><h2>OurCarZ</h2></a>
         <a style="left:10em;" class="font-primary d-inline-block vertical-center-abs" asp-area="" asp-page="/Routes">Routes</a>
-         @{
-                            if (LogInPageModel.LoggedInUser == null)
+        
+                            @if (LogInPageModel.LoggedInUser == null)
                             {
             <a style="right: 10px;" class="font-primary ubutton round float-right vertical-center-abs" asp-area="" asp-page="/UserPages/RegisterPage">
                 Sign up </a>
@@ -30,7 +30,7 @@
                     <h3 style="right: 10px; cursor: pointer; user-select: none;" class="font-primary round vertical-center-abs" onclick="openProfileBox()">
                         <i class="fas fa-user round roundborder" style="margin-right: 20px;" title="Your Profile"></i></h3>
                             }
-        }
+                       
 
 
 </nav>
@@ -52,10 +52,10 @@
         </div>
     </section>
 
-     @{if (LogInPageModel.LoggedInUser != null && LogInPageModel.LoggedInUser.UserId == 35)
+     @{if (LogInPageModel.LoggedInUser != null && (LogInPageModel.LoggedInUser.UserId == 35 || LogInPageModel.LoggedInUser.UserId == 57))
                                 {
         <hr />
-        <a class="nav-link" asp-area="" asp-page="">Statistics</a>
+        <a class="nav-link" asp-area="" asp-page="/AdminStats">Statistics</a>
                                 }
     }
     <hr />

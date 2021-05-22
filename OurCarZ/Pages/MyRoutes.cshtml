@@ -3,9 +3,10 @@
 @model OurCarZ.Pages.MyRoutesModel
 @{
 }
-<div class="item-container">
-    <h1>Hello @LogInPageModel.LoggedInUser.FirstName @LogInPageModel.LoggedInUser.LastName. This is all your routes.</h1><br />
-    <table class="table">
+
+<div class="form-container">
+    <h2>Hello @LogInPageModel.LoggedInUser.FirstName @LogInPageModel.LoggedInUser.LastName. This is all your routes.</h2><br />
+    <table class="table" style="color: var(--font-color);">
         <thead>
             <tr>
                 <th>Role</th>
