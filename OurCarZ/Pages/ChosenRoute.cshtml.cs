@@ -11,12 +11,16 @@ namespace OurCarZ.Pages
     {
         [BindProperty]
         public List<UserRoute> PassengerList { get; set; }
+        [BindProperty]
         public Route myRoute { get; set; }
         public EmilDbContext DB = new EmilDbContext();
+        [BindProperty]
         public List<Address> currentAddress { get; set; }
+        [BindProperty]
         public List<Address> EndAddress { get; set; }
         [BindProperty]
         public User CurrentUser { get; set; }
+        [BindProperty]
         public User Driver { get; set; }
         [BindProperty]
         public string StartPoint { get; set; }
@@ -32,6 +36,7 @@ namespace OurCarZ.Pages
         public List<Car> Cars { get; set; }
         [BindProperty]
         public List<User> Users { get; set; }
+        public UserRoute Passenger { get; set; }
         public void OnGet(int routeId)
         {
             UserList = DB.Users.ToList();
@@ -58,6 +63,19 @@ namespace OurCarZ.Pages
             {
                 Driver = DB.Users.Find(myRoute.UserId);
             }
+        }
+
+        public IActionResult OnPost(int routeId)
+        {
+            CurrentUser = DB.Users.Find(LogInPageModel.LoggedInUser.UserId);
+            Passenger = new UserRoute();
+            Passenger.UserId = CurrentUser.UserId;
+            Passenger.RouteId = routeId;
+
+            DB.UserRoutes.Add(Passenger);
+            DB.SaveChanges();
+
+            return RedirectToPage("/Rating/RatingPage");
         }
     }
 }

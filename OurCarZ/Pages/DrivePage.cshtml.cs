@@ -46,8 +46,9 @@ namespace OurCarZ.Pages
 
         public void OnGet(int routeId, int startAddressId, int endAddressId)
         {
+            if(routeId != 0)
+            {
             //I guess we dont need to find all these ids when we implement login
-            //Finds the current user (7)
             CurrentUser = _edb.Users.Find(LogInPageModel.LoggedInUser.UserId);
             //finds route 9
             YourRoute = _edb.Routes.Find(routeId);
@@ -79,13 +80,14 @@ namespace OurCarZ.Pages
                 YourRoute.FinishPoint = EndAddress.AddressId;
             }
 
+
             if (YourRoute.StartTime.Date == YourRoute.ArrivalTime.Value.Date)
             {
                 RouteDate = YourRoute.StartTime.ToShortDateString();
             }
-
-
+            }
         }
+
 
 
 

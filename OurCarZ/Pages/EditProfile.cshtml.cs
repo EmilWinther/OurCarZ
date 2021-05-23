@@ -34,7 +34,7 @@ namespace OurCarZ.Pages
         ErrorMessage = "Password must contain one uppercase, one lowercase, one number, and be atleast 8 characters long")]
         public string? Password { get; set; }
         [BindProperty]
-        [StringLength(28), MinLength(8, ErrorMessage = "Your password is too short"), MaxLength(28, ErrorMessage = "Your password is too long"), Compare(nameof(Password), ErrorMessage = "The passwords does not match")]
+        [StringLength(28), MinLength(8, ErrorMessage = "Your password is too short"), MaxLength(28, ErrorMessage = "Your password is too long"), Compare(nameof(Password), ErrorMessage = "The passwords do not match")]
         public string? ConfirmPassword { get; set; }
         [BindProperty]
         [Required(ErrorMessage = "Please re-enter your current password here to update values."), StringLength(28), MinLength(8, ErrorMessage = "Your password is too short"), MaxLength(28, ErrorMessage = "Your password is too long")]
@@ -48,7 +48,20 @@ namespace OurCarZ.Pages
         [BindProperty]
         [StringLength(7)]
         public string? LicensePlate { get; set; }
+        [BindProperty]
+        [RegularExpression(@"[1-9]")]
+        public int? Seats { get; set; }
+
+        [BindProperty]
+        [RegularExpression(@"[0-2]+[0-9]+[0-9]+[0-9]")]
+        public string? Year { get; set; }
+        [BindProperty]
+        [MinLength(1), MaxLength(30)]
+        public string? Model { get; set; }
 #nullable disable
+        [BindProperty]
+        public bool IsChecked { get; set; }
+        Car newcar { get; set; }
         public EditProfileModel(ILogger<EditProfileModel> logger, EmilDbContext db)
         {
             _logger = logger;
@@ -62,10 +75,12 @@ namespace OurCarZ.Pages
         {
             if (!ModelState.IsValid)
             {
+                OnGet();
                 return Page();
             }
-            if (FirstName == null && LastName == null && PhoneNumber == null && Email == null && LicensePlate == null && Password == null)
+            if (FirstName == null && LastName == null && PhoneNumber == null && Email == null && LicensePlate == null && Password == null && Model == null && Year == null && Seats == null)
             {
+                OnGet();
                 return Page();
             }
             //No persistence between OnGet and OnPost, load the currentUser to update:
@@ -88,9 +103,49 @@ namespace OurCarZ.Pages
             {
                 currentUser.Email = Email;
             }
-            if (LicensePlate != null)
+            if (LicensePlate != null || Model != null || Year != null || Seats != null)
             {
-                currentUser.LicensePlate = LicensePlate;
+                if (currentUser.LicensePlate != null)
+                {
+                    newcar = DB.Cars.Find(currentUser.LicensePlate);
+                }
+                else 
+                {
+                    newcar = new Car();
+                }
+                if (LicensePlate != null)
+                {
+                    newcar.LicensePlate = LicensePlate;
+                }
+                if (Model != null)
+                {
+                    newcar.Model = Model;
+                }
+                if (Year != null)
+                {
+                    newcar.Year = Year;
+                }
+                if (Seats != null)
+                {
+                    newcar.Seats = Convert.ToInt32(Seats);
+                }
+                string shh = currentUser.LicensePlate;
+                if (DB.Cars.Find(newcar.LicensePlate) == null) 
+                {
+                    DB.Cars.Add(newcar);
+                }
+                else if (DB.Cars.Find(newcar.LicensePlate) != null) 
+                {
+                    DB.Remove(DB.Cars.Find(newcar.LicensePlate));
+                    DB.Cars.Add(newcar);
+                }
+                DB.SaveChanges();
+                if (DB.Cars.Find(currentUser.LicensePlate) != null) 
+                {
+                    DB.Cars.Remove(DB.Cars.Find(shh));
+                }
+                DB.SaveChanges();
+                currentUser.LicensePlate = newcar.LicensePlate;
             }
             if (Password != null)
             { 
@@ -98,7 +153,6 @@ namespace OurCarZ.Pages
                     PasswordVerificationResult.Success)
                 {
                     currentUser.Password = passwordHasher.HashPassword(null, Password);
-                    currentUser.ConfirmPassword = passwordHasher.HashPassword(null, ConfirmPassword); ;
                 }
             }
             

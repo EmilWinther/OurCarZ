@@ -27,6 +27,9 @@ namespace OurCarZ.Pages
         public List<Institution> Zealand { get; set; }
         public DateTime Time { get; set; }
         public User CurrentUser { get; set; }
+        public DateTime Tomorrow { get; set; }
+
+
         public void OnGet()
         {
             if (UserPages.LogInPageModel.LoggedInUser != null)
@@ -60,13 +63,16 @@ namespace OurCarZ.Pages
                 {
                     EndAddress = _edb.Addresses.FirstOrDefault(x => x.RoadName == EndAddress.RoadName && x.ZipCode == EndAddress.ZipCode);
                 }
-
                 _edb.SaveChanges();
 
                 Route.StartTime = StartTime;
+                Route.ArrivalTime = StartTime.AddHours(1);
                 Route.StartPoint = StartAddress.AddressId;
                 Route.FinishPoint = EndAddress.AddressId;
                 Zealand = _edb.Institutions.ToList();
+
+                var today = DateTime.Now;
+                Tomorrow = today.AddDays(1);
 
                 //Implement Login Functionality here:
                 Route.UserId = @LogInPageModel.LoggedInUser.UserId;
@@ -82,7 +88,7 @@ namespace OurCarZ.Pages
 
                 if (InstitutionList == null || InstitutionList.Count == 0 || Route.StartTime < DateTime.Now)
                 {
-                    throw new Exception();
+                    return Page();
                 }
                 else
                 {

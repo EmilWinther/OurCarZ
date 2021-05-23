@@ -4,6 +4,7 @@ using OurCarZ.Model;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Identity;
+using System;
 
 namespace OurCarZ.Pages.UserPages
 {
@@ -37,37 +38,55 @@ namespace OurCarZ.Pages.UserPages
         [Required(ErrorMessage = "Phone Number is required."), StringLength(8), MinLength(8, ErrorMessage = "Your phonenumber should be 8 digits"), MaxLength(8, ErrorMessage = "Your phonenumber should be 8 digits"), Phone]
         public string? PhoneNumber { get; set; }
         [BindProperty]
-        [Required(ErrorMessage = "Email is require."), MinLength(6), MaxLength(30), RegularExpression(@"^[a-zA-Z0-9_.+-]+@(edu.easj.dk)+$", ErrorMessage = "Invalid email format, use school mails")]
+        [Required(ErrorMessage = "Email is required."), MinLength(6), MaxLength(30), RegularExpression(@"^[a-zA-Z0-9_.+-]+@(edu.easj.dk)+$", ErrorMessage = "Invalid email format, use school mails")]
         public string? Email { get; set; }
         [BindProperty]
         [StringLength(7)]
         public string? LicensePlate { get; set; }
+        [BindProperty]
+        [RegularExpression(@"[1-9]")]
+        public int? Seats { get; set; }
+
+        [BindProperty]
+        [RegularExpression(@"[0-2]+[0-9]+[0-9]+[0-9]")]
+        public string? Year { get; set; }
+        [BindProperty]
+        [MinLength(1), MaxLength(30)]
+        public string? Model { get; set; }
 #nullable disable
+        [BindProperty]
+        public bool IsChecked {get; set;}
         public IActionResult OnPost()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
-           
+            if (IsChecked == true && LicensePlate != "on" && Model != null && Year != null && Seats != null) 
+            {
+                Car thiscar = new Car();
+                thiscar.LicensePlate = LicensePlate;
+                thiscar.Model = Model;
+                thiscar.Year = Year;
+                thiscar.Seats = Convert.ToInt32(Seats);
+                DB.Cars.Add(thiscar);
+                DB.SaveChanges();
+            }
             currentUser = new User();
             currentUser.FirstName = FirstName;
             currentUser.LastName = LastName;
             currentUser.PhoneNumber = PhoneNumber;
             currentUser.Email = Email;
-            currentUser.LicensePlate = LicensePlate;
-            currentUser.Password = passwordHasher.HashPassword(null, Password);
-            currentUser.ConfirmPassword = currentUser.Password;
-
-            if (currentUser.Password == currentUser.ConfirmPassword)
+            if (IsChecked == true) 
             {
-                DB.Users.Add(currentUser);
-                DB.SaveChanges();
-
-                return RedirectToPage("/Index");
+                currentUser.LicensePlate = LicensePlate;
             }
+            currentUser.Password = passwordHasher.HashPassword(null, Password);
 
-            return Page();
+            DB.Users.Add(currentUser);
+            DB.SaveChanges();
+
+            return RedirectToPage("/Index");
 
         }
     }

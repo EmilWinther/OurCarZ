@@ -6,29 +6,32 @@ namespace OurCarZ.Services
 {
     public class RoutePersistence : IRoutePersistence
     {
-        private EmilDbContext edb = new EmilDbContext();
-
+        private EmilDbContext _edb;
+        public RoutePersistence(EmilDbContext edb) 
+        {
+            _edb = edb;
+        }
         public void Create(Route route)
         {
-            edb.Routes.Add(route);
-            edb.SaveChanges();
+            _edb.Routes.Add(route);
+            _edb.SaveChanges();
         }
 
         public void Delete(int id)
         {
             Route route = GetOne(id);
-            edb.Routes.Remove(route);
-            edb.SaveChanges();
+            _edb.Routes.Remove(route);
+            _edb.SaveChanges();
         }
 
         public List<Route> GetAll()
         {
-            return edb.Routes.ToList();
+            return _edb.Routes.ToList();
         }
 
         public Route GetOne(int id)
         {
-            return edb.Routes.Find(id);
+            return _edb.Routes.Find(id);
         }
 
         public void Update(int id, Route updatedRoute)
@@ -36,7 +39,7 @@ namespace OurCarZ.Services
             Route route = GetOne(id);
             route.StartPoint = updatedRoute.StartPoint;
             route.FinishPoint = updatedRoute.FinishPoint;
-            edb.SaveChanges();
+            _edb.SaveChanges();
         }
     }
 }
