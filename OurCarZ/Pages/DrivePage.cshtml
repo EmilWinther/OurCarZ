@@ -42,17 +42,17 @@
             }
             <br>
             <form>
-                <a class="ubutton" asp-area="" asp-page="/EditRoute" asp-route-routeid="@Model.YourRoute.RouteId" asp-route-userId="@Model.CurrentUser.UserId" asp-route-startAddressId="@Model.StartAddress.AddressId" asp-route-endAddressId="@Model.EndAddress.AddressId">Change Route</a><br>
+                <a class="ubutton" style="text-align: center;" asp-area="" asp-page="/EditRoute" asp-route-routeid="@Model.YourRoute.RouteId" asp-route-userId="@Model.CurrentUser.UserId" asp-route-startAddressId="@Model.StartAddress.AddressId" asp-route-endAddressId="@Model.EndAddress.AddressId">Change Route</a><br>
             </form><br />
             <form asp-route-routeid="@Model.YourRoute.RouteId" asp-route-userId="@Model.CurrentUser.UserId" asp-route-startAddressId="@Model.StartAddress.AddressId" asp-route-endAddressId="@Model.EndAddress.AddressId" asp-page-handler="start" method="post">
-                <a class="ubutton">Start Route</a>
+                <button class="ubutton">Start Route</button>
             </form>
             <br />
 
             @* redirects to the route by the routeid *@
             <form>
                 <a class="ubutton" type="button" asp-page="Route" asp-route-id="@Model.YourRoute.RouteId" style="text-align:center">
-                    <i class="fas fa-map-marked-alt" title=" View Route"></i>View Route
+                    <i style="margin-right: 2ch;"class="fas fa-map-marked-alt" title="View Route"></i>View Route
                 </a>
             </form>
             <br />
