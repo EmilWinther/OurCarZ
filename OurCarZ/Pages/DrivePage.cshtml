@@ -41,20 +41,23 @@
                 <p>Date: @Model.RouteDate</p>
             }
             <br>
-            <a class="button" asp-area="" asp-page="/EditRoute" asp-route-routeid="@Model.YourRoute.RouteId" asp-route-userId="@Model.CurrentUser.UserId" asp-route-startAddressId="@Model.StartAddress.AddressId" asp-route-endAddressId="@Model.EndAddress.AddressId">Change Route</a><br>
+            <form>
+            <button class="ubutton" asp-area="" asp-page="/EditRoute" asp-route-routeid="@Model.YourRoute.RouteId" asp-route-userId="@Model.CurrentUser.UserId" asp-route-startAddressId="@Model.StartAddress.AddressId" asp-route-endAddressId="@Model.EndAddress.AddressId">Change Route</button><br>
+            </form><br />
             <form asp-route-routeid="@Model.YourRoute.RouteId" asp-route-userId="@Model.CurrentUser.UserId" asp-route-startAddressId="@Model.StartAddress.AddressId" asp-route-endAddressId="@Model.EndAddress.AddressId" asp-page-handler="start" method="post">
-                <button class="btn btn-default">Start Route</button>
+                <button class="ubutton">Start Route</button>
             </form>
-
+            <br />
 
             @* redirects to the route by the routeid *@
-            <a class="btn" type="button" asp-page="Route" asp-route-id="@Model.YourRoute.RouteId">
-                <i class="fas fa-map-marked-alt" title="View Route">View Route</i>
-            </a>
-
-
+            <form>
+                <a class="ubutton" type="button" asp-page="Route" asp-route-id="@Model.YourRoute.RouteId" style="text-align:center">
+                    ><i class="fas fa-map-marked-alt" title="View Route"></i>View Route
+                </a>
+            </form>
+            <br />
             <h3>Passengers who have chosen your route @Model.PassengerList.Count / @Model.YourCar.Seats</h3><br />
-            <table class="table">
+            <table class="table" style="color: var(--font-color)">
                 <thead>
                     <tr>
                         <th>Passenger</th>
@@ -132,5 +135,5 @@
                     }
                 </tbody>
             </table>
-    }
+        }
 </div>

@@ -62,15 +62,15 @@
                 <div style="margin-top: 10px;">
                     <h3 class="ml-0">From:</h3>
                     <label asp-for="@Model.StartAddress.RoadName"></label>
-                    <input class="ubutton" asp-for="@Model.StartAddress.RoadName" id="fromTbx" type="text" />
+                    <input class="default-form" asp-for="@Model.StartAddress.RoadName" id="fromTbx" type="text" />
                     <span asp-validation-for="StartAddress.RoadName"></span> <br>
 
                     <label asp-for="@Model.StartAddress.ZipCode"></label>
-                    <input class="ubutton" asp-for="@Model.StartAddress.ZipCode" id="fromZIP" type="text" />
+                    <input class="default-form" asp-for="@Model.StartAddress.ZipCode" id="fromZIP" type="text" />
                     <span asp-validation-for="StartAddress.ZipCode"></span> <br><br />
                     <h3 class="ml-0">From: </h3>
                     <label asp-for="@Model.EndAddress.RoadName"></label>
-                    <input class="ubutton" asp-for="@Model.EndAddress.RoadName" id="toTbx" type="text" />
+                    <input class="default-form" asp-for="@Model.EndAddress.RoadName" id="toTbx" type="text" />
                     <span asp-validation-for="EndAddress.RoadName"></span> <br>
 
                     <label asp-for="@Model.EndAddress.ZipCode"> To Zipcode: </label>
@@ -87,11 +87,15 @@
                 </div>
             
         </form>
-
+        <br />
         @if(Model.Route != null)
-        {  <a asp-route-routeId="@Model.Route.RouteId" asp-route-startAddressId="@Model.StartAddress.AddressId" asp-route-endAddressId="@Model.EndAddress.AddressId" asp-page="/DrivePage">
-               <button type="submit"  onclick="return confirm('Are you sure you want to continue?')">On to Drive Page</button>
-           </a>}
+        {
+    <form>
+        <a class="ubutton" asp-route-routeId="@Model.Route.RouteId" asp-route-startAddressId="@Model.StartAddress.AddressId" asp-route-endAddressId="@Model.EndAddress.AddressId" asp-page="/DrivePage" onclick="return confirm('Are you sure you want to continue?')" style="text-align: center">
+            Confirm Route
+        </a>
+    </form>
+                }
        
     }
     else if (UserPages.LogInPageModel.LoggedInUser == null)

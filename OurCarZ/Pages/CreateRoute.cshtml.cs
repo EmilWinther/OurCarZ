@@ -36,8 +36,9 @@ namespace OurCarZ.Pages
             {
                 CurrentUser = _edb.Users.Find(UserPages.LogInPageModel.LoggedInUser.UserId);
             }
-        var today = DateTime.Today;
+        var today = DateTime.Now;
             Time = today.AddDays(1);
+            Tomorrow = today.AddDays(1);
         }
 
         public IActionResult OnPost()

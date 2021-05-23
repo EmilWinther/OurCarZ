@@ -18,9 +18,17 @@
     <nav class="mb-3 color-prim sticky nav-size">
 
         <a style="left: 1em;" class="navbar-brand vertical-center-abs" asp-area="" asp-page="/Index"><h2>OurCarZ</h2></a>
-        <a style="left:10em;" class="font-primary d-inline-block vertical-center-abs" asp-area="" asp-page="/Routes">Routes</a>
-        
-                            @if (LogInPageModel.LoggedInUser == null)
+
+@if (LogInPageModel.LoggedInUser != null)
+                            {
+
+        <a style="left:10em;" class="font-primary d-inline-block vertical-center-abs" asp-area="" asp-page="/Routes">
+            Routes</a>
+            }
+
+
+
+@if (LogInPageModel.LoggedInUser == null)
                             {
             <a style="right: 10px;" class="font-primary ubutton round float-right vertical-center-abs" asp-area="" asp-page="/UserPages/RegisterPage">
                 Sign up </a>
@@ -28,118 +36,122 @@
                     Log In </a>
                             } else {
                     <h3 style="right: 10px; cursor: pointer; user-select: none;" class="font-primary round vertical-center-abs" onclick="openProfileBox()">
-                        <i class="fas fa-user round roundborder" style="margin-right: 20px;" title="Your Profile"></i></h3>
-                            }
-                       
+@LogInPageModel.LoggedInUser.FirstName @LogInPageModel.LoggedInUser.LastName
+    <i class="fas fa-user round roundborder" style="margin-right: 20px;" title="Your Profile"></i></h3>
+    }
 
 
-</nav>
+
+ </nav>
+
 @if(LogInPageModel.LoggedInUser != null) {
-<div class="profile-popup" id="myForm">
-    <a class="nav-link font-primary" asp-area="" asp-page="/Routes"><i class="fas fa-map-marked-alt"></i>Your Routes</a>
-    <a class="nav-link font-primary" asp-area="" asp-page="/Profile" asp-route-id="6"><i class="fas fa-user-alt"></i>Your Profile</a>
-    <a class="nav-link font-primary" asp-area="" asp-page="/EditProfile" asp-route-id="7"><i class="fas fa-edit"></i>Edit Profile</a>
-    <a class="nav-link font-primary" asp-area="" asp-page="/MyMessages" asp-route-id="@LogInPageModel.LoggedInUser.UserId"><i class="fas fa-envelope"></i>My messages</a>
-    <hr />
-    <section>
-        <p><i class="fas fa-moon"></i>Dark Theme</p>
-
-        <div class="toggle">
-            <input type="checkbox" onchange="toggleTheme()" id="toggle" aria-checked="false" ;>
-            <label class="slider" for="toggle">
-
-            </label>
-        </div>
-    </section>
-
-     @{if (LogInPageModel.LoggedInUser != null && (LogInPageModel.LoggedInUser.UserId == 35 || LogInPageModel.LoggedInUser.UserId == 57))
-                                {
+    <div class="profile-popup" id="myForm">
+        <a class="nav-link font-primary" asp-area="" asp-page="/Routes"><i class="fas fa-map-marked-alt"></i>Your Routes</a>
+        <a class="nav-link font-primary" asp-area="" asp-page="/Profile" asp-route-id="6"><i class="fas fa-user-alt"></i>Your Profile</a>
+        <a class="nav-link font-primary" asp-area="" asp-page="/EditProfile" asp-route-id="7"><i class="fas fa-edit"></i>Edit Profile</a>
+        <a class="nav-link font-primary" asp-area="" asp-page="/MyMessages" asp-route-id="@LogInPageModel.LoggedInUser.UserId"><i class="fas fa-envelope"></i>My messages</a>
         <hr />
-        <a class="nav-link" asp-area="" asp-page="/AdminStats">Statistics</a>
+        <section>
+            <p><i class="fas fa-moon"></i>Dark Theme</p>
+
+            <div class="toggle">
+                <input type="checkbox" onchange="toggleTheme()" id="toggle" aria-checked="false" ;>
+                <label class="slider" for="toggle">
+
+                </label>
+            </div>
+        </section>
+
+         @{if (LogInPageModel.LoggedInUser != null && (LogInPageModel.LoggedInUser.UserId == 35 || LogInPageModel.LoggedInUser.UserId == 57))
+                                {
+            <hr />
+            <a class="nav-link" asp-area="" asp-page="/AdminStats">Statistics</a>
                                 }
-    }
-    <hr />
-    <a class="nav-link" asp-area="" asp-page="/UserPages/LogOutPage"><i class="fas fa-sign-out-alt"></i>Logout</a>
-</div>
-    }
-
-<div class="container">
-    <div class="loadingWrapper"><img src="~/Pictures/Logo.png" alt="logo" style="width:20vw;"></div>
-    <main role="main" class="pb-3">
-@RenderBody()
-</main>
-</div>
-
-<footer class="footer box-shadow text-muted">
-    <div class="container">
-        <p>&copy; 2021 - OurCarZ - <a asp-area="" asp-page="/Privacy">Privacy</a></p>
+        }
+        <hr />
+        <a class="nav-link" asp-area="" asp-page="/UserPages/LogOutPage"><i class="fas fa-sign-out-alt"></i>Logout</a>
     </div>
-</footer>
+    }
 
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
+    <div class="container">
+        <div class="loadingWrapper"><img src="~/Pictures/Logo.png" alt="logo" style="width:20vw;"></div>
+        <main role="main" class="pb-3">
+
+@RenderBody()
+    </main>
+    </div>
+
+    <footer class="footer box-shadow text-muted">
+        <div class="container">
+            <p>&copy; 2021 - OurCarZ - <a asp-area="" asp-page="/Privacy">Privacy</a></p>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
 
 @await RenderSectionAsync("Scripts", required: false)
 
-<script>
-    var profilebool = 0;
-    let wrapper = document.querySelector('.loadingWrapper');
+    <script>
+        var profilebool = 0;
+        let wrapper = document.querySelector('.loadingWrapper');
 
-    window.addEventListener('load', function () {
-        wrapper.animate([
+        window.addEventListener('load', function () {
+            wrapper.animate([
 
-            { opacity: '1' },
-            { opacity: '0' }
+                { opacity: '1' },
+                { opacity: '0' }
 
-        ], {
-            duration: 300,
-            iterations: 1
+            ], {
+                duration: 300,
+                iterations: 1
+            });
+            this.setTimeout(function () {
+                wrapper.parentElement.removeChild(wrapper);
+            }, 300);
         });
-        this.setTimeout(function () {
-            wrapper.parentElement.removeChild(wrapper);
-        }, 300);
-    });
 
-    function setTheme(themeName) {
-        localStorage.setItem('theme', themeName);
-        document.documentElement.className = themeName;
-    }
-    // function to toggle between light and dark theme
-    function toggleTheme() {
-
-        if (localStorage.getItem('theme') === 'theme-dark') {
-            setTheme('theme-light');
-
-        } else {
-            setTheme('theme-dark');
-
+        function setTheme(themeName) {
+            localStorage.setItem('theme', themeName);
+            document.documentElement.className = themeName;
         }
-    }
-    // Immediately invoked function to set the theme on initial load
-    (function () {
-        let checkbox = document.getElementById('toggle');
-        if (localStorage.getItem('theme') === 'theme-dark') {
-            setTheme('theme-dark');
-            checkbox.setAttribute('checked', 'checked');
-        } else {
-            setTheme('theme-light');
-            checkbox.removeAttribute('checked');
-        }
-    })();
+        // function to toggle between light and dark theme
+        function toggleTheme() {
 
-    function openProfileBox() {
-        if (profilebool == 0) {
-            profilebool = 1;
-            document.getElementById("myForm").style.display = "block";
-            return;
+            if (localStorage.getItem('theme') === 'theme-dark') {
+                setTheme('theme-light');
+
+            } else {
+                setTheme('theme-dark');
+
+            }
         }
-        if (profilebool == 1) {
-            profilebool = 0;
-            document.getElementById("myForm").style.display = "none";
-            return;
+        // Immediately invoked function to set the theme on initial load
+        (function () {
+            let checkbox = document.getElementById('toggle');
+            if (localStorage.getItem('theme') === 'theme-dark') {
+                setTheme('theme-dark');
+                checkbox.setAttribute('checked', 'checked');
+            } else {
+                setTheme('theme-light');
+                checkbox.removeAttribute('checked');
+            }
+        })();
+
+        function openProfileBox() {
+            if (profilebool == 0) {
+                profilebool = 1;
+                document.getElementById("myForm").style.display = "block";
+                return;
+            }
+            if (profilebool == 1) {
+                profilebool = 0;
+                document.getElementById("myForm").style.display = "none";
+                return;
+            }
         }
-    }
-</script>
+    </script>
 </body>
 </html>
