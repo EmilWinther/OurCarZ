@@ -22,7 +22,7 @@
 @if (LogInPageModel.LoggedInUser != null)
                             {
 
-        <a style="left:10em;" class="font-primary d-inline-block vertical-center-abs" asp-area="" asp-page="/Routes">
+        <a style="left: calc(50% - 3ch); font-size: 1.3rem;" class="font-primary d-inline-block vertical-center-abs" asp-area="" asp-page="/Routes">
             Routes</a>
             }
 
@@ -46,8 +46,8 @@
 
 @if(LogInPageModel.LoggedInUser != null) {
     <div class="profile-popup" id="myForm">
-        <a class="nav-link font-primary" asp-area="" asp-page="/Routes"><i class="fas fa-map-marked-alt"></i>Your Routes</a>
-        <a class="nav-link font-primary" asp-area="" asp-page="/Profile" asp-route-id="6"><i class="fas fa-user-alt"></i>Your Profile</a>
+        <a class="nav-link font-primary" asp-area="" asp-page="/MyRoutes"><i class="fas fa-map-marked-alt"></i>My Routes</a>
+        <a class="nav-link font-primary" asp-area="" asp-page="/Profile" asp-route-id="6"><i class="fas fa-user-alt"></i>My Profile</a>
         <a class="nav-link font-primary" asp-area="" asp-page="/EditProfile" asp-route-id="7"><i class="fas fa-edit"></i>Edit Profile</a>
         <a class="nav-link font-primary" asp-area="" asp-page="/MyMessages" asp-route-id="@LogInPageModel.LoggedInUser.UserId"><i class="fas fa-envelope"></i>My messages</a>
         <hr />

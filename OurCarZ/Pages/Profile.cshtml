@@ -20,11 +20,10 @@
         <div class="PG7"> <a class="ubutton" asp-area="" asp-page="/Routes" asp-route-id="@LogInPageModel.LoggedInUser.UserId">Select new route</a></div>
         <div class="PG8"> <a class="ubutton" asp-area="" asp-page="/PastRoutes" asp-route-id="@LogInPageModel.LoggedInUser.UserId">Your past routes</a></div>
         <div class="PG9"> <a class="ubutton" asp-area="" asp-page="/CreateRoute" asp-route-id="@LogInPageModel.LoggedInUser.UserId">Create new route</a></div>
-        <div class="PG10"> <a class="ubutton" asp-area="" asp-page="/" asp-route-id="@Model.currentUser.UserId">Your next route as driver</a></div>
-        <div class="PG11"> <a class="ubutton" asp-area="" asp-page="/MyRoutes" asp-route-id="@LogInPageModel.LoggedInUser.UserId">My routes</a></div>
-        <div class="PG12"> <a class="ubutton" asp-area="" asp-page="/MyMessages" asp-route-id="@LogInPageModel.LoggedInUser.UserId">My messages</a></div>
-        <div class="PG13">
-                <a class="ubutton" asp-route-DeleteID="@Model.currentUser.UserId" onclick="return confirm('Are you sure you want to change your Profile?')">Delete Profile</a>
+        <div class="PG10"> <a class="ubutton" asp-area="" asp-page="/MyRoutes" asp-route-id="@LogInPageModel.LoggedInUser.UserId">My routes</a></div>
+        <div class="PG11"> <a class="ubutton" asp-area="" asp-page="/MyMessages" asp-route-id="@LogInPageModel.LoggedInUser.UserId">My messages</a></div>
+        <div class="PG12">
+            <a class="ubutton" asp-route-DeleteID="@Model.currentUser.UserId" onclick="return confirm('Are you sure you want to change your Profile?')">Delete Profile</a>
         </div>
 
     </div>
