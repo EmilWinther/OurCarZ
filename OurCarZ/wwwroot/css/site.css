@@ -284,6 +284,7 @@ form .ubutton {
     grid-column-gap: 0px;
     grid-row-gap: 0px;
     margin-top: 50px;
+    height: 900px;
 }
 
 
@@ -296,6 +297,7 @@ form .ubutton {
     grid-column-gap: 0px;
     grid-row-gap: 0px;
     overflow: hidden;
+    height: 900px;
 }
 
 .ProfileGrid2 {
@@ -305,6 +307,7 @@ form .ubutton {
     grid-template-rows: repeat(5, 1fr);
     grid-column-gap: 0px;
     grid-row-gap: 0px;
+    height: 900px;
 }
 
 .PG1 {

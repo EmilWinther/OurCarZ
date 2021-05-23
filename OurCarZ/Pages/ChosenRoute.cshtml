@@ -72,69 +72,15 @@
 </script>
 <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap' async defer></script>
 @* Map Section *@
-<br/>
-<center>
+<br />
+<div class="form-container">
+    <center>
 
-    @foreach (var add in Model.currentAddress)
-    {
-        if (add.AddressId.Equals(Model.myRoute.StartPoint))
-        {
-    <div class="form-container" style="text-align: center">
-        <center>
-            <h1>Choose route</h1>
-            <h2>Are you sure you want to join this route?</h2>
-        </center>
-        <div class="text-center">
-
-            <h1 id="demo" class="display-4"></h1>
-            <div id="myMap" style="
-        position: center;
-        margin: auto;
-        width: 100%;
-        height: 50vh;
-        ">
-            </div>
-        </div>
-        <br />
-        <a asp-route-page="/Rating/RatingPage" class="ubutton" style="width:100px;">Yes</a>
-        <a asp-route-page="/Routes" class="ubutton" style="width:100px;">No</a><br />
-        <br />
         @foreach (var add in Model.currentAddress)
         {
             if (add.AddressId.Equals(Model.myRoute.StartPoint))
             {
 
-            <p>From: @add.RoadName at @Model.myRoute.StartTime</p>
-        }
-    }
-    @foreach (var add in Model.EndAddress)
-    {
-        if (add.AddressId.Equals((Model.myRoute.FinishPoint)))
-        {
-            <p>To: @add.RoadName arrival at @Model.myRoute.ArrivalTime</p>
-        }
-    }
-    <p>Driver: @Model.Driver.FirstName @Model.Driver.LastName</p>
-
-    <table>
-        <form method="post">
-            <a asp-route-routeId="@Model.myRoute.RouteId">
-                <button type="submit" class="btn btn-success btn-group-lg pull-left">yes</button>
-            </a>
-        </form>
-        <a asp-route-page="/Routes"
-           class="btn btn-success btn-group-lg pull-left">
-            No
-        </a>
-        <a asp-route-page="/PickaPath" asp-route-id="@Model.myRoute.RouteId"
-               class="btn btn-success btn-group-lg border-left">
-            Make pickup point
-            </a>
-       
-    </table>
-    <p><b>If you want to choose this route and have a reasonable pickup point in mind, press Make pickup point</b></p>
-    <p><b>If you want to message the driver about something, press yes, go to your profile in the the top right corner, choose My routes and press the drivers name.</b></p>
-    <p><b>If you want to go back to Routes press no.</b></p>
                 <p>From: @add.RoadName at @Model.myRoute.StartTime</p>
             }
         }
@@ -146,15 +92,25 @@
             }
         }
         <p>Driver: @Model.Driver.FirstName @Model.Driver.LastName</p>
-        <br /><br /><br />
-        <a asp-route-page="/SendMessage" asp-route-id="@Model.CurrentUser.UserId" asp-route-id2="@Model.myRoute.UserId" asp-route-id3="@Model.CurrentUser.UserId"
-           class="ubutton" style="width:300px;">
-            Message driver
-        </a>
 
-        <a asp-route-page="/SendMessage" asp-route-id="@Model.CurrentUser.UserId"
-           class="ubutton" style="width:300px;">
-            Make pickup point
-        </a>
-    </div>
-</center>
+        <table>
+            <form method="post">
+                <a asp-route-routeId="@Model.myRoute.RouteId">
+                    <button type="submit" class="btn btn-success btn-group-lg pull-left">yes</button>
+                </a>
+            </form>
+            <a asp-route-page="/Routes"
+               class="btn btn-success btn-group-lg pull-left">
+                No
+            </a>
+            <a asp-route-page="/PickaPath" asp-route-id="@Model.myRoute.RouteId"
+               class="btn btn-success btn-group-lg border-left">
+                Make pickup point
+            </a>
+
+        </table>
+        <p><b>If you want to choose this route and have a reasonable pickup point in mind, press Make pickup point</b></p>
+        <p><b>If you want to message the driver about something, press yes, go to your profile in the the top right corner, choose My routes and press the drivers name.</b></p>
+        <p><b>If you want to go back to Routes press no.</b></p>
+    </center>
+</div>
