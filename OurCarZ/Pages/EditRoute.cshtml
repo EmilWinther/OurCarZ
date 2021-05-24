@@ -34,7 +34,7 @@
 
         <form method="post">
             <h2>Change the Route details: </h2>
-            Remember to fill out Zipcode when changing address
+            <p>Remember to fill out Zipcode when changing address</p>
             <div class="form-group">
                 <label for="start">Start Address:</label>
                 <input type="text" id="@Model.Start" class="default-form" name="start">
@@ -55,7 +55,7 @@
                 <input type="text" id="@Model.EndZip" class="default-form" name="endzip">
                 <span asp-validation-for="EndZip" class="text-danger"></span><br><br>
             </div>
-            <b>Dates have to be the same and arrival time should be later than start time</b>
+            <p>Dates have to be the same and arrival time should be later than start time</p>
             <div class="form-group">
                 <label for="starttime">Start Date and Time:</label>
                 <input type="text" id="@Model.YourRoute.StartTime" class="default-form" name="starttime">
