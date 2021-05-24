@@ -52,7 +52,7 @@
                                 <form method="post">
                                     <input hidden="hidden" asp-for="@LogInPageModel.LoggedInUser.UserId"/>
 
-                                    <a class="ubutton" type="submit" asp-route-userId="@routes.UserId" asp-route-DeleteRid="@routes.RouteId" asp-route-DeleteAid="@add.AddressId" onclick="return confirm('Are you sure you want to change your information?')">Delete</a>
+                                    <a class="ubutton" style="text-align: center; font-size: 1.2rem !important;" type="submit" asp-route-userId="@routes.UserId" asp-route-DeleteRid="@routes.RouteId" asp-route-DeleteAid="@add.AddressId" onclick="return confirm('Are you sure you want to change your information?')">Delete</a>
                                 </form>
                             </td>
                         }
@@ -90,7 +90,7 @@
                     <td>
                         <form method="post">
                             <input hidden="hidden" asp-for="@LogInPageModel.LoggedInUser.UserId" />
-                            <button type="submit" asp-page-handler="remove" asp-route-removeId="@LogInPageModel.LoggedInUser.UserId" asp-route-removeRid="@route.RouteId" onclick="return confirm('Are you sure you want to remove yourself from the route?')">Quit Route</button>
+                            <button class="ubutton" style="font-size: 1.2rem !important" type="submit" asp-page-handler="remove" asp-route-removeId="@LogInPageModel.LoggedInUser.UserId" asp-route-removeRid="@route.RouteId" onclick="return confirm('Are you sure you want to remove yourself from the route?')">Quit Route</button>
                         </form>
                     </td>
                 }

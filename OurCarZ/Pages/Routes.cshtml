@@ -50,13 +50,10 @@
                         </div>
                         <div class="card-text cardE4 mw-100 position-relative" style="display:flex; transform: scale(0.7); transform-origin: left;">
                             <i class="fas fa-users"></i>
-                            <h6 class="m-0 p-0 float-left position-absolute font-weak abs-left">Spots: </h6>
+                            <h6 class="m-0 p-0 float-left position-absolute font-weak abs-left">Spots occupied: </h6>
                             <h3 class="m-0 position-absolute anim-Load abs-left" style="top: 1.20rem; width: 300px;">
 
-                                @Model.cars.Where(c => c.LicensePlate ==
-                                Model.users.Where(u => u.UserId == route.UserId)
-                                .Select(u => u.LicensePlate).DefaultIfEmpty("--Option unknown--")
-                                .First()).First().Seats
+                                @Model.PassengerRoutes.Count(s => s.RouteId == route.RouteId) / @Model.DB.Cars.Find(Model.DB.Users.Find(route.UserId).LicensePlate).Seats
                             </h3>
                         </div>
                     </div>
