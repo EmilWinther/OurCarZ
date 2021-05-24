@@ -75,42 +75,51 @@
 <br />
 <div class="form-container">
     <center>
+        <div class="text-center">
 
-        @foreach (var add in Model.currentAddress)
-        {
-            if (add.AddressId.Equals(Model.myRoute.StartPoint))
+            <h1 id="demo" class="display-4"></h1>
+            <div id="myMap" style="
+        position: center;
+        margin: auto;
+        width: 100%;
+        height: 50vh;
+        ">
+            </div>
+            @foreach (var add in Model.currentAddress)
             {
+                if (add.AddressId.Equals(Model.myRoute.StartPoint))
+                {
 
-                <p>From: @add.RoadName at @Model.myRoute.StartTime</p>
+                    <p>From: @add.RoadName at @Model.myRoute.StartTime</p>
+                }
             }
-        }
-        @foreach (var add in Model.EndAddress)
-        {
-            if (add.AddressId.Equals((Model.myRoute.FinishPoint)))
+            @foreach (var add in Model.EndAddress)
             {
-                <p>To: @add.RoadName arrival at @Model.myRoute.ArrivalTime</p>
+                if (add.AddressId.Equals((Model.myRoute.FinishPoint)))
+                {
+                    <p>To: @add.RoadName arrival at @Model.myRoute.ArrivalTime</p>
+                }
             }
-        }
-        <p>Driver: @Model.Driver.FirstName @Model.Driver.LastName</p>
+            <p>Driver: @Model.Driver.FirstName @Model.Driver.LastName</p>
 
-        <table>
-            <form method="post">
-                <a asp-route-routeId="@Model.myRoute.RouteId">
-                    <button type="submit" class="btn btn-success btn-group-lg pull-left">yes</button>
+            <table>
+                <form method="post">
+                    <a asp-route-routeId="@Model.myRoute.RouteId">
+                        <button type="submit" class="btn btn-success btn-group-lg pull-left">yes</button>
+                    </a>
+                </form>
+                <a asp-route-page="/Routes"
+                   class="btn btn-success btn-group-lg pull-left">
+                    No
                 </a>
-            </form>
-            <a asp-route-page="/Routes"
-               class="btn btn-success btn-group-lg pull-left">
-                No
-            </a>
-            <a asp-route-page="/PickaPath" asp-route-id="@Model.myRoute.RouteId"
-               class="btn btn-success btn-group-lg border-left">
-                Make pickup point
-            </a>
+                <a asp-route-page="/PickaPath" asp-route-id="@Model.myRoute.RouteId"
+                   class="btn btn-success btn-group-lg border-left">
+                    Make pickup point
+                </a>
 
-        </table>
-        <p><b>If you want to choose this route and have a reasonable pickup point in mind, press Make pickup point</b></p>
-        <p><b>If you want to message the driver about something, press yes, go to your profile in the the top right corner, choose My routes and press the drivers name.</b></p>
-        <p><b>If you want to go back to Routes press no.</b></p>
+            </table>
+            <p><b>If you want to choose this route and have a reasonable pickup point in mind, press Make pickup point</b></p>
+            <p><b>If you want to message the driver about something, press yes, go to your profile in the the top right corner, choose My routes and press the drivers name.</b></p>
+            <p><b>If you want to go back to Routes press no.</b></p>
     </center>
 </div>
