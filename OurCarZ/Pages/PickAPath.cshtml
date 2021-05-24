@@ -69,45 +69,52 @@
     </script>
 </head>
 <body onload="GetDirections()">
-    @if (Model.Route != null)
-    {
-    <form asp-route-id="@Model.Route.RouteId" method="post">
-        <div id="myMap" style="position: relative; width: 800px; height: 600px;"></div>
+    <div class="form-container">
+        @if (Model.Route != null)
+        {
 
-        <div style="margin-top: 10px;">
-            <label asp-for="@Model.PhotopathAdr.RoadName" class="custom-control-label"></label>
-            <input asp-for="@Model.PhotopathAdr.RoadName" type="text" /><br>
-            <span asp-validation-for="PhotopathAdr.RoadName"></span> <br>
+            <form asp-route-id="@Model.Route.RouteId" method="post">
+                <div id="myMap" style="position: relative; width: 800px; height: 600px;"></div>
 
-            <label asp-for="@Model.ZipCode" class="custom-control-label"></label>
-            <input asp-for="@Model.ZipCode" type="text" /><br>
-            <span asp-validation-for="ZipCode"></span><br>
+                <div style="margin-top: 10px;">
+                    <label asp-for="@Model.PhotopathAdr.RoadName"></label>
+                    <input class="default-form" asp-for="@Model.PhotopathAdr.RoadName" type="text" /><br>
+                    <span asp-validation-for="PhotopathAdr.RoadName"></span> <br>
 
-            <input type="submit" value="Calculate" />
-        </div>
-        <p>Input the Pick-up point's RoadName and Zipcode up above and click calculate to see the new route. <br>
-        If the point was added unto the map, click below to save the results and request the driver pick you up at the specified location.</p>
-        <br />
-        </form>
-        <form asp-page-handler="request" method="post">
-            <div style="margin-top: 10px;">
+                    <label asp-for="@Model.ZipCode"></label>
+                    <input class="default-form" asp-for="@Model.ZipCode" type="text" /><br>
+                    <span asp-validation-for="ZipCode"></span><br>
 
-                <input asp-for="@Model.ZipCode" type="hidden" />
-                <input asp-for="@Model.Route.RouteId" type="hidden" />
-                <input asp-for="@Model.PhotopathAdr.RoadName" type="hidden" />
+                    <input class="ubutton" type="submit" value="Calculate" />
+                </div>
+                <p>
+                    Input the Pick-up point's RoadName and Zipcode up above and click calculate to see the new route. <br>
+                    If the point was added unto the map, click below to save the results and request the driver pick you up at the specified location.
+                </p>
+                <br />
+            </form>
+            <form asp-page-handler="request" method="post">
+                <div style="margin-top: 10px;">
 
-                <input type="submit" value="Request Pickup" />
-            </div>
-        </form>
-    }
-    else if (Model.currentUser == null)
-    {
-        <p>This pages functionality requires a logged in user. <br>
-        Please consider logging in to utilize this page.</p>
-    }
-    else 
-    {
-        <p> something went wrong, try again? </p>
-    }
+                    <input asp-for="@Model.ZipCode" type="hidden" />
+                    <input asp-for="@Model.Route.RouteId" type="hidden" />
+                    <input asp-for="@Model.PhotopathAdr.RoadName" type="hidden" />
+
+                    <input class="ubutton" type="submit" value="Request Pickup" />
+                </div>
+            </form>
+        }
+        else if (Model.currentUser == null)
+        {
+            <p>
+                This pages functionality requires a logged in user. <br>
+                Please consider logging in to utilize this page.
+            </p>
+        }
+        else
+        {
+            <p> something went wrong, try again? </p>
+        }
+    </div>
 </body>
 </html>
