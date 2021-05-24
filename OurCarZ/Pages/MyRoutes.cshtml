@@ -51,8 +51,7 @@
                             <td>
                                 <form method="post">
                                     <input hidden="hidden" asp-for="@LogInPageModel.LoggedInUser.UserId"/>
-
-                                    <a class="ubutton" style="text-align: center; font-size: 1.2rem !important;" type="submit" asp-route-userId="@routes.UserId" asp-route-DeleteRid="@routes.RouteId" asp-route-DeleteAid="@add.AddressId" onclick="return confirm('Are you sure you want to change your information?')">Delete</a>
+                                    <button class="ubutton" style="text-align: center; font-size: 1.2rem !important;" type="submit" asp-route-userId="@routes.UserId" asp-route-DeleteRid="@routes.RouteId" onclick="return confirm('Are you sure you want to delete this route?')">Delete</button>
                                 </form>
                             </td>
                         }

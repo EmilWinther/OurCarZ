@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -109,11 +108,14 @@ namespace OurCarZ.Pages
                 {
                     newcar = DB.Cars.Find(currentUser.LicensePlate);
                 }
-                else 
+                else
                 {
                     newcar = new Car();
                 }
-                if (LicensePlate != null)
+                if (LicensePlate.ToLower() == "delete")
+                {
+                }
+                else if (LicensePlate != null)
                 {
                     newcar.LicensePlate = LicensePlate;
                 }
@@ -130,32 +132,42 @@ namespace OurCarZ.Pages
                     newcar.Seats = Convert.ToInt32(Seats);
                 }
                 string shh = currentUser.LicensePlate;
-                if (DB.Cars.Find(newcar.LicensePlate) == null) 
+                if (LicensePlate.ToLower() == "delete")
+                {
+                }
+                else if (DB.Cars.Find(newcar.LicensePlate) == null)
                 {
                     DB.Cars.Add(newcar);
                 }
-                else if (DB.Cars.Find(newcar.LicensePlate) != null) 
+                else if (DB.Cars.Find(newcar.LicensePlate) != null)
                 {
                     DB.Remove(DB.Cars.Find(newcar.LicensePlate));
                     DB.Cars.Add(newcar);
                 }
                 DB.SaveChanges();
-                if (DB.Cars.Find(currentUser.LicensePlate) != null) 
+                if (DB.Cars.Find(currentUser.LicensePlate) != null)
                 {
                     DB.Cars.Remove(DB.Cars.Find(shh));
                 }
                 DB.SaveChanges();
-                currentUser.LicensePlate = newcar.LicensePlate;
+                if (LicensePlate.ToLower() == "delete")
+                {
+                    currentUser.LicensePlate = null;
+                }
+                else
+                {
+                    currentUser.LicensePlate = newcar.LicensePlate;
+                }
             }
             if (Password != null)
-            { 
+            {
                 if (passwordHasher.VerifyHashedPassword(null, currentUser.Password, OldPassword) ==
                     PasswordVerificationResult.Success)
                 {
                     currentUser.Password = passwordHasher.HashPassword(null, Password);
                 }
             }
-            
+
             //Update the user. Finds the user based on the primary key (UserId). If a new primary key is somehow inserted, it makes a new user instead.
             DB.Users.Update(currentUser);
             DB.SaveChanges();

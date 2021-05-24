@@ -43,7 +43,10 @@ namespace OurCarZ.Pages.Rating
                 else
                 {
                     RatingDatabase newRating = new RatingDatabase();
-                    DB.RatingDatabases.Add(new(UserRating, Rating, UserToBeRated));
+                    newRating.Rating = Rating;
+                    newRating.UserRatedId = UserToBeRated;
+                    newRating.UserRatingId = UserRating;
+                    DB.RatingDatabases.Add(newRating);
                 }
                 //When in doubt, Try / Catch! This is here for when an incorrect UserID is input either as the Rater or the Ratee. 
                 //Of course, it catches other errors too (That aren't already specified above! Those *SHOULD* already be handled)

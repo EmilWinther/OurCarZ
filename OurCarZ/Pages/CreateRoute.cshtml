@@ -54,7 +54,7 @@
 
 <body onload="GetDirections()">
     <div class="form-container">
-        @if (UserPages.LogInPageModel.LoggedInUser != null || UserPages.LogInPageModel.LoggedInUser.LicensePlate != null)
+        @if (UserPages.LogInPageModel.LoggedInUser != null && UserPages.LogInPageModel.LoggedInUser.LicensePlate != null)
         {
 
             <form method="post">
