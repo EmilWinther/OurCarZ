@@ -1,103 +1,97 @@
 ﻿@using OurCarZ.Pages.UserPages
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="theme-light">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - OurCarZ</title>
+    <title> @ViewData["Title"] - OurCarZ</title>
     @RenderSection("Styles", false)
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <script src="https://kit.fontawesome.com/95875560d8.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">OurCarZ</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-page="/CreateRoute">Route</a>
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Routes">Routes</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Route">Route</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/UserPages/RegisterPage">Sign up</a>
-                        </li>
-                        <li class="nav-item">
 
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Profile">Profile</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/EditProfile">Edit Profile</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/DrivePage" asp-route-userId="6" asp-route-routeId="74" asp-route-startAddressId="1" asp-route-endAddressId="2" asp-route-viaId="1">DriverPage</a>
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Your Profile" asp-route-id="6">Your Profile</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/MyMessages" asp-route-id="7">My messages</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Rating/RatingPage">Rate Driver</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-route-userId="6" asp-page="/MyRoutes">My routes</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-route-id="35" asp-page="/Past Routes">Past routes</a>
-                        </li>
-                        <li class="nav-item">
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav">
-                        @{
-                            if (LogInPageModel.LoggedInUser == null)
+    <nav class="mb-3 color-prim sticky nav-size">
+
+        <a style="left: 1em;" class="navbar-brand vertical-center-abs" asp-area="" asp-page="/Index"><h2>OurCarZ</h2></a>
+
+
+@if (LogInPageModel.LoggedInUser != null)
                             {
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-page="/UserPages/LogInPage">Login</a>
-                                </li>
-                            }
-                            else
+
+        <a style="left: calc(45% - 3ch); font-size: 1.3rem;" class="font-primary d-inline-block vertical-center-abs" asp-area="" asp-page="/Routes">
+            Routes</a>
+            <a style="left: calc(55% - 6ch); font-size: 1.3rem;" class="font-primary d-inline-block vertical-center-abs" asp-area="" asp-page="/CreateRoute">
+                Create Route</a>
+    }
+
+
+
+
+@if (LogInPageModel.LoggedInUser == null)
                             {
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-route-id="@LogInPageModel.LoggedInUser.UserId" asp-page="/Profile">User: @LogInPageModel.LoggedInUser.Email</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-page="/UserPages/LogOutPage">Logout</a>
-                                </li>
-                            }
-                            if (LogInPageModel.LoggedInUser != null && LogInPageModel.LoggedInUser.UserId == 35)
-                                {
-                                    <li class="nav-item">
-                                        <a class="nav-link" asp-area="" asp-page="">Statistics</a>
-                                    </li>
-                                }
-                        }
-                    </ul>
-                </div>
+    <a style="right: 10px;" class="font-primary ubutton round float-right vertical-center-abs" asp-area="" asp-page="/UserPages/RegisterPage">
+        Sign up
+    </a>
+    <a style="right: 110px;" class="font-primary ubutton round float-right vertical-center-abs" asp-area="" asp-page="/UserPages/LogInPage">
+        Log In
+    </a>
+                            } else {
+    <h3 style="right: 10px; cursor: pointer; user-select: none;" class="font-primary round vertical-center-abs" onclick="openProfileBox()">
+
+@LogInPageModel.LoggedInUser.FirstName @LogInPageModel.LoggedInUser.LastName
+    <i class="fas fa-user round roundborder" style="margin-right: 20px;" title="Your Profile"></i>
+    </h3>
+    }
+
+
+
+    </nav>
+
+@if(LogInPageModel.LoggedInUser != null) {
+    <div class="profile-popup" id="myForm">
+        <a class="nav-link font-primary" asp-area="" asp-page="/MyRoutes"><i class="fas fa-map-marked-alt"></i>My Routes</a>
+        <a class="nav-link font-primary" asp-area="" asp-page="/Profile"><i class="fas fa-user-alt"></i>My Profile</a>
+        <a class="nav-link font-primary" asp-area="" asp-page="/EditProfile"><i class="fas fa-edit"></i>Edit Profile</a>
+        <a class="nav-link font-primary" asp-area="" asp-page="/MyMessages" asp-route-id="@LogInPageModel.LoggedInUser.UserId"><i class="fas fa-envelope"></i>My messages</a>
+        <hr />
+        <section>
+            <p><i class="fas fa-moon"></i>Dark Theme</p>
+
+            <div class="toggle">
+                <input type="checkbox" onchange="toggleTheme()" id="toggle" aria-checked="false" ;>
+                <label class="slider" for="toggle">
+
+                </label>
             </div>
-        </nav>
-    </header>
+        </section>
+
+         @{if (LogInPageModel.LoggedInUser != null && (LogInPageModel.LoggedInUser.UserId == 88))
+                                {
+            <hr />
+            <a class="nav-link" asp-area="" asp-page="/AdminStats">Statistics</a>
+                                }
+        }
+        <hr />
+        <a class="nav-link" asp-area="" asp-page="/UserPages/LogOutPage"><i class="fas fa-sign-out-alt"></i>Logout</a>
+    </div>
+    }
+
     <div class="container">
+        <div class="loadingWrapper"><img src="~/Pictures/Logo.png" alt="logo" style="width:20vw;"></div>
         <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+
+@RenderBody()
+    </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="footer box-shadow text-muted">
         <div class="container">
-            &copy; 2021 - OurCarZ - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            <p>&copy; 2021 - OurCarZ - <a asp-area="" asp-page="/Privacy">Privacy</a></p>
         </div>
     </footer>
 
@@ -105,6 +99,67 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
-    @await RenderSectionAsync("Scripts", required: false)
+
+@await RenderSectionAsync("Scripts", required: false)
+
+    <script>
+        var profilebool = 0;
+        let wrapper = document.querySelector('.loadingWrapper');
+
+        window.addEventListener('load', function () {
+            wrapper.animate([
+
+                { opacity: '1' },
+                { opacity: '0' }
+
+            ], {
+                duration: 300,
+                iterations: 1
+            });
+            this.setTimeout(function () {
+                wrapper.parentElement.removeChild(wrapper);
+            }, 300);
+        });
+
+        function setTheme(themeName) {
+            localStorage.setItem('theme', themeName);
+            document.documentElement.className = themeName;
+        }
+        // function to toggle between light and dark theme
+        function toggleTheme() {
+
+            if (localStorage.getItem('theme') === 'theme-dark') {
+                setTheme('theme-light');
+
+            } else {
+                setTheme('theme-dark');
+
+            }
+        }
+        // Immediately invoked function to set the theme on initial load
+        (function () {
+            let checkbox = document.getElementById('toggle');
+            if (localStorage.getItem('theme') === 'theme-dark') {
+                setTheme('theme-dark');
+                checkbox.setAttribute('checked', 'checked');
+            } else {
+                setTheme('theme-light');
+                checkbox.removeAttribute('checked');
+            }
+        })();
+
+        function openProfileBox() {
+            if (profilebool == 0) {
+                profilebool = 1;
+                document.getElementById("myForm").style.display = "block";
+                return;
+            }
+            if (profilebool == 1) {
+                profilebool = 0;
+                document.getElementById("myForm").style.display = "none";
+                return;
+            }
+        }
+    </script>
 </body>
 </html>

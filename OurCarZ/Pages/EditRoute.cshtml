@@ -3,12 +3,12 @@
 @{
     ViewData["Title"] = "Edit Profile Page for User";
 }
-
-@if (Model.YourRoute != null)
-{
-    <h2>Current Route Details: </h2>
-    <p>From: @Model.StartAddress.RoadName</p>
-    <p> via: </p>
+<div class="form-container">
+    @if (Model.YourRoute != null)
+    {
+        <h2>Current Route Details: </h2>
+        <p>From: @Model.StartAddress.RoadName</p>
+        <p> via: </p>
         @foreach (var passenger in Model.PassengerList.Take(Model.YourCar.Seats))
         {
             @foreach (var address in Model.AddressList)
@@ -19,68 +19,69 @@
                 }
             }
         }
-    <p>To: @Model.EndAddress.RoadName </p>
-    <p>Departure Time: @Model.YourRoute.StartTime.TimeOfDay </p>
-    <p>Arrival Time: @Model.YourRoute.ArrivalTime.Value.TimeOfDay </p>
-    <p>Seats available: @Model.YourCar.Seats</p>
-    if (Model.YourRoute.ArrivalTime.Value.Date != Model.YourRoute.StartTime.Date)
-    {
-        <p>Date: Route error, Arrival date and Start date is not the same</p>
+        <p>To: @Model.EndAddress.RoadName </p>
+        <p>Departure Time: @Model.YourRoute.StartTime.TimeOfDay </p>
+        <p>Arrival Time: @Model.YourRoute.ArrivalTime.Value.TimeOfDay </p>
+        <p>Seats available: @Model.YourCar.Seats</p>
+        if (Model.YourRoute.ArrivalTime.Value.Date != Model.YourRoute.StartTime.Date)
+        {
+            <p>Date: Route error, Arrival date and Start date is not the same</p>
+        }
+        else
+        {
+            <p>Date: @Model.RouteDate</p>
+        }
+
+        <form method="post">
+            <h2>Change the Route details: </h2>
+            <p>Remember to fill out Zipcode when changing address</p>
+            <div class="form-group">
+                <label for="start">Start Address:</label>
+                <input type="text" id="@Model.Start" class="default-form" name="start">
+                <span asp-validation-for="Start" class="text-danger"></span><br><br>
+            </div>
+            <div class="form-group">
+                <label for="startzip">Start Zipcode:</label>
+                <input type="text" id="@Model.StartZip" class="default-form" name="startzip">
+                <span asp-validation-for="StartZip" class="text-danger"></span><br><br>
+            </div>
+            <div class="form-group">
+                <label for="end">End Address:</label>
+                <input type="text" id="@Model.End" class="default-form" name="end">
+                <span asp-validation-for="End" class="text-danger"></span><br><br>
+            </div>
+            <div class="form-group">
+                <label for="endzip">End Zipcode:</label>
+                <input type="text" id="@Model.EndZip" class="default-form" name="endzip">
+                <span asp-validation-for="EndZip" class="text-danger"></span><br><br>
+            </div>
+            <p>Dates have to be the same and arrival time should be later than start time</p>
+            <div class="form-group">
+                <label for="starttime">Start Date and Time:</label>
+                <input type="text" id="@Model.YourRoute.StartTime" class="default-form" name="starttime">
+                <span asp-validation-for="YourRoute.StartTime" class="text-danger"></span><br><br>
+                <p>Remember to write it like this example: 22-05-2021 13:00:00</p>
+            </div>
+            <div class="form-group">
+                <label for="arrivaltime">Arrival Date and Time:</label>
+                <input type="text" id="@Model.YourRoute.ArrivalTime" class="default-form" name="arrivaltime">
+                <span asp-validation-for="YourRoute.ArrivalTime" class="text-danger"></span><br><br>
+                <p>Remember to write it like this example: 22-05-2021 13:00:00</p>
+            </div>
+            <div class="form-group">
+                <label for="seats">number of Seats:</label>
+                <input type="text" id="@Model.Seats" class="default-form" name="seats">
+                <span asp-validation-for="Seats" class="text-danger"></span><br><br>
+            </div>
+            <!-- Hidden input field is used, for storing the UserId needed to find the user, since there is no persistence between OnGet() and OnPost() -->
+            <input hidden="hidden" asp-for="@Model.YourRoute.RouteId" />
+            <input type="submit" value="Submit" class="ubutton" onclick="return confirm('Are you sure you want to change your information? remember to restart program')">
+        </form>
     }
     else
     {
-        <p>Date: @Model.RouteDate</p>
+        <p>Route can't be found!</p>
     }
-
-<form method="post">
-    <h2>Change the Route details: </h2>
-    <b>Remember to fill out Zipcode when changing address</b>
-    <div class="form-group">
-        <label for="start">Start Address:</label>
-        <input type="text" id="@Model.Start" name="start">
-        <span asp-validation-for="Start" class="text-danger"></span><br><br>
-    </div>
-    <div class="form-group">
-        <label for="startzip">Start Zipcode:</label>
-        <input type="text" id="@Model.StartZip" name="startzip">
-        <span asp-validation-for="StartZip" class="text-danger"></span><br><br>
-    </div>
-    <div class="form-group">
-        <label for="end">End Address:</label>
-        <input type="text" id="@Model.End" name="end">
-        <span asp-validation-for="End" class="text-danger"></span><br><br>
-    </div>
-    <div class="form-group">
-        <label for="endzip">End Zipcode:</label>
-        <input type="text" id="@Model.EndZip" name="endzip">
-        <span asp-validation-for="EndZip" class="text-danger"></span><br><br>
-    </div>
-    <b>Dates have to be the same and arrival time should be later than start time</b>
-    <div class="form-group">
-        <label for="starttime">Start Date and Time:</label>
-        <input type="text" id="@Model.YourRoute.StartTime" name="starttime">
-        <span asp-validation-for="YourRoute.StartTime" class="text-danger"></span><br><br>
-        <p>Remember to write it like this example: 22-05-2021 13:00:00</p>
-    </div>
-    <div class="form-group">
-        <label for="arrivaltime">Arrival Date and Time:</label>
-        <input type="text" id="@Model.YourRoute.ArrivalTime" name="arrivaltime">
-        <span asp-validation-for="YourRoute.ArrivalTime" class="text-danger"></span><br><br>
-        <p>Remember to write it like this example: 22-05-2021 13:00:00</p>
-    </div>
-    <div class="form-group">
-        <label for="seats">number of Seats:</label>
-        <input type="text" id="@Model.Seats" name="seats">
-        <span asp-validation-for="Seats" class="text-danger"></span><br><br>
-    </div>
-    <!-- Hidden input field is used, for storing the UserId needed to find the user, since there is no persistence between OnGet() and OnPost() -->
-    <input hidden="hidden" asp-for="@Model.YourRoute.RouteId" />
-    <input type="submit" value="Submit" onclick="return confirm('Are you sure you want to change your information? remember to restart program')">
-</form>
-}
-else
-{
-    <p>Route can't be found!</p>
-}
+</div>
 <br>
 <br>

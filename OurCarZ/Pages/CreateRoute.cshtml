@@ -53,40 +53,49 @@
 </head>
 
 <body onload="GetDirections()">
-    @if (UserPages.LogInPageModel.LoggedInUser != null || UserPages.LogInPageModel.LoggedInUser.LicensePlate != null)
-    {
-        <form method="post">
-            <div id="myMap" style="position: relative; width: 800px; height: 600px;"></div>
-            <div style="margin-top: 10px;">
-                <label asp-for="@Model.StartAddress.RoadName" class="custom-control-label"></label>
-                From: <input asp-for="@Model.StartAddress.RoadName" id="fromTbx" type="text" />
-                <span asp-validation-for="StartAddress.RoadName"></span> <br>
+    <div class="form-container">
+        @if (UserPages.LogInPageModel.LoggedInUser != null && UserPages.LogInPageModel.LoggedInUser.LicensePlate != null)
+        {
 
-                <label asp-for="@Model.StartAddress.ZipCode" class="custom-control-label"></label>
-                From Zipcode: <input asp-for="@Model.StartAddress.ZipCode" id="fromZIP" type="text" />
-                <span asp-validation-for="StartAddress.ZipCode"></span> <br>
+            <form method="post">
+                <div id="myMap" style="position: relative; width: 100%; height: 50vh;"></div>
+                <div style="margin-top: 10px;">
+                    <h3 class="ml-0">To:</h3>
+                    <label asp-for="@Model.StartAddress.RoadName"></label>
+                    <input class="default-form" asp-for="@Model.StartAddress.RoadName" id="fromTbx" type="text" />
+                    <span asp-validation-for="StartAddress.RoadName"></span> <br>
 
-                <label asp-for="@Model.EndAddress.RoadName" class="custom-control-label"></label>
-                To: <input asp-for="@Model.EndAddress.RoadName" id="toTbx" type="text" />
-                <span asp-validation-for="EndAddress.RoadName"></span> <br>
+                    <label asp-for="@Model.StartAddress.ZipCode"></label>
+                    <input class="default-form" asp-for="@Model.StartAddress.ZipCode" id="fromZIP" type="text" />
+                    <span asp-validation-for="StartAddress.ZipCode"></span> <br><br />
+                    <h3 class="ml-0">From: </h3>
+                    <label asp-for="@Model.EndAddress.RoadName"></label>
+                    <input class="default-form" asp-for="@Model.EndAddress.RoadName" id="toTbx" type="text" />
+                    <span asp-validation-for="EndAddress.RoadName"></span> <br>
 
-                <label asp-for="@Model.EndAddress.ZipCode" class="custom-control-label"></label>
-                To Zipcode: <input asp-for="@Model.EndAddress.ZipCode" id="toZIP" type="text" />
-                <span asp-validation-for="EndAddress.ZipCode"></span> <br>
+                    <label asp-for="@Model.EndAddress.ZipCode"> To Zipcode: </label>
+                    <input asp-for="@Model.EndAddress.ZipCode" id="toZIP" class="default-form" type="text" />
+                    <span asp-validation-for="EndAddress.ZipCode"></span> <br>
 
-                <label asp-for="@Model.StartTime" class="custom-control-label"></label>
-                Start time: <input asp-for="@Model.StartTime"  type="text" value="@Model.Tomorrow"/>
-                <span asp-validation-for="StartTime"></span> <br>
-
-                <input type="submit" value="Calculate" />
-            </div>
-            <div><b>Remember to write the name or zipcode of the city</b><b>one of the addresses need to be a Zealand institution</b></div>
+                    <label asp-for="@Model.StartTime">Start time:</label>
+                    <input asp-for="@Model.StartTime" class="default-form" type="text" value="@Model.Tomorrow" />
+                    <span asp-validation-for="StartTime"></span> <br>
+                    <br />
+                    <div style="color: var(--font-color)"><b>Remember to write the name or zipcode of the city</b><b>one of the addresses need to be a Zealand institution</b></div>
+                    <br />
+                    <input type="submit" value="Calculate" class="ubutton" />
+                </div>
+            
         </form>
-
+        <br />
         @if(Model.Route != null)
-        {  <a asp-route-routeId="@Model.Route.RouteId" asp-route-startAddressId="@Model.StartAddress.AddressId" asp-route-endAddressId="@Model.EndAddress.AddressId" asp-page="/DrivePage">
-               <button type="submit"  onclick="return confirm('Are you sure you want to continue?')">On to Drive Page</button>
-           </a>}
+        {
+    <form>
+        <a class="ubutton" asp-route-routeId="@Model.Route.RouteId" asp-route-startAddressId="@Model.StartAddress.AddressId" asp-route-endAddressId="@Model.EndAddress.AddressId" asp-page="/DrivePage" onclick="return confirm('Are you sure you want to continue?')" style="text-align: center">
+            Confirm Route
+        </a>
+    </form>
+                }
        
     }
     else if (UserPages.LogInPageModel.LoggedInUser == null)

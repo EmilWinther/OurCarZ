@@ -1,10 +1,28 @@
 ﻿@page
+@using OurCarZ.Pages.UserPages
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Word</h1>
+
+    <img src="~/Pictures/car.svg" class="var-filter svg" width="700" height="309" alt="OurCarZ - SVG curtersy of www.svgrepo.com">
+    <h1 class="display-4 anim-Load"><b>OurCarZ</b></h1>
+    <div class="FrontPageGrid">
+        @if (LogInPageModel.LoggedInUser == null)
+        {
+            <a asp-page="/UserPages/LogInPage" class="ubutton neon float-right">Log In</a>
+            <a asp-page="/UserPages/RegisterPage" class="ubutton neon float-left">Sign Up</a>
+        }
+        else
+        {
+            if (LogInPageModel.LoggedInUser.LicensePlate != null)
+            {
+                <a asp-page="/CreateRoute" class="ubutton neon float-left">Create Route</a>
+            }
+            <a asp-page="/Routes" class="ubutton neon float-right">Routes</a>
+        }
+    </div>
 </div>
 

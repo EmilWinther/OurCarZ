@@ -11,17 +11,18 @@
     <h3 onclick="animateFilters()" style="cursor: pointer; user-select: none;">Filters <i class="fas fa-chevron-right" id="chevron"></i></h3>
     <form method="post" id="filter" class="filter" style="margin-bottom: 30px;">
         @* Form for filter *@
-        <input type="text" class="form-control" id="inlineFormInput" name="ZipCodeSearch" placeholder="Zip Code">
-        <input type="date" class="form-control" name="dateOfRoute" id="dateOfRoute" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
-        <button type="submit" class="btn btn-primary">Filter</button>
+        <input class="default-form" id="inlineFormInput" type="text" name="ZipCodeSearch" placeholder="Zip Code"/>
+        <input type="date" class="default-form" name="dateOfRoute" id="dateOfRoute" />
+        <button type="submit" class="ubutton">Filter</button>
+
+
     </form>
     <div class="routes">
         @foreach (var route in Model.UsedRoutes.Where(r => r.StartTime > DateTime.Now && Model.PassengerRoutes.Count(c => c.RouteId == r.RouteId) < @Model.DB.Cars.Find(Model.DB.Users.Find(r.UserId).LicensePlate).Seats))
         {
-            if (route.UserId != LogInPageModel.LoggedInUser.UserId)
-            {
-                <div class="card mb-3" style="height: 20rem">
-                    <div class="card-header p-2">
+
+                <div class="card mb-3 var-harsh anim-Load" style="height: auto; --i:@Model.increaseCount()">
+                    <div class="card-header p-2 gradient-pattern-one">
                         <h5 class="card-title">
                             @Model.addresses.Where(a => a.AddressId == route.StartPoint).FirstOrDefault().RoadName,
                             @Model.addresses.Where(a => a.AddressId == route.StartPoint).FirstOrDefault().ZipCode,
@@ -31,13 +32,30 @@
                             @Model.addresses.Where(a => a.AddressId == route.FinishPoint).FirstOrDefault().Country
                         </h5>
                     </div>
-                    <div class="card-body">
-                        <p class="card-text">Driver: @Model.users.Where(u => u.UserId == route.UserId).Select(u => u.FirstName).DefaultIfEmpty("--Option unknown--").First() @Model.users.Where(u => u.UserId == route.UserId).Select(u => u.LastName).DefaultIfEmpty("--Option unknown--").First()</p>
-                        <p class="card-text">Start time: @route.StartTime </p>
-                        <p class="card-text">Arrival time: @route.ArrivalTime </p>
-                        <p class="card-text">
-                            Seats occupied: @Model.PassengerRoutes.Count(s => s.RouteId == route.RouteId) / @Model.DB.Cars.Find(Model.DB.Users.Find(route.UserId).LicensePlate).Seats
-                        </p>
+                    <div class="card-body var-sec">
+                        <div class="card-text cardE1 mw-100 position-relative" style="display:flex; transform: scale(0.7); transform-origin: left;">
+                            <i class="fas fa-id-card-alt"></i>
+                            <h6 class="m-0 p-0 float-left position-absolute font-weak abs-left">Driver name: </h6>
+                            <h3 class="m-0 position-absolute anim-Load abs-left" style="top: 1.20rem; width: 300px;"><a asp-page="/Your Profile" asp-route-id="@route.UserId"> @Model.users.Where(u => u.UserId == route.UserId).Select(u => u.FirstName).DefaultIfEmpty("--Option unknown--").First()</a></h3>
+                        </div>
+                        <div class="card-text cardE2 mw-100 position-relative" style="display:flex; transform: scale(0.7); transform-origin: left;">
+                            <i class="fas fa-clock"></i>
+                            <h6 class="m-0 p-0 float-left position-absolute font-weak abs-left">Start Time:</h6>
+                            <h3 class="m-0 position-absolute anim-Load abs-left" style="top: 1.20rem; width: 300px;">@route.StartTime</h3>
+                        </div>
+                        <div class="card-text cardE3 mw-100 position-relative" style="display:flex; transform: scale(0.7); transform-origin: left;">
+                            <i class="fas fa-hourglass-end"></i>
+                            <h6 class="m-0 p-0 float-left position-absolute font-weak abs-left">Arrival Time:</h6>
+                            <h3 class="m-0 position-absolute anim-Load abs-left" style="top: 1.20rem; width: 300px;">@route.ArrivalTime</h3>
+                        </div>
+                        <div class="card-text cardE4 mw-100 position-relative" style="display:flex; transform: scale(0.7); transform-origin: left;">
+                            <i class="fas fa-users"></i>
+                            <h6 class="m-0 p-0 float-left position-absolute font-weak abs-left">Spots occupied: </h6>
+                            <h3 class="m-0 position-absolute anim-Load abs-left" style="top: 1.20rem; width: 300px;">
+
+                                @Model.PassengerRoutes.Count(s => s.RouteId == route.RouteId) / @Model.DB.Cars.Find(Model.DB.Users.Find(route.UserId).LicensePlate).Seats
+                            </h3>
+                        </div>
                     </div>
                     <div class="card-footer">
                         @* Shows the choose route page *@
@@ -46,7 +64,7 @@
                         </a>
                     </div>
                 </div>
-            }
+            
         }
     </div>
 </div>

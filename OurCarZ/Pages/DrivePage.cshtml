@@ -5,14 +5,14 @@
 @model OurCarZ.Pages.DrivePageModel
 @{
 }
-<div class="item-container">
+<div class="form-container">
     <br />
 
     @if (Model.CurrentUser == null || Model.YourRoute == null)
     {<p>You can't be found! or if you are logged in, then your route is invalid</p> }
     else
     {
-        <h3>Hello @Model.CurrentUser.FirstName @Model.CurrentUser.LastName Thank you for making this route.</h3><br />
+        <h3>Hello @Model.CurrentUser.FirstName @Model.CurrentUser.LastName Thank you for making this route</h3><br />
         <p>From: @Model.StartAddress.RoadName</p>
         <p>
             via:
@@ -41,20 +41,23 @@
                 <p>Date: @Model.RouteDate</p>
             }
             <br>
-            <a class="button" asp-area="" asp-page="/EditRoute" asp-route-routeid="@Model.YourRoute.RouteId" asp-route-userId="@Model.CurrentUser.UserId" asp-route-startAddressId="@Model.StartAddress.AddressId" asp-route-endAddressId="@Model.EndAddress.AddressId">Change Route</a><br>
+            <form>
+                <a class="ubutton" style="text-align: center;" asp-area="" asp-page="/EditRoute" asp-route-routeid="@Model.YourRoute.RouteId" asp-route-userId="@Model.CurrentUser.UserId" asp-route-startAddressId="@Model.StartAddress.AddressId" asp-route-endAddressId="@Model.EndAddress.AddressId">Change Route</a><br>
+            </form><br />
             <form asp-route-routeid="@Model.YourRoute.RouteId" asp-route-userId="@Model.CurrentUser.UserId" asp-route-startAddressId="@Model.StartAddress.AddressId" asp-route-endAddressId="@Model.EndAddress.AddressId" asp-page-handler="start" method="post">
-                <button class="btn btn-default">Start Route</button>
+                <button class="ubutton">Start Route</button>
             </form>
-
+            <br />
 
             @* redirects to the route by the routeid *@
-            <a class="btn" type="button" asp-page="Route" asp-route-id="@Model.YourRoute.RouteId">
-                <i class="fas fa-map-marked-alt" title="View Route">View Route</i>
-            </a>
-
-
+            <form>
+                <a class="ubutton" type="button" asp-page="Route" asp-route-id="@Model.YourRoute.RouteId" style="text-align:center">
+                    <i style="margin-right: 0.5ch;"class="fas fa-map-marked-alt" title="View Route"></i>View Route
+                </a>
+            </form>
+            <br />
             <h3>Passengers who have chosen your route @Model.PassengerList.Count / @Model.YourCar.Seats</h3><br />
-            <table class="table">
+            <table class="table" style="color: var(--font-color)">
                 <thead>
                     <tr>
                         <th>Passenger</th>
@@ -73,8 +76,7 @@
                                 {
                                     if (user.UserId.Equals(passenger.UserId))
                                     {
-                                        <a asp-route-page="/Your Profile" asp-route-id="@passenger.UserId"
-                                           class="btn btn-success btn-group-lg pull-right">
+                                        <a asp-route-page="/Your Profile" asp-route-id="@passenger.UserId">
                                             <p>@user.FirstName @user.LastName</p>
                                         </a>
                                     }
@@ -91,7 +93,7 @@
                             <td>
                                 <form method="post">
                                     <input hidden="hidden" asp-for="@passenger.UserRouteId" />
-                                    <button type="submit" asp-route-DeleteID="@passenger.UserRouteId" asp-route-routeid="@passenger.RouteId" asp-route-userId="@Model.CurrentUser.UserId" asp-route-startAddressId="@Model.StartAddress.AddressId" asp-route-endAddressId="@Model.EndAddress.AddressId"
+                                    <button class="ubutton" type="submit" asp-route-DeleteID="@passenger.UserRouteId" asp-route-routeid="@passenger.RouteId" asp-route-userId="@Model.CurrentUser.UserId" asp-route-startAddressId="@Model.StartAddress.AddressId" asp-route-endAddressId="@Model.EndAddress.AddressId"
                                             onclick="return confirm('Are you sure you want to cancel?')">
                                         cancel Passenger
                                     </button>
@@ -124,7 +126,8 @@
                             </th>
                             <th>
                                 <a asp-route-page="/MyMessages" asp-route-id="@Model.CurrentUser.UserId"
-                                   class="btn btn-success btn-group-lg pull-right">
+                                   class="ubutton" style="font-size: 1.3rem !important; background-color: var(--color-primary);
+">
                                     Reply
                                 </a>
                             </th>
@@ -132,5 +135,5 @@
                     }
                 </tbody>
             </table>
-    }
+        }
 </div>

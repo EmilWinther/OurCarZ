@@ -26,6 +26,9 @@ namespace OurCarZ.Pages
 
         public List<Car> cars;
 
+        public int count;
+
+
         public RoutesModel(EmilDbContext db)
         {
             DB = db;
@@ -38,7 +41,7 @@ namespace OurCarZ.Pages
             addresses = DB.Addresses.ToList();
             users = DB.Users.ToList();
             cars = DB.Cars.ToList();
-
+            count = 0;
         }
 
 
@@ -46,7 +49,10 @@ namespace OurCarZ.Pages
         public void OnPost()
         {
             ZipCode = Request.Form["ZipCodeSearch"];
-            if (Request.Form["dateOfRoute"].Count > 0)
+
+            DateTime dateValue;
+            var datebool = DateTime.TryParse(Request.Form["dateOfRoute"], out dateValue);
+            if (datebool)
             {
                 date = Convert.ToDateTime(Request.Form["dateOfRoute"]);
             }
@@ -70,7 +76,7 @@ namespace OurCarZ.Pages
             }
             else { UsedRoutes = allRoutes; }
 
-            if (date != null)
+            if (datebool)
             {
                 foreach (var route in UsedRoutes.ToList())
                 {
@@ -80,6 +86,14 @@ namespace OurCarZ.Pages
                     }
                 }
             }
+
+            
+        }
+
+        public int increaseCount()
+        {
+            count++;
+            return count;
         }
     }
 }

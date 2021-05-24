@@ -6,15 +6,16 @@
 @section Styles {
     <link href="@Url.Content("~/css/starrating.css")" rel="stylesheet" type="text/css"/>
 }
-
-@if (Model.CurrentUser != null)
-{
-    <body>
-    <h5 text align="center">You are now a passenger on the route you just chose, you can see your future routes if you go to your profile and then my routes or you can choose past routes for your past routes.</h5>
-    <h5 text align="center">Remember to go to you fellow users profiles and rate them, you can find those you have driven with in your Past Routes</h5>
-    </body>
-}
-else
-{
-    <p>Sorry, but you can't rate a person without being logged in.</p>
-}
+<div class="form-container">
+    @if (Model.CurrentUser != null)
+    {
+        <body>
+            <h5 text align="center">You are now on the route, you can see your future routes if you go to your profile and then my routes or you can choose past routes for your past routes.</h5>
+            <br /><h5 text align="center">Remember to go to you fellow users profiles and rate them, you can find those you have driven with in your Past Routes</h5>
+        </body>
+    }
+    else
+    {
+        <p>Sorry, but you can't rate a person without being logged in.</p>
+    }
+</div>

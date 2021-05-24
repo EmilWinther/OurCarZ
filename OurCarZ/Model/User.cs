@@ -34,7 +34,6 @@ namespace OurCarZ.Model
         public string Password { get; set; }
         [StringLength(50)]
         public string Email { get; set; }
-        public string ConfirmPassword { get; set; }
 
         [ForeignKey(nameof(LicensePlate))]
         [InverseProperty(nameof(Car.Users))]
