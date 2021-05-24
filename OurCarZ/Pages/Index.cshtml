@@ -1,5 +1,5 @@
 ﻿@page
-﻿@using OurCarZ.Pages.UserPages
+@using OurCarZ.Pages.UserPages
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
@@ -17,8 +17,11 @@
         }
         else
         {
+            if (LogInPageModel.LoggedInUser.LicensePlate != null)
+            {
+                <a asp-page="/CreateRoute" class="ubutton neon float-left">Create Route</a>
+            }
             <a asp-page="/Routes" class="ubutton neon float-right">Routes</a>
-            <a asp-page="/CreateRoute" class="ubutton neon float-left">Create Route</a>
         }
     </div>
 </div>
