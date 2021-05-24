@@ -65,17 +65,5 @@ namespace OurCarZ.Pages
             }
         }
 
-        public IActionResult OnPost(int routeId)
-        {
-            CurrentUser = DB.Users.Find(LogInPageModel.LoggedInUser.UserId);
-            Passenger = new UserRoute();
-            Passenger.UserId = CurrentUser.UserId;
-            Passenger.RouteId = routeId;
-
-            DB.UserRoutes.Add(Passenger);
-            DB.SaveChanges();
-
-            return RedirectToPage("/Rating/RatingPage");
-        }
     }
 }
