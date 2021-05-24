@@ -4,7 +4,7 @@
 @{
 }
 
-<div class="form-container">
+<div class="table-container">
     @if (Model.CurrentUser != null)
     {
         <h2>Past Routes</h2><br />
@@ -35,10 +35,10 @@
                                         </a>
                                     </td>
                                     <td>
-                                        <p>address: @Model.addresses.Where(a => a.AddressId == routes.StartPoint).Select(a => a.RoadName).First() time: @routes.StartTime </p>
+                                        <p>Address: @Model.addresses.Where(a => a.AddressId == routes.StartPoint).Select(a => a.RoadName).First() <br />Time: @routes.StartTime </p>
                                     </td>
                                     <td>
-                                        <p>address: @Model.addresses.Where(a => a.AddressId == routes.FinishPoint).Select(a => a.RoadName).First() time: @routes.ArrivalTime </p>
+                                        <p>Address: @Model.addresses.Where(a => a.AddressId == routes.FinishPoint).Select(a => a.RoadName).First() <br /> Time: @routes.ArrivalTime </p>
 
                                     </td>
                                     <td>
@@ -71,10 +71,10 @@
                                     </a>
                                 </td>
                                 <td>
-                                    <p>address: @Model.addresses.Where(a => a.AddressId == Model.DB.Routes.Find(routes.RouteId).StartPoint).Select(a => a.RoadName).First() time: @Model.DB.Routes.Find(routes.RouteId).StartTime </p>
+                                    <p>Address: @Model.addresses.Where(a => a.AddressId == Model.DB.Routes.Find(routes.RouteId).StartPoint).Select(a => a.RoadName).First() <br />Time: @Model.DB.Routes.Find(routes.RouteId).StartTime </p>
                                 </td>
                                 <td>
-                                    address: @Model.addresses.Where(a => a.AddressId == Model.DB.Routes.Find(routes.RouteId).FinishPoint).Select(a => a.RoadName).First() time: @Model.DB.Routes.Find(routes.RouteId).ArrivalTime
+                                    <p>Address: @Model.addresses.Where(a => a.AddressId == Model.DB.Routes.Find(routes.RouteId).FinishPoint).Select(a => a.RoadName).First() <br /> Time: @Model.DB.Routes.Find(routes.RouteId).ArrivalTime </p>
 
                                 </td>
                                 <td>

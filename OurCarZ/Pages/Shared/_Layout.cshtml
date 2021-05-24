@@ -19,34 +19,47 @@
 
         <a style="left: 1em;" class="navbar-brand vertical-center-abs" asp-area="" asp-page="/Index"><h2>OurCarZ</h2></a>
 
+        <div class="menu">
+            @if (LogInPageModel.LoggedInUser != null)
+            {
+                if (LogInPageModel.LoggedInUser.LicensePlate != null)
+                {
+                    <a style="float:left; font-size: 1.3rem; position: relative;" class="font-primary d-inline-block vertical-center-abs" asp-area="" asp-page="/Routes">
+                        <h3>Routes</h3>
+                    </a>
+                    <a style="float: right; font-size: 1.3rem; position: relative;" class="font-primary d-inline-block vertical-center-abs" asp-area="" asp-page="/CreateRoute">
+                        <h3>Create Route</h3>
+                    </a>
+                }
+                else
+                {
+                    <a style="font-size: 1.3rem; position: relative;" class="font-primary d-inline-block vertical-center-abs" asp-area="" asp-page="/Routes">
+                        <h3>Routes</h3>
+                    </a>
+                }
+            }
+        </div>
 
-@if (LogInPageModel.LoggedInUser != null)
-                            {
-
-        <a style="left: calc(45% - 3ch); font-size: 1.3rem;" class="font-primary d-inline-block vertical-center-abs" asp-area="" asp-page="/Routes">
-            Routes</a>
-            <a style="left: calc(55% - 6ch); font-size: 1.3rem;" class="font-primary d-inline-block vertical-center-abs" asp-area="" asp-page="/CreateRoute">
-                Create Route</a>
-    }
 
 
 
+        @if (LogInPageModel.LoggedInUser == null)
+        {
+            <a style="right: 10px;" class="font-primary ubutton round float-right vertical-center-abs" asp-area="" asp-page="/UserPages/RegisterPage">
+                Sign up
+            </a>
+            <a style="right: 110px;" class="font-primary ubutton round float-right vertical-center-abs" asp-area="" asp-page="/UserPages/LogInPage">
+                Log In
+            </a>
+        }
+        else
+        {
+            <h3 style="right: 10px; cursor: pointer; user-select: none;" class="font-primary round vertical-center-abs" onclick="openProfileBox()">
 
-@if (LogInPageModel.LoggedInUser == null)
-                            {
-    <a style="right: 10px;" class="font-primary ubutton round float-right vertical-center-abs" asp-area="" asp-page="/UserPages/RegisterPage">
-        Sign up
-    </a>
-    <a style="right: 110px;" class="font-primary ubutton round float-right vertical-center-abs" asp-area="" asp-page="/UserPages/LogInPage">
-        Log In
-    </a>
-                            } else {
-    <h3 style="right: 10px; cursor: pointer; user-select: none;" class="font-primary round vertical-center-abs" onclick="openProfileBox()">
-
-@LogInPageModel.LoggedInUser.FirstName @LogInPageModel.LoggedInUser.LastName
-    <i class="fas fa-user round roundborder" style="margin-right: 20px;" title="Your Profile"></i>
-    </h3>
-    }
+                @LogInPageModel.LoggedInUser.FirstName @LogInPageModel.LoggedInUser.LastName
+                <i class="fas fa-user round roundborder" style="margin-right: 20px;" title="Your Profile"></i>
+            </h3>
+        }
 
 
 

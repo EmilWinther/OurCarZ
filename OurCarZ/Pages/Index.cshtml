@@ -17,11 +17,12 @@
         }
         else
         {
+            <a asp-page="/Routes" class="ubutton neon float-left">Routes</a>
             if (LogInPageModel.LoggedInUser.LicensePlate != null)
             {
-                <a asp-page="/CreateRoute" class="ubutton neon float-left">Create Route</a>
+                <a asp-page="/CreateRoute" class="ubutton neon float-right">Create Route</a>
             }
-            <a asp-page="/Routes" class="ubutton neon float-right">Routes</a>
+
         }
     </div>
 </div>

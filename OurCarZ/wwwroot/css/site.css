@@ -115,7 +115,16 @@ hr {
 }
 
 .svg {
-    width:clamp(30vw, 35vw, 90%);
+    width:clamp(350px, 35vw, 90%);
+}
+
+.menu {
+    width: 30%;
+    height: 100%;
+    left: 50%;
+    position: absolute;
+    transform: translateX(-50%);
+    text-align: center;
 }
 
 .navbar-brand h2 {
@@ -124,6 +133,11 @@ hr {
 
 form {
     padding:0;
+}
+
+table {
+    table-layout:fixed;
+    text-align:center;
 }
 
 .roundborder {
@@ -137,6 +151,18 @@ form {
     margin: 60px auto;
     background: var(--color-secondary);
     padding: 60px 7% 80px 7%;
+    text-align: center;
+    -webkit-box-shadow: 2px 2px 3px rgba(0,0,0,0.1);
+    box-shadow: 2px 2px 3px rgba(0,0,0,0.1);
+    text-align: left;
+    box-shadow: 5px 5px 13px 0px #000000;
+}
+
+.table-container {
+    width: clamp(40%, 80vw, 90%);
+    margin: 60px auto;
+    background: var(--color-secondary);
+    padding: 60px 2% 80px 2%;
     text-align: center;
     -webkit-box-shadow: 2px 2px 3px rgba(0,0,0,0.1);
     box-shadow: 2px 2px 3px rgba(0,0,0,0.1);
