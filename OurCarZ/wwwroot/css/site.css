@@ -83,7 +83,7 @@ textarea {
     color: var(--font-weak) !important;
 }
 
-h1, h2, h3, h4, h5, h6, p, label {
+h1, h2, h3, h4, h5, h6, p, label, b {
     color: var(--font-color);
     margin-bottom: 0px !important;
 }
@@ -394,6 +394,10 @@ form .ubutton {
         transform-origin: top left;
         margin-bottom: 20px;
     }*/
+
+    table {
+        font-size: 0.7rem !important;
+    }
 }
 
 .PG1, .PG2, .PG3, .PG4, .PG5, .PG6, .PG7, .PG8, .PG9, .PG10, .PG11, .PG12, .PG13, .PG14, PG15 {

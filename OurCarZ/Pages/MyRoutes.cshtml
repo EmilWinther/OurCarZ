@@ -6,7 +6,7 @@
 
 <div class="form-container">
     <h2>Hello @LogInPageModel.LoggedInUser.FirstName @LogInPageModel.LoggedInUser.LastName. This is all your routes.</h2><br />
-    <table class="table" style="color: var(--font-color);">
+    <table class="table" style="color: var(--font-color); table-layout: fixed; word-break: break-word;">
         <thead>
             <tr>
                 <th>Driver</th>
@@ -46,7 +46,7 @@
                             <td>@routes.StartTime</td>
                             <td>@routes.ArrivalTime</td>
                             <td>
-                                <a asp-page="/DrivePage" asp-route-RouteId="@routes.RouteId" asp-route-StartAddressId="@routes.StartPoint" asp-route-EndAddressId="@routes.FinishPoint">Choose</a>
+                                <a class="ubutton" style="text-align: center; font-size: 1.2rem !important; "asp-page="/DrivePage" asp-route-RouteId="@routes.RouteId" asp-route-StartAddressId="@routes.StartPoint" asp-route-EndAddressId="@routes.FinishPoint">Choose</a>
                             </td>
                             <td>
                                 <form method="post">
