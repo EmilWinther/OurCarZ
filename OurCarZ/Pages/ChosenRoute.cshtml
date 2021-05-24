@@ -104,19 +104,17 @@
             }
             <p>Driver: @Model.Driver.FirstName @Model.Driver.LastName</p>
             <br />
-
-        <a class="ubutton" asp-route-page="/Routes"
-           class="btn btn-success btn-group-lg pull-left">
+            <a class="ubutton" asp-route-page="/PickaPath" asp-route-id="@Model.myRoute.RouteId" style="width:48%">
+                Make pickup point
+            </a>
+        <a class="ubutton" asp-route-page="/Routes" style="width:48%">
             No
-        </a><br/>
-        <a class="ubutton" asp-route-page="/PickaPath" asp-route-id="@Model.myRoute.RouteId"
-           class="btn btn-success btn-group-lg border-left">
-            Make pickup point
         </a>
+        
             <br />
-
+            <br />
             <p><b>If you want to choose this route and have a reasonable pickup point in mind, press Make pickup point</b></p>
-            <p><b>If you want to message the driver about something, press yes, go to your profile in the the top right corner, choose My routes and press the drivers name.</b></p>
+            <p><b>If you want to message the driver about something, proceed with joining the route, go to your profile in the the top right corner, choose My routes and press the drivers name.</b></p>
             <p><b>If you want to go back to Routes press no.</b></p>
     </center>
 </div>
