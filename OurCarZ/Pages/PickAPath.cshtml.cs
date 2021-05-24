@@ -32,9 +32,13 @@ namespace OurCarZ.Pages
         public string CombineZipAndRoad(int? id)
         {
             //Get an Addresses name and zipcode based on AddressId
-            string returner;
-            returner = _edb.Addresses.Find(id).RoadName + " " + _edb.Addresses.Find(id).ZipCode;
-            return returner;
+            if(id != null) 
+            {
+                string returner;
+                returner = _edb.Addresses.Find(id).RoadName + " " + _edb.Addresses.Find(id).ZipCode;
+                return returner;
+            }
+            return "";
         }
         public void ExtraWaypoints(int router)
         {
