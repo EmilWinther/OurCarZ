@@ -50,6 +50,27 @@ namespace OurCarZ.Pages
         {
             ZipCode = Request.Form["ZipCodeSearch"];
 
+
+
+            
+            addresses = DB.Addresses.ToList();
+            users = DB.Users.ToList();
+            cars = DB.Cars.ToList();
+
+            UsedRoutes = Filter();
+
+            
+        }
+
+        public int increaseCount()
+        {
+            count++;
+            return count;
+        }
+
+        public List<Route> Filter ()
+        {
+
             DateTime dateValue;
             var datebool = DateTime.TryParse(Request.Form["dateOfRoute"], out dateValue);
             if (datebool)
@@ -58,10 +79,6 @@ namespace OurCarZ.Pages
             }
 
             var allRoutes = DB.Routes.ToList();
-            addresses = DB.Addresses.ToList();
-            users = DB.Users.ToList();
-            cars = DB.Cars.ToList();
-
             if (!string.IsNullOrEmpty(ZipCode))
             {
                 UsedRoutes = new List<Route>();
@@ -86,14 +103,7 @@ namespace OurCarZ.Pages
                     }
                 }
             }
-
-            
-        }
-
-        public int increaseCount()
-        {
-            count++;
-            return count;
+            return UsedRoutes;
         }
     }
 }
