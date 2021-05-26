@@ -44,7 +44,7 @@
             <form>
                 <a class="ubutton" style="text-align: center;" asp-area="" asp-page="/EditRoute" asp-route-routeid="@Model.YourRoute.RouteId" asp-route-userId="@Model.CurrentUser.UserId" asp-route-startAddressId="@Model.StartAddress.AddressId" asp-route-endAddressId="@Model.EndAddress.AddressId">Change Route</a><br>
             </form><br />
-            <form asp-route-routeid="@Model.YourRoute.RouteId" asp-route-userId="@Model.CurrentUser.UserId" asp-route-startAddressId="@Model.StartAddress.AddressId" asp-route-endAddressId="@Model.EndAddress.AddressId" asp-page-handler="start" method="post">
+            <form asp-route-routeid="@Model.YourRoute.RouteId" asp-route-userId="@Model.CurrentUser.UserId" asp-page-handler="start" method="post">
                 <button class="ubutton">Start Route</button>
             </form>
             <br />
@@ -64,7 +64,7 @@
                         <th>Pickup Point</th>
                         <th>Cancel Passenger</th>
                         <th>Message(s)</th>
-                        <th>Reply</th>
+                        <th>All Messages</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -102,7 +102,7 @@
                             <th>
                                 @foreach (var message in Model.YourMessages)
                                 {
-                                    if ((message.MessageFrom == passenger.UserId || message.MessageTo == passenger.UserId) && (message.MessageFrom == Model.CurrentUser.UserId || message.MessageTo == Model.CurrentUser.UserId))
+                                    if ((message.MessageFrom == passenger.UserId && message.MessageTo == Model.CurrentUser.UserId))
                                     {
                                         if (Model.MessageList == null || Model.MessageList.Count == 0)
                                         {
@@ -128,7 +128,7 @@
                                 <a asp-route-page="/MyMessages" asp-route-id="@Model.CurrentUser.UserId"
                                    class="ubutton" style="font-size: 1.3rem !important; background-color: var(--color-primary);
 ">
-                                    Reply
+                                    All Messages
                                 </a>
                             </th>
                         </tr>

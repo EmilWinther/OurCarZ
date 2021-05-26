@@ -13,7 +13,6 @@ namespace OurCarZ.Pages
         public List<UserRoute> PassengerList { get; set; }
         [BindProperty]
         public Route myRoute { get; set; }
-        public EmilDbContext DB = new EmilDbContext();
         [BindProperty]
         public List<Address> currentAddress { get; set; }
         [BindProperty]
@@ -37,19 +36,35 @@ namespace OurCarZ.Pages
         [BindProperty]
         public List<User> Users { get; set; }
         public UserRoute Passenger { get; set; }
+        public EmilDbContext _edb;
+        public ChosenRouteModel(EmilDbContext edb) 
+        {
+            _edb = edb;
+        }
+        public string CombineZipAndRoad(int? id)
+        {
+            //Get an Addresses name and zipcode based on AddressId
+            if (id != null)
+            {
+                string returner;
+                returner = _edb.Addresses.Find(id).RoadName + " " + _edb.Addresses.Find(id).ZipCode;
+                return returner;
+            }
+            return "";
+        }
         public void OnGet(int routeId)
         {
-            UserList = DB.Users.ToList();
-            CurrentUser = DB.Users.Find(LogInPageModel.LoggedInUser.UserId);
-            currentAddress = DB.Addresses.ToList();
-            myRoute = DB.Routes.Find(routeId);
-            EndAddress = DB.Addresses.ToList();
-            UserList = DB.Users.ToList();
-            YourCar = DB.Cars.Find(CurrentUser.LicensePlate);
-            Cars = DB.Cars.ToList();
-            Users = DB.Users.ToList();
-            TheRoute = DB.Routes.ToList();
-            IQueryable<UserRoute> userRouteList = from s in DB.UserRoutes
+            UserList = _edb.Users.ToList();
+            CurrentUser = _edb.Users.Find(LogInPageModel.LoggedInUser.UserId);
+            currentAddress = _edb.Addresses.ToList();
+            myRoute = _edb.Routes.Find(routeId);
+            EndAddress = _edb.Addresses.ToList();
+            UserList = _edb.Users.ToList();
+            YourCar = _edb.Cars.Find(CurrentUser.LicensePlate);
+            Cars = _edb.Cars.ToList();
+            Users = _edb.Users.ToList();
+            TheRoute = _edb.Routes.ToList();
+            IQueryable<UserRoute> userRouteList = from s in _edb.UserRoutes
                 select s;
 
             userRouteList = userRouteList.Where(s => s.RouteId == routeId);
@@ -57,11 +72,11 @@ namespace OurCarZ.Pages
 
             PassengerList = userRouteList.ToList();
 
-            StartPoint = DB.Addresses.Find(myRoute.StartPoint).RoadName;
-            FinishPoint = DB.Addresses.Find(myRoute.FinishPoint).RoadName;
+            StartPoint = _edb.Addresses.Find(myRoute.StartPoint).RoadName;
+            FinishPoint = _edb.Addresses.Find(myRoute.FinishPoint).RoadName;
             if (myRoute.UserId == myRoute.UserId)
             {
-                Driver = DB.Users.Find(myRoute.UserId);
+                Driver = _edb.Users.Find(myRoute.UserId);
             }
         }
 

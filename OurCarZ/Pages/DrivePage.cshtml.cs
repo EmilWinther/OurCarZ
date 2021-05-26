@@ -114,11 +114,8 @@ namespace OurCarZ.Pages
             return RedirectToPage("/DrivePage", new { UserId = CurrentUser.UserId, routeId = YourRoute.RouteId, startAddressId = StartAddress.AddressId, endAddressId = EndAddress.AddressId });
         }
 
-        public IActionResult OnPostStart(int userId, int routeid, int startAddressId, int endAddressId)
+        public IActionResult OnPostStart(int routeid)
         {
-            StartAddress = _edb.Addresses.Find(startAddressId);
-            EndAddress = _edb.Addresses.Find(endAddressId);
-
             IQueryable<UserRoute> userRouteList = from s in _edb.UserRoutes
                 select s;
 
@@ -138,7 +135,7 @@ namespace OurCarZ.Pages
                 _edb.SaveChanges();
             }
 
-            return RedirectToPage("/Rating/RatingPage", new { UserId = CurrentUser.UserId, routeId = YourRoute.RouteId, startAddressId = StartAddress.AddressId, endAddressId = EndAddress.AddressId });
+            return RedirectToPage("/Rating/RatingPage");
         }
 
     }
