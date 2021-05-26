@@ -28,7 +28,7 @@ namespace OurCarZ.Pages
 
         public int count;
 
-
+        
         public RoutesModel(EmilDbContext db)
         {
             DB = db;
