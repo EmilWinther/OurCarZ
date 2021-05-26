@@ -39,8 +39,8 @@
             //Create waypoints to route between.
             @if (Model.myRoute != null)
             {
-                @: directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: '@Html.Raw(Model.StartPoint)' }));
-                @: directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: '@Html.Raw(Model.FinishPoint)' }));
+                @: directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: '@Html.Raw(@Model.CombineZipAndRoad(Model.myRoute.StartPoint))' }));
+                @: directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: '@Html.Raw(@Model.CombineZipAndRoad(Model.myRoute.FinishPoint))' }));
             }
             else
             {
