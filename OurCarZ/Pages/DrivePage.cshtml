@@ -102,7 +102,7 @@
                             <th>
                                 @foreach (var message in Model.YourMessages)
                                 {
-                                    if ((message.MessageFrom == passenger.UserId || message.MessageTo == passenger.UserId) && (message.MessageFrom == Model.CurrentUser.UserId || message.MessageTo == Model.CurrentUser.UserId))
+                                    if ((message.MessageFrom == passenger.UserId && message.MessageTo == Model.CurrentUser.UserId))
                                     {
                                         if (Model.MessageList == null || Model.MessageList.Count == 0)
                                         {
