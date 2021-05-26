@@ -1,4 +1,5 @@
 ﻿@page
+@using OurCarZ.Pages.UserPages
 @model OurCarZ.Pages.Rating.RatingPageModel
 @{
 }
@@ -7,7 +8,7 @@
     <link href="@Url.Content("~/css/starrating.css")" rel="stylesheet" type="text/css"/>
 }
 <div class="form-container">
-    @if (Model.CurrentUser != null)
+    @if (@LogInPageModel.LoggedInUser != null)
     {
         <body>
             <h5 text align="center">You are now on the route, you can see your future routes if you go to your profile and then my routes or you can choose past routes for your past routes.</h5>
