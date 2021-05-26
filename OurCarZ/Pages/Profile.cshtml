@@ -23,7 +23,9 @@
         <div class="PG10"> <a class="ubutton" asp-area="" asp-page="/MyRoutes" asp-route-id="@LogInPageModel.LoggedInUser.UserId">My routes</a></div>
         <div class="PG11"> <a class="ubutton" asp-area="" asp-page="/MyMessages" asp-route-id="@LogInPageModel.LoggedInUser.UserId">My messages</a></div>
         <div class="PG12">
-            <a class="ubutton" asp-route-DeleteID="@Model.currentUser.UserId" onclick="return confirm('Are you sure you want to change your Profile?')">Delete Profile</a>
+            <form method="post">
+                <button class="ubutton" type="submit" asp-route-DeleteID="@Model.currentUser.UserId" onclick="return confirm('Are you sure you want to change your Profile?')">Delete Profile</button>
+            </form>
         </div>
 
     </div>
