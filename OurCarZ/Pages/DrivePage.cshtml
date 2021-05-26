@@ -44,7 +44,7 @@
             <form>
                 <a class="ubutton" style="text-align: center;" asp-area="" asp-page="/EditRoute" asp-route-routeid="@Model.YourRoute.RouteId" asp-route-userId="@Model.CurrentUser.UserId" asp-route-startAddressId="@Model.StartAddress.AddressId" asp-route-endAddressId="@Model.EndAddress.AddressId">Change Route</a><br>
             </form><br />
-            <form asp-route-routeid="@Model.YourRoute.RouteId" asp-route-userId="@Model.CurrentUser.UserId" asp-route-startAddressId="@Model.StartAddress.AddressId" asp-route-endAddressId="@Model.EndAddress.AddressId" asp-page-handler="start" method="post">
+            <form asp-route-routeid="@Model.YourRoute.RouteId" asp-route-userId="@Model.CurrentUser.UserId" asp-page-handler="start" method="post">
                 <button class="ubutton">Start Route</button>
             </form>
             <br />
