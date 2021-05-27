@@ -14,6 +14,7 @@
         <div class="PG3"> <i class="fas fa-at bubble float-left mr-2"></i><h6 class="mb-0 pb-0 float-left position-relative font-weak">Email: </h6> <h3 class="position-relative anim-Load" style="margin-top: 1.20rem; --i:2;"> @Model.currentUser.Email </h3></div>
         <div class="PG4"> <i class="fas fa-phone bubble float-left mr-2"></i><h6 class="mb-0 pb-0 float-left position-relative font-weak">Phone Number: </h6> <h3 class="position-relative anim-Load" style="margin-top: 1.20rem; --i:3;">@Model.currentUser.PhoneNumber</h3></div>
         <div class="PG5"> <i class="fas fa-car bubble float-left mr-2"></i><h6 class="mb-0 pb-0 float-left position-relative font-weak">License Plate:</h6><h3 class="position-relative anim-Load" style="margin-top: 1.20rem; --i:4;">@Model.currentUser.LicensePlate</h3></div>
+        <div> <i class="fas fa-star bubble float-left mr-2"></i><h6 class="mb-0 pb-0 float-left position-relative font-weak">Rating:</h6><h3 class="position-relative anim-Load" style="margin-top: 1.20rem; --i:5;">@Model.avg</h3></div>
     </div>
     <div class="ProfileGrid2">
         <div class="PG6"> <a class="ubutton" asp-area="" asp-page="/EditProfile" asp-route-id="@LogInPageModel.LoggedInUser.UserId">Edit User</a></div>
