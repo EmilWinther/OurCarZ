@@ -16,7 +16,7 @@
                 <th>From</th>
                 <th>Text</th>
                 <th>To</th>
-                <th>DateTime</th>
+                <th>Date and Time</th>
                 <th>Reply</th>
                 <th>Delete</th>
             </tr>
@@ -35,7 +35,7 @@
                         }
                     </td>
                     <td>
-                        <p style="word-break:break-word; width: 200px;">@Html.DisplayFor(modelItem => message.MessageText)</p>
+                        <p style="word-break:break-word;">@Html.DisplayFor(modelItem => message.MessageText)</p>
                     </td>
                     <td>
                         @foreach (var user in Model.UserList)

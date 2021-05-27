@@ -55,22 +55,17 @@ namespace OurCarZ.Pages
 
 
         /// <summary>
-        /// The user has requested that we filter the routes. This function will refresh our data and use the filter function to sort through the relevant routes.
+        /// When til function is called, we know that the user has requested that we filter the routes.
+        /// This function will refresh our data and use the filter function to sort through the relevant routes.
         /// </summary>
         public void OnPost()
         {
             ZipCode = Request.Form["ZipCodeSearch"];
-
-
-
-            
+           
             addresses = DB.Addresses.ToList();
             users = DB.Users.ToList();
             cars = DB.Cars.ToList();
-
             UsedRoutes = Filter();
-
-            
         }
 
         /// <summary>
@@ -85,7 +80,8 @@ namespace OurCarZ.Pages
 
 
         /// <summary>
-        /// The function responsible for filtering and sorting through the routes data. It is capable of both sorting through zipcodes and dates should the user specify it.
+        /// The function responsible for filtering and sorting through the routes data.
+        /// It is capable of  sorting through both zipcodes and dates should the user specify it.
         /// </summary>
         /// <returns> A filtered list of routes </returns>
         public List<Route> Filter ()
