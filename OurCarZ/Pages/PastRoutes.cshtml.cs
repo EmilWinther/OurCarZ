@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OurCarZ.Model;
+using OurCarZ.Pages.UserPages;
 
 namespace OurCarZ.Pages
 {
@@ -59,6 +60,24 @@ namespace OurCarZ.Pages
             addresses = DB.Addresses.ToList();
             users = DB.Users.ToList();
             cars = DB.Cars.ToList();
+        }
+
+        public IActionResult OnPostRecreate(int routeId, int startAddressId, int endAddressId)
+        {
+            DateTime now = DateTime.Now;
+            DateTime today = now.AddHours(1);
+            var arrivalToday = today.AddHours(1);
+
+            Route newRoute = new Route();
+            newRoute.StartPoint = startAddressId;
+            newRoute.FinishPoint = endAddressId;
+            newRoute.StartTime = today;
+            newRoute.ArrivalTime = arrivalToday;
+            newRoute.UserId = LogInPageModel.LoggedInUser.UserId;
+            DB.Routes.Add(newRoute);
+            DB.SaveChanges();
+
+            return RedirectToPage("/DrivePage", new {routeId = DB.Routes.Where(r => r.StartPoint == startAddressId && r.FinishPoint == endAddressId && r.UserId == LogInPageModel.LoggedInUser.UserId).OrderBy(o => o.RouteId).Last().RouteId, startAddressId, endAddressId });
         }
     }
 }

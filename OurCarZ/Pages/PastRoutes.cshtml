@@ -17,65 +17,30 @@
                     <th>Route end</th>
                     <th>Passengers</th>
                     <th>Map</th>
+                    <th>Recreate</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var id in Model.RouteList)
                 {
-                    <tr>
-                        @*Denne her foreach er for at finde de ruter hvor useren er Driver*@
-                        @foreach (var userRoutes in Model.UsedRoutes)
+                <tr>
+                    @*Denne her foreach er for at finde de ruter hvor useren er Driver*@
+                    @foreach (var userRoutes in Model.UsedRoutes)
+                    {
+                        if (id == userRoutes.RouteId)
                         {
-                            if (id == userRoutes.RouteId)
-                            {
-                                foreach (var routes in Model.UsedRoutes.Where(s => s.RouteId == id && s.ArrivalTime < DateTime.Now))
-                                {
-                                    <td>
-                                        <a asp-page="/Your Profile" asp-route-Id="@Model.DB.Users.Find(Model.DB.Routes.Find(routes.RouteId).UserId).UserId">
-                                            <p> @Model.DB.Users.Find(routes.UserId).FirstName @Model.DB.Users.Find(routes.UserId).LastName</p>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <p>Address: @Model.addresses.Where(a => a.AddressId == routes.StartPoint).Select(a => a.RoadName).First() <br />Time: @routes.StartTime </p>
-                                    </td>
-                                    <td>
-                                        <p>Address: @Model.addresses.Where(a => a.AddressId == routes.FinishPoint).Select(a => a.RoadName).First() <br /> Time: @routes.ArrivalTime </p>
-
-                                    </td>
-                                    <td>
-                                        @foreach (var routePassenger in Model.DB.UserRoutes)
-                                        {
-                                            if (routePassenger.RouteId == routes.RouteId)
-                                            {
-                                                <a asp-page="/Your Profile" asp-route-id="@routePassenger.UserId">
-                                                    <p>@Model.DB.Users.Find(routePassenger.UserId).FirstName @Model.DB.Users.Find(routePassenger.UserId).LastName</p>
-                                                </a>
-                                            }
-                                        }
-                                    </td>
-                                    <td>
-                                        <a class="btn" type="button" asp-page="Route" asp-route-id="@id">
-                                            <i class="fas fa-map-marked-alt" title="View Route"></i>
-                                        </a>
-                                    </td>
-                                }
-                            }
-                        }
-                        @*Denne her foreach er for at finde de ruter hvor useren er passager*@
-                        @foreach (var routes in Model.PassengerRoutes.Where(p => p.RouteId == id))
-                        {
-                            if (Model.DB.Routes.Find(routes.RouteId).ArrivalTime < DateTime.Now)
+                            foreach (var routes in Model.UsedRoutes.Where(s => s.RouteId == id && s.ArrivalTime < DateTime.Now))
                             {
                                 <td>
                                     <a asp-page="/Your Profile" asp-route-Id="@Model.DB.Users.Find(Model.DB.Routes.Find(routes.RouteId).UserId).UserId">
-                                        @Model.DB.Users.Find(Model.DB.Routes.Find(routes.RouteId).UserId).FirstName @Model.DB.Users.Find(Model.DB.Routes.Find(routes.RouteId).UserId).LastName
+                                        <p> @Model.DB.Users.Find(routes.UserId).FirstName @Model.DB.Users.Find(routes.UserId).LastName</p>
                                     </a>
                                 </td>
                                 <td>
-                                    <p>Address: @Model.addresses.Where(a => a.AddressId == Model.DB.Routes.Find(routes.RouteId).StartPoint).Select(a => a.RoadName).First() <br />Time: @Model.DB.Routes.Find(routes.RouteId).StartTime </p>
+                                    <p>Address: @Model.addresses.Where(a => a.AddressId == routes.StartPoint).Select(a => a.RoadName).First() <br />Time: @routes.StartTime </p>
                                 </td>
                                 <td>
-                                    <p>Address: @Model.addresses.Where(a => a.AddressId == Model.DB.Routes.Find(routes.RouteId).FinishPoint).Select(a => a.RoadName).First() <br /> Time: @Model.DB.Routes.Find(routes.RouteId).ArrivalTime </p>
+                                    <p>Address: @Model.addresses.Where(a => a.AddressId == routes.FinishPoint).Select(a => a.RoadName).First() <br /> Time: @routes.ArrivalTime </p>
 
                                 </td>
                                 <td>
@@ -94,9 +59,50 @@
                                         <i class="fas fa-map-marked-alt" title="View Route"></i>
                                     </a>
                                 </td>
+                                <td>
+                                    <form method="post">
+                                        <button asp-page-handler="recreate" asp-route-RouteId="@routes.RouteId" asp-route-startAddressId="@routes.StartPoint" asp-route-endAddressId="@routes.FinishPoint">Recreate Route</button>
+                                    </form>
+                                </td>
                             }
                         }
-                    </tr>
+                    }
+                    @*Denne her foreach er for at finde de ruter hvor useren er passager*@
+                    @foreach (var routes in Model.PassengerRoutes.Where(p => p.RouteId == id))
+                    {
+                        if (Model.DB.Routes.Find(routes.RouteId).ArrivalTime < DateTime.Now)
+                        {
+                            <td>
+                                <a asp-page="/Your Profile" asp-route-Id="@Model.DB.Users.Find(Model.DB.Routes.Find(routes.RouteId).UserId).UserId">
+                                    @Model.DB.Users.Find(Model.DB.Routes.Find(routes.RouteId).UserId).FirstName @Model.DB.Users.Find(Model.DB.Routes.Find(routes.RouteId).UserId).LastName
+                                </a>
+                            </td>
+                            <td>
+                                <p>Address: @Model.addresses.Where(a => a.AddressId == Model.DB.Routes.Find(routes.RouteId).StartPoint).Select(a => a.RoadName).First() <br />Time: @Model.DB.Routes.Find(routes.RouteId).StartTime </p>
+                            </td>
+                            <td>
+                                <p>Address: @Model.addresses.Where(a => a.AddressId == Model.DB.Routes.Find(routes.RouteId).FinishPoint).Select(a => a.RoadName).First() <br /> Time: @Model.DB.Routes.Find(routes.RouteId).ArrivalTime </p>
+
+                            </td>
+                            <td>
+                                @foreach (var routePassenger in Model.DB.UserRoutes)
+                                {
+                                    if (routePassenger.RouteId == routes.RouteId)
+                                    {
+                                        <a asp-page="/Your Profile" asp-route-id="@routePassenger.UserId">
+                                            <p>@Model.DB.Users.Find(routePassenger.UserId).FirstName @Model.DB.Users.Find(routePassenger.UserId).LastName</p>
+                                        </a>
+                                    }
+                                }
+                            </td>
+                            <td>
+                                <a class="btn" type="button" asp-page="Route" asp-route-id="@id">
+                                    <i class="fas fa-map-marked-alt" title="View Route"></i>
+                                </a>
+                            </td>
+                        }
+                    }
+                </tr>
                 }
             </tbody>
         </table>

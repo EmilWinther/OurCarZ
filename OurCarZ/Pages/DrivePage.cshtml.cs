@@ -95,9 +95,9 @@ namespace OurCarZ.Pages
         {
             CurrentUser = _edb.Users.Find(LogInPageModel.LoggedInUser.UserId);
             YourRoute = _edb.Routes.Find(routeid);
-            //finds AddressId 1
+            
             StartAddress = _edb.Addresses.Find(startAddressId);
-            //finds AddressId 2
+            
             EndAddress = _edb.Addresses.Find(endAddressId);
             CancelUser = _edb.UserRoutes.Find(DeleteID);
 
