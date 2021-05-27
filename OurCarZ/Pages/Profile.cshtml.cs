@@ -28,7 +28,7 @@ namespace OurCarZ.Pages
             {
                 currentUser = DB.Users.Find(UserPages.LogInPageModel.LoggedInUser.UserId);
 
-                var reviews = (from x in DB.RatingDatabases where x.UserRatedId.Equals(currentUser) select x).ToList();
+                var reviews = (from x in DB.RatingDatabases where x.UserRatedId.Equals(currentUser.UserId) select x).ToList();
                 avg = (from x in reviews select x.Rating).Average();
             }
 
