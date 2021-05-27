@@ -25,8 +25,8 @@
                     <form method="post" asp-page-handler="rate">
                         <input type="hidden" asp-for="@Model.FoundUser.UserId">
                         <input type="hidden" asp-for="@Model.CurrentUser.UserId">
-                        <h2 @*style="text-align: center;"*@>Rate @Model.FoundUser.FirstName</h2>
-                        <span class="starRating" @*style="transform: translateX(320px) translateX(-50%);"*@>
+                        <h2 style="text-align: center;">Rate @Model.FoundUser.FirstName</h2>
+                        <span class="starRating" style="margin-left: 50%;transform: translateX(-50%);">
                             <input id="rating5" type="radio" name="usersrating" value="5" asp-for="@Model.UsersRating">
                             <label for="rating5">5</label>
                             <input id="rating4" type="radio" name="usersrating" value="4" asp-for="@Model.UsersRating">
