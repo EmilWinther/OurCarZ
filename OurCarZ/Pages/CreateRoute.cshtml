@@ -3,6 +3,7 @@
 @using OurCarZ.Pages.UserPages
 @model OurCarZ.Pages.CreateRouteModel
 @{
+    ViewData["Title"] = "Create Route";
 }
 <html>
 <head>
@@ -81,7 +82,7 @@
                     <input asp-for="@Model.StartTime" class="default-form" type="text" value="@Model.Tomorrow" />
                     <span asp-validation-for="StartTime"></span> <br>
                     <br />
-                    <div style="color: var(--font-color)"><b>Remember to write the name or zipcode of the city</b><b>one of the addresses need to be a Zealand institution</b></div>
+                    <div style="color: var(--font-color)"><b>Remember to write the name or zipcode of the city. One of the addresses need to be a Zealand institution</b></div>
                     <br />
                     <input type="submit" value="Calculate" class="ubutton" />
                 </div>
@@ -104,7 +105,7 @@
     }
     else if (UserPages.LogInPageModel.LoggedInUser.LicensePlate == null) 
     {
-        <p>You appear to not have a license plate connected to your account. To add a route, please first add a your car's license plate in your profile.</p>
+        <p>You appear to not have a license plate connected to your account. To add a route, please first add your car's license plate in your profile.</p>
     }
 </body>
 </html>
