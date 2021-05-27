@@ -22,11 +22,11 @@
             <div class="ProfileGrid2">
                 <div class="PG7"> <a asp-page="/SendMessage" asp-route-id="@LogInPageModel.LoggedInUser.UserId" asp-route-id2="@Model.FoundUser.UserId" class="ubutton neon">Send Message To @Model.FoundUser.FirstName</a></div>
                 <div class="PG8">
-                    <form method="post" asp-page-handler="rate" style="text-align: center;">
+                    <form method="post" asp-page-handler="rate">
                         <input type="hidden" asp-for="@Model.FoundUser.UserId">
                         <input type="hidden" asp-for="@Model.CurrentUser.UserId">
-                        <h2>Rate @Model.FoundUser.FirstName</h2>
-                        <span class="starRating">
+                        <h2 @*style="text-align: center;"*@>Rate @Model.FoundUser.FirstName</h2>
+                        <span class="starRating" @*style="transform: translateX(320px) translateX(-50%);"*@>
                             <input id="rating5" type="radio" name="usersrating" value="5" asp-for="@Model.UsersRating">
                             <label for="rating5">5</label>
                             <input id="rating4" type="radio" name="usersrating" value="4" asp-for="@Model.UsersRating">
