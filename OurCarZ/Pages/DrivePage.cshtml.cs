@@ -48,15 +48,15 @@ namespace OurCarZ.Pages
         {
             if(routeId != 0)
             {
-            //I guess we dont need to find all these ids when we implement login
+            
             CurrentUser = _edb.Users.Find(LogInPageModel.LoggedInUser.UserId);
-            //finds route 9
+            
             YourRoute = _edb.Routes.Find(routeId);
-            //finds AddressId 1
+           
             StartAddress = _edb.Addresses.Find(startAddressId);
-            //finds AddressId 2
+            
             EndAddress = _edb.Addresses.Find(endAddressId);
-            //Checks if the FK in Route is == PK 
+            
             UserList = _edb.Users.ToList();
 
             AddressList = _edb.Addresses.Where(s => s.AddressId > 0).ToList();
