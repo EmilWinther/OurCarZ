@@ -5,6 +5,7 @@ using OurCarZ.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using OurCarZ.Pages.UserPages;
 
 namespace OurCarZ.Pages
 {
@@ -34,14 +35,14 @@ namespace OurCarZ.Pages
             _logger = logger;
             DB = db;
         }
-        public void OnGet(int id, int id2, int id3)
+        public void OnGet(int id, int id2)
         {
             CurrentUser = DB.Users.Find(id);
             FoundUser = DB.Users.Find(id2);
 
             if (FoundUser.UserId.Equals(CurrentUser.UserId))
             {
-                FoundUser = DB.Users.Find(id3);
+                FoundUser = DB.Users.Find(LogInPageModel.LoggedInUser.UserId);
             }
             else
             {
@@ -51,13 +52,13 @@ namespace OurCarZ.Pages
             UserList = DB.Users.ToList();
         }
 
-        public IActionResult OnPost(int id, int id2, int id3)
+        public IActionResult OnPost(int id, int id2)
         {
             CurrentUser = DB.Users.Find(id);
             FoundUser = DB.Users.Find(id2);
             if (FoundUser.UserId.Equals(CurrentUser.UserId))
             {
-                FoundUser = DB.Users.Find(id3);
+                FoundUser = DB.Users.Find(LogInPageModel.LoggedInUser.UserId);
             }
             else
             {
