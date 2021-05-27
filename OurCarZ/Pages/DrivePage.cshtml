@@ -29,8 +29,8 @@
             </p>
 
             <p>To: @Model.EndAddress.RoadName </p>
-            <p>Departure Time: @Model.YourRoute.StartTime.TimeOfDay</p>
-            <p>Arrival Time: @Model.YourRoute.ArrivalTime.Value.TimeOfDay</p>
+            <p>Departure Time: @Model.YourRoute.StartTime.ToShortTimeString()</p>
+            <p>Arrival Time: @Model.YourRoute.ArrivalTime.Value.ToShortTimeString()</p>
             <p>Seats available: @Model.YourCar.Seats</p>
             if (Model.YourRoute.ArrivalTime.Value.Date != Model.YourRoute.StartTime.Date)
             {
