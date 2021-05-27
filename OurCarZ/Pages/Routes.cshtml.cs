@@ -11,6 +11,9 @@ namespace OurCarZ.Pages
 {
     public class RoutesModel : PageModel
     {
+        /// <summary>
+        /// The Model which is responislbe for the routes page
+        /// </summary>
         [BindProperty] public string ZipCode { get; set; }
         [BindProperty] public DateTime date { get; set; }
 
@@ -28,12 +31,18 @@ namespace OurCarZ.Pages
 
         public int count;
 
-        
+        /// <summary>
+        /// Establishes connection with the database
+        /// </summary>
+        /// <param name="db"></param>
         public RoutesModel(EmilDbContext db)
         {
             DB = db;
         }
 
+        /// <summary>
+        /// Gets the various lists of objects from the database
+        /// </summary>
         public void OnGet()
         {
             UsedRoutes = DB.Routes.ToList();
@@ -45,7 +54,9 @@ namespace OurCarZ.Pages
         }
 
 
-
+        /// <summary>
+        /// The user has requested that we filter the routes. This function will refresh our data and use the filter function to sort through the relevant routes.
+        /// </summary>
         public void OnPost()
         {
             ZipCode = Request.Form["ZipCodeSearch"];
@@ -62,12 +73,21 @@ namespace OurCarZ.Pages
             
         }
 
+        /// <summary>
+        /// This is a simple function that increases the int count every time it is called
+        /// </summary>
+        /// <returns>Int count</returns>
         public int increaseCount()
         {
             count++;
             return count;
         }
 
+
+        /// <summary>
+        /// The function responsible for filtering and sorting through the routes data. It is capable of both sorting through zipcodes and dates should the user specify it.
+        /// </summary>
+        /// <returns> A filtered list of routes </returns>
         public List<Route> Filter ()
         {
 
